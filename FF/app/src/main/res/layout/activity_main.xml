@@ -3,110 +3,252 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/reg">
 
-    <EditText
-        android:id="@+id/email_registration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
+
+    <LinearLayout
+        android:id="@+id/LinearRegistration"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.459"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.166" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-80dp">
 
-    <EditText
-        android:id="@+id/phone_registration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="phone"
-        android:inputType="phone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.459"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.258" />
 
-    <EditText
-        android:id="@+id/address_registration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Address"
-        android:inputType="textPostalAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.459"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.37" />
+        <TextView
 
-    <EditText
-        android:id="@+id/name_registration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.062" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30sp"
+            android:background="#00FFFFFF"
+            android:fontFamily="@font/bad_script"
+            android:text="Register Here"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorAccent"
+            android:textSize="28sp" />
 
-    <EditText
-        android:id="@+id/birthdate_registration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Birth date"
-        android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/name_registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:background="@drawable/edit_text_style"
+            android:drawableLeft="@drawable/user"
+            android:drawablePadding="10sp"
+            android:ems="10"
+            android:fontFamily="@font/bad_script"
+            android:hint="Name"
+            android:inputType="textPersonName"
+            android:paddingLeft="10sp"
+            android:textAlignment="gravity"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.444"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.062" />
 
-    <EditText
-        android:id="@+id/password_registration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.645" />
+        <EditText
+            android:id="@+id/email_registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:background="@drawable/edit_text_style"
+            android:drawableLeft="@drawable/mail"
+            android:drawablePadding="10sp"
+            android:ems="10"
+            android:fontFamily="@font/bad_script"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="8sp"
+            android:textAlignment="gravity"
+            android:textColorHighlight="@color/colorAccent"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.459"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.166" />
 
-    <Button
-        android:id="@+id/register_registration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.808" />
 
-    <Button
-        android:id="@+id/login_registration"
-        android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/phone_registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:background="@drawable/edit_text_style"
+            android:drawableLeft="@drawable/phone"
+            android:drawablePadding="10sp"
+            android:ems="10"
+            android:fontFamily="@font/bad_script"
+            android:hint="Phone"
+            android:inputType="phone"
+            android:paddingLeft="8sp"
+            android:textColorHighlight="@color/colorAccent"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.459"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.258" />
+
+        <EditText
+            android:id="@+id/address_registration"
+            android:layout_width="354sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:background="@drawable/edit_text_style"
+            android:drawableLeft="@drawable/gps"
+            android:drawablePadding="10sp"
+            android:fontFamily="@font/bad_script"
+            android:gravity="top|left"
+            android:hint="Address"
+            android:inputType="textMultiLine"
+            android:lines="2"
+            android:maxLines="2"
+            android:minLines="2"
+            android:paddingLeft="8sp"
+            android:scrollbars="vertical"
+            android:textColorHighlight="@color/colorAccent"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.459"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.37" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+            <EditText
+                android:layout_marginLeft="30sp"
+                android:id="@+id/birthdate_registration"
+                android:layout_width="170sp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/edit_text_style"
+                android:drawableLeft="@drawable/birth"
+                android:drawablePadding="10sp"
+                android:ems="10"
+                android:fontFamily="@font/bad_script"
+                android:hint="Select Birth date"
+                android:inputType="date"
+                android:paddingLeft="8sp"
+                android:textColorHighlight="@color/colorAccent"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        style="@android:style/Widget.Material.Light.Spinner"
+        android:layout_width="140sp"
         android:layout_height="wrap_content"
-        android:text="Login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.842"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.808" />
+        android:layout_marginLeft="32sp"
+        android:layout_marginTop="15sp"
+        android:background="@drawable/edit_text_style"
+        android:dropDownWidth="wrap_content"
+        android:entries="@array/gender"
+        android:popupBackground="@drawable/edit_text_style"
+        android:prompt="@string/prompt"
+        android:textColorHighlight="@color/colorAccent"
+        android:textSize="18sp" />
+    </LinearLayout>
+
+        <EditText
+            android:id="@+id/password_registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:background="@drawable/edit_text_style"
+            android:drawableLeft="@drawable/lock"
+            android:drawablePadding="10sp"
+            android:ems="10"
+            android:fontFamily="@font/bad_script"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="8sp"
+            android:textColorHighlight="@color/colorAccent"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.645" />
+
+
+        <EditText
+            android:id="@+id/confirmpassword_registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/edit_text_style"
+            android:drawableLeft="@drawable/confirmation"
+            android:drawablePadding="10sp"
+            android:ems="10"
+            android:fontFamily="@font/bad_script"
+            android:hint="Confirm Password"
+            android:importantForAutofill="yes"
+            android:inputType="textPassword"
+            android:paddingLeft="8sp"
+            android:textColorHighlight="@color/colorAccent"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.645" />
+
+
+        <Button
+
+            android:id="@+id/register_registration"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30sp"
+            android:background="@drawable/btn_rounded"
+            android:fontFamily="@font/bad_script"
+            android:paddingLeft="10sp"
+            android:paddingRight="10sp"
+            android:text="Register"
+            android:textColor="#F8F5F5"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.808" />
+
+        <Button
+            android:id="@+id/login_registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:fontFamily="@font/bad_script"
+            android:text="Already Registered ? Login here."
+            android:textColor="#FFF8F8"
+            android:textColorHint="#FF9800"
+            android:textSize="10sp"
+            android:theme="@style/PrimaryFlatButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.842"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.808" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
