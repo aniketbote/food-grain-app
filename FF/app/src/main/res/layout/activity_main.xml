@@ -18,12 +18,11 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="-80dp">
 
-
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30sp"
+            android:layout_marginTop="8sp"
             android:background="#00FFFFFF"
             android:fontFamily="@font/bad_script"
             android:text="Register Here"
@@ -31,11 +30,39 @@
             android:textColor="@color/colorAccent"
             android:textSize="28sp" />
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/profile2"
+            app:civ_border_width="3sp"
+            app:civ_border_color="#FF000000"/>
+        <Button
+            android:id="@+id/profile_registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2sp"
+            android:fontFamily="@font/bad_script"
+            android:text="Upload Photo"
+            android:textStyle="bold"
+            android:textColor="#FFF8F8"
+            android:textColorHint="#FF9800"
+            android:textSize="8sp"
+            android:theme="@style/PrimaryFlatButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.842"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.808" />
+
+
+
+
         <EditText
             android:id="@+id/name_registration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15sp"
+            android:layout_marginTop="1sp"
             android:background="@drawable/edit_text_style"
             android:drawableLeft="@drawable/user"
             android:drawablePadding="10sp"
@@ -105,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15sp"
             android:background="@drawable/edit_text_style"
-            android:drawableLeft="@drawable/gps"
+            android:drawableStart="@drawable/gps"
             android:drawablePadding="10sp"
             android:fontFamily="@font/bad_script"
             android:gravity="top|left"
@@ -130,7 +157,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-            <EditText
+
+    <EditText
                 android:layout_marginLeft="30sp"
                 android:id="@+id/birthdate_registration"
                 android:layout_width="170sp"
@@ -150,6 +178,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
 
     <Spinner
         android:id="@+id/spinner1"
@@ -193,7 +222,7 @@
             android:id="@+id/confirmpassword_registration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
+            android:layout_marginTop="15sp"
             android:background="@drawable/edit_text_style"
             android:drawableLeft="@drawable/confirmation"
             android:drawablePadding="10sp"
@@ -217,14 +246,14 @@
             android:id="@+id/register_registration"
             android:layout_width="114dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30sp"
+            android:layout_marginTop="15sp"
             android:background="@drawable/btn_rounded"
             android:fontFamily="@font/bad_script"
             android:paddingLeft="10sp"
             android:paddingRight="10sp"
             android:text="Register"
             android:textColor="#F8F5F5"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -236,8 +265,9 @@
             android:id="@+id/login_registration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15sp"
+            android:layout_marginTop="1sp"
             android:fontFamily="@font/bad_script"
+            android:textStyle="bold"
             android:text="Already Registered ? Login here."
             android:textColor="#FFF8F8"
             android:textColorHint="#FF9800"
