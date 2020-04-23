@@ -23,34 +23,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/showphoto_registration"
-            android:layout_width="100sp"
-            android:layout_height="100sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="80dp" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/showphoto_registration"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        app:layout_constraintBottom_toBottomOf="@+id/uploadphoto_registration"
+        app:layout_constraintEnd_toEndOf="@+id/uploadphoto_registration"
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="@+id/uploadphoto_registration"
+        app:layout_constraintTop_toTopOf="@+id/uploadphoto_registration"
+        tools:ignore="MissingConstraints" />
 
-        <Button
-            android:id="@+id/uploadphoto_registration"
-            android:layout_width="100sp"
-            android:layout_height="100sp"
-            android:layout_marginTop="80dp"
-            android:background="@drawable/btn_upload"
-            android:fontFamily="@font/bad_script"
-            android:text="Upload Photo"
-            android:textColor="#000"
-            android:textColorHint="#FF9800"
-            android:textSize="8sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView"
-            tools:ignore="MissingConstraints" />
+    <Button
+        android:id="@+id/uploadphoto_registration"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/btn_upload"
+        android:fontFamily="@font/bad_script"
+        android:text="Upload Photo"
+        android:textColor="#000"
+        android:textColorHint="#FF9800"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        tools:ignore="MissingConstraints" />
 
-        <LinearLayout
+    <LinearLayout
             android:id="@+id/LinearRegistration"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

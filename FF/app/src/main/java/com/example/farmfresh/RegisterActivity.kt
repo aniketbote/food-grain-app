@@ -79,7 +79,7 @@ class RegisterActivity : AppCompatActivity() {
             selectedPhotoUri = data.data
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
             showphoto_registration.setImageBitmap(bitmap)
-//            uploadphoto_registration.alpha = 0f
+            uploadphoto_registration.alpha = 0f
 
         }
 
@@ -178,8 +178,6 @@ class RegisterActivity : AppCompatActivity() {
         uploadImageToFirebase(name)
 
 
-        //Firbase Auth Object
-
     }
 
     private fun uploadImageToFirebase(filename : String){
@@ -212,6 +210,7 @@ class RegisterActivity : AppCompatActivity() {
         ref.setValue(user)
             .addOnSuccessListener {
 
+                //Firbase Auth Object
                 val auth = FirebaseAuth.getInstance()
                 auth.createUserWithEmailAndPassword(email_registration.text.toString(), password_registration.text.toString())
                     .addOnCompleteListener {
@@ -234,7 +233,8 @@ class RegisterActivity : AppCompatActivity() {
                 mtoast = Toast.makeText(this,"Registration Succesful",Toast.LENGTH_SHORT)
                 mtoast!!.show()
                 Log.d("RegisterActivity","User Created Successfully")
-                setContentView(R.layout.activity_login)
+                val intent = Intent(this,LoginActivity::class.java)
+                startActivity(intent)
             }
             .addOnFailureListener {
                 if(mtoast != null) mtoast!!.cancel()
