@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/reg">
-
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
 
     <LinearLayout
         android:id="@+id/LinearRegistration"
@@ -33,7 +36,7 @@
 
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/photoview_registration"
+            android:id="@+id/showphoto_registration"
             android:layout_width="100sp"
             android:layout_height="100sp" />
 
@@ -180,7 +183,7 @@
                 android:layout_marginLeft="32sp"
                 android:layout_marginTop="15sp"
                 android:background="@drawable/edit_text_style"
-                
+
                 android:dropDownWidth="wrap_content"
                 android:entries="@array/gender"
                 android:popupBackground="@drawable/edit_text_style"
@@ -275,23 +278,6 @@
 
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="-18dp" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" /><![CDATA[// android:src="@drawable/profile2"
-            app:civ_border_color="#FF000000"
-            app:civ_border_width="3sp" />
-
-
-
-
-        ]]>
-
+</ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
