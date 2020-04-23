@@ -109,10 +109,10 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this,"Phone field cannot be empty",Toast.LENGTH_SHORT).show()
             return
         }
-        if (address.isEmpty()){
-            Toast.makeText(this,"Phone field cannot be empty",Toast.LENGTH_SHORT).show()
-            return
-        }
+//        if (address.isEmpty()){
+//            Toast.makeText(this,"Phone field cannot be empty",Toast.LENGTH_SHORT).show()
+//            return
+//        }
         if (birthdate.isEmpty()){
             Toast.makeText(this,"Birthdate field cannot be empty",Toast.LENGTH_SHORT).show()
             return
@@ -173,6 +173,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun uploadImageToFirebase(filename : String){
         if (selectedPhotoUri == null){
+            Log.d("RegisterActivity","Image not inserted")
             Toast.makeText(this,"Please insert photo",Toast.LENGTH_SHORT).show()
             return
         }
