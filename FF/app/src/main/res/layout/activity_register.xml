@@ -86,7 +86,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.062" />
-
+        
         <EditText
             android:id="@+id/email_registration"
             android:layout_width="wrap_content"
@@ -153,12 +153,7 @@
             android:scrollbars="vertical"
             android:textColorHighlight="@color/colorAccent"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.459"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.37" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
