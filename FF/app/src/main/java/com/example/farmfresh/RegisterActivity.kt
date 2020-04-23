@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_register.*
 class RegisterActivity : AppCompatActivity() {
     private var selectedPhotoUri: Uri ?= null
     private var gender: String ?= null
+    private var mtoast: Toast ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,77 +99,87 @@ class RegisterActivity : AppCompatActivity() {
 
         //Sanity Checks : Empty
         if (name.isEmpty()){
-            Toast.makeText(this,"Name field cannot be empty",Toast.LENGTH_SHORT).show()
+            if(mtoast != null) mtoast!!.cancel()
+            mtoast = Toast.makeText(this,"Name field cannot be empty",Toast.LENGTH_SHORT)
+            mtoast!!.show()
             return
         }
         if (email.isEmpty()){
-            Toast.makeText(this,"Email field cannot be empty",Toast.LENGTH_SHORT).show()
+            if(mtoast != null) mtoast!!.cancel()
+            mtoast = Toast.makeText(this,"Email field cannot be empty",Toast.LENGTH_SHORT)
+            mtoast!!.show()
             return
         }
         if (phone.isEmpty()){
-            Toast.makeText(this,"Phone field cannot be empty",Toast.LENGTH_SHORT).show()
+            if(mtoast != null) mtoast!!.cancel()
+            mtoast = Toast.makeText(this,"Phone field cannot be empty",Toast.LENGTH_SHORT)
+            mtoast!!.show()
             return
+
         }
 //        if (address.isEmpty()){
-//            Toast.makeText(this,"Phone field cannot be empty",Toast.LENGTH_SHORT).show()
+//            if(mtoast != null) mtoast!!.cancel()
+//            mtoast = Toast.makeText(this,"Address field cannot be empty",Toast.LENGTH_SHORT)
+//            mtoast!!.show()
 //            return
 //        }
         if (birthdate.isEmpty()){
-            Toast.makeText(this,"Birthdate field cannot be empty",Toast.LENGTH_SHORT).show()
+            if(mtoast != null) mtoast!!.cancel()
+            mtoast = Toast.makeText(this,"Birthdate field cannot be empty",Toast.LENGTH_SHORT)
+            mtoast!!.show()
             return
         }
         if (gender!!.isEmpty()){
-            Toast.makeText(this,"Please select gender",Toast.LENGTH_SHORT).show()
+            if(mtoast != null) mtoast!!.cancel()
+            mtoast = Toast.makeText(this,"Please select gender",Toast.LENGTH_SHORT)
+            mtoast!!.show()
             return
         }
         if (password.isEmpty()){
-            Toast.makeText(this,"Password field cannot be empty",Toast.LENGTH_SHORT).show()
+            if(mtoast != null) mtoast!!.cancel()
+            mtoast = Toast.makeText(this,"Password field cannot be empty",Toast.LENGTH_SHORT)
+            mtoast!!.show()
             return
         }
 
 
         //Sanity Checks : Email
         if(!EmailValidate(email)){
-            Toast.makeText(this,"Enter a valid Email",Toast.LENGTH_SHORT).show()
+            if(mtoast != null) mtoast!!.cancel()
+            mtoast = Toast.makeText(this,"Enter a valid Email",Toast.LENGTH_SHORT)
+            mtoast!!.show()
             return
         }
 
         //Sanity Checks : Password Length
         if (password.length < 6 || password.length > 20){
-            Toast.makeText(this,"Password should contain 6 to 20 characters",Toast.LENGTH_SHORT).show()
+            if(mtoast != null) mtoast!!.cancel()
+            mtoast = Toast.makeText(this,"Password should contain 6 to 20 characters",Toast.LENGTH_SHORT)
+            mtoast!!.show()
             return
         }
 
         //Sanity Checks : Phone Length
         if (phone.length != 10){
-            Toast.makeText(this,"Enter Valid Phone Number",Toast.LENGTH_SHORT).show()
+            if(mtoast != null) mtoast!!.cancel()
+            mtoast = Toast.makeText(this,"Enter Valid Phone Number",Toast.LENGTH_SHORT)
+            mtoast!!.show()
             return
         }
 
         //Sanity Check : password == confirm password
 
         if (password != confirm_password){
-            Toast.makeText(this,"Password and Confirm password are not same",Toast.LENGTH_SHORT).show()
+            if(mtoast != null) mtoast!!.cancel()
+            mtoast = Toast.makeText(this,"Password and Confirm password are not same",Toast.LENGTH_SHORT)
+            mtoast!!.show()
         }
 
+        uploadImageToFirebase(name)
 
 
         //Firbase Auth Object
 
-        val auth = FirebaseAuth.getInstance()
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (!it.isSuccessful){
-                    return@addOnCompleteListener
-                }
-                Log.d("RegisterActivity","Registration Succesful : ${it}")
-                uploadImageToFirebase(name)
-
-            }
-            .addOnFailureListener {
-                Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT).show()
-                Log.d("RegisterActivity","Registration Failed : ${it.message}")
-            }
     }
 
     private fun uploadImageToFirebase(filename : String){
@@ -200,12 +211,35 @@ class RegisterActivity : AppCompatActivity() {
         val user = User(uid, name_registration.text.toString(), email_registration.text.toString(), phone_registration.text.toString(), address_registration.text.toString(), birthdate_registration.text.toString(), gender!!, password_registration.text.toString(), imageUri)
         ref.setValue(user)
             .addOnSuccessListener {
-                Toast.makeText(this,"Registration Succesful",Toast.LENGTH_SHORT).show()
+
+                val auth = FirebaseAuth.getInstance()
+                auth.createUserWithEmailAndPassword(email_registration.text.toString(), password_registration.text.toString())
+                    .addOnCompleteListener {
+                        if (!it.isSuccessful){
+                            return@addOnCompleteListener
+                        }
+                        Log.d("RegisterActivity","Registration Succesful : ${it}")
+
+                    }
+                    .addOnFailureListener {
+                        if(mtoast != null) mtoast!!.cancel()
+                        mtoast = Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT)
+                        mtoast!!.show()
+                        Log.d("RegisterActivity","Registration Failed : ${it.message}")
+                    }
+
+
+
+                if(mtoast != null) mtoast!!.cancel()
+                mtoast = Toast.makeText(this,"Registration Succesful",Toast.LENGTH_SHORT)
+                mtoast!!.show()
                 Log.d("RegisterActivity","User Created Successfully")
                 setContentView(R.layout.activity_login)
             }
             .addOnFailureListener {
-                Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT).show()
+                if(mtoast != null) mtoast!!.cancel()
+                mtoast = Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT)
+                mtoast!!.show()
                 Log.d("RegisterActivity","Failed to create user : ${it.message}")
             }
     }
