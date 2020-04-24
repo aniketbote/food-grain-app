@@ -1,8 +1,8 @@
 package com.example.farmfresh
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,11 +17,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register.*
+import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
     private var selectedPhotoUri: Uri ?= null
     private var gender: String ?= null
     private var mtoast: Toast ?= null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,11 +68,25 @@ class RegisterActivity : AppCompatActivity() {
             startActivityForResult(intent,0)
         }
         address_registration.setOnClickListener{
-            val api_key = getString(R.string.api_key)
-
             Log.d("Registration","Clicked address")
+            val intent = Intent(this,AutoFillActivity::class.java)
+            startActivity(intent)
+        }
+        birthdate_registration.setOnClickListener {
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, myear, mmonth, mday ->
+
+                // Display Selected date in textbox
+                birthdate_registration.setText("" + mday + "/" + mmonth + "/" + myear)
+            }, year, month, day)
+            dpd.show()
         }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -84,6 +100,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
     }
+
 
     private fun perfromRegistration(){
         val name = name_registration.text.toString()

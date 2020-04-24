@@ -6,9 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/reg">
 
-
-
-        <TextView
+    <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -79,6 +77,7 @@
                 android:paddingLeft="10sp"
                 android:textAlignment="gravity"
                 android:textSize="18sp"
+                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.444"
@@ -175,6 +174,7 @@
                     android:drawableLeft="@drawable/birth"
                     android:drawablePadding="10sp"
                     android:ems="10"
+                    android:focusableInTouchMode="false"
                     android:fontFamily="@font/bad_script"
                     android:hint="Select Birth date"
                     android:inputType="date"
