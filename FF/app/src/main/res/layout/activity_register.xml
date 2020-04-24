@@ -51,7 +51,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <LinearLayout
-<<<<<<< HEAD
+
         android:id="@+id/LinearRegistration"
         android:layout_width="412dp"
         android:layout_height="538dp"
@@ -64,17 +64,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints">
-=======
-            android:id="@+id/LinearRegistration"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="188sp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
-
 
             <EditText
                 android:id="@+id/name_registration"
@@ -121,53 +110,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.166" />
->>>>>>> 18f2e18b9d4f5ec9496db691ef74c54442198a04
 
 
-        <EditText
-            android:id="@+id/name_registration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:background="@drawable/edit_text_style"
-            android:drawableLeft="@drawable/user"
-            android:drawablePadding="10sp"
-            android:ems="10"
-            android:fontFamily="@font/bad_script"
-            android:hint="Name"
-            android:inputType="textPersonName"
-            android:paddingLeft="10sp"
-            android:textAlignment="gravity"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.444"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.062" />
 
-        <EditText
-            android:id="@+id/email_registration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15sp"
-            android:background="@drawable/edit_text_style"
-            android:drawableLeft="@drawable/mail"
-            android:drawablePadding="10sp"
-            android:ems="10"
-            android:fontFamily="@font/bad_script"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="8sp"
-            android:textAlignment="gravity"
-            android:textColorHighlight="@color/colorAccent"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.459"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.166" />
 
 
         <EditText
@@ -192,7 +137,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.258" />
 
-<<<<<<< HEAD
+
         <EditText
             android:id="@+id/address_registration"
             android:layout_width="354sp"
@@ -213,30 +158,6 @@
             android:scrollbars="vertical"
             android:textColorHighlight="@color/colorAccent"
             android:textSize="18sp"/>
-=======
-                <EditText
-                    android:id="@+id/birthdate_registration"
-                    android:layout_width="170sp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30sp"
-                    android:layout_marginTop="15sp"
-                    android:background="@drawable/edit_text_style"
-                    android:drawableLeft="@drawable/birth"
-                    android:drawablePadding="10sp"
-                    android:ems="10"
-                    android:focusableInTouchMode="false"
-                    android:fontFamily="@font/bad_script"
-                    android:hint="Select Birth date"
-                    android:inputType="date"
-                    android:paddingLeft="8sp"
-                    android:textColorHighlight="@color/colorAccent"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
->>>>>>> 18f2e18b9d4f5ec9496db691ef74c54442198a04
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -254,6 +175,7 @@
                 android:drawableLeft="@drawable/birth"
                 android:drawablePadding="10sp"
                 android:ems="10"
+                android:focusable="false"
                 android:fontFamily="@font/bad_script"
                 android:hint="Select Birth date"
                 android:inputType="date"
@@ -273,6 +195,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_marginLeft="32sp"
+                android:entries="@array/gender"
                 android:layout_marginTop="15sp"
                 android:spinnerMode="dropdown"
                 android:background="@drawable/edit_text_style" />
