@@ -19,6 +19,7 @@
             android:layout_marginTop="100sp"
             android:fontFamily="@font/bad_script"
             android:text="Login"
+            android:textStyle="bold"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
             android:textSize="28sp" />
