@@ -200,6 +200,7 @@ class RegisterActivity : AppCompatActivity() {
             if(mtoast != null) mtoast!!.cancel()
             mtoast = Toast.makeText(this,"Password and Confirm password are not same",Toast.LENGTH_SHORT)
             mtoast!!.show()
+            return
         }
 
         uploadImageToFirebase(name)
