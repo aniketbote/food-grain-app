@@ -10,9 +10,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.util.Patterns
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -52,11 +50,12 @@ class RegisterActivity : AppCompatActivity() {
 
 
         register_registration.setOnClickListener {
+            Log.d("RegisterActivity","Clicked Registration Button")
             perfromRegistration()
         }
 
         login_registration.setOnClickListener {
-            Log.d( "RegisterActivity","On clicking Login")
+            Log.d( "RegisterActivity","Clicked Login Button")
             val intent = Intent(this,LoginActivity::class.java)
             startActivity(intent)
         }
@@ -69,10 +68,12 @@ class RegisterActivity : AppCompatActivity() {
         }
         address_registration.setOnClickListener{
             Log.d("Registration","Clicked address")
-            val intent = Intent(this,AutoFillActivity::class.java)
-            startActivity(intent)
+            val intent = Intent(this,AddAutoActivity::class.java)
+            startActivityForResult(intent, 12)
         }
+
         birthdate_registration.setOnClickListener {
+            Log.d("RegisterActivity","Clicked Birthdate")
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
@@ -91,7 +92,7 @@ class RegisterActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null){
-            Log.d("RegisterActivity", "Photo Selected")
+            Log.d("RegisterActivity", "Photo Selected Successfully")
             selectedPhotoUri = data.data
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
             showphoto_registration.setImageBitmap(bitmap)
@@ -99,10 +100,19 @@ class RegisterActivity : AppCompatActivity() {
 
         }
 
+        if(requestCode == 12 && resultCode == Activity.RESULT_OK && data != null){
+            Log.d("RegisterActivity","Address received Successsfully")
+            val addressHolder = data.getSerializableExtra("address")
+            val address_reg:EditText = findViewById(R.id.address_registration)
+            address_reg.setText("${addressHolder}")
+            Log.d("RegisterActivity","${addressHolder}")
+        }
+
     }
 
 
     private fun perfromRegistration(){
+        Log.d("RegisterActivity","Function : performRegistration")
         val name = name_registration.text.toString()
         val email = email_registration.text.toString()
         val phone = phone_registration.text.toString()
@@ -134,12 +144,12 @@ class RegisterActivity : AppCompatActivity() {
             return
 
         }
-//        if (address.isEmpty()){
-//            if(mtoast != null) mtoast!!.cancel()
-//            mtoast = Toast.makeText(this,"Address field cannot be empty",Toast.LENGTH_SHORT)
-//            mtoast!!.show()
-//            return
-//        }
+        if (address.isEmpty()){
+            if(mtoast != null) mtoast!!.cancel()
+            mtoast = Toast.makeText(this,"Address field cannot be empty",Toast.LENGTH_SHORT)
+            mtoast!!.show()
+            return
+        }
         if (birthdate.isEmpty()){
             if(mtoast != null) mtoast!!.cancel()
             mtoast = Toast.makeText(this,"Birthdate field cannot be empty",Toast.LENGTH_SHORT)
@@ -198,6 +208,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun uploadImageToFirebase(filename : String){
+        Log.d("RegisterActivity","Function : uploadImagetoFirebase : ${filename} ${selectedPhotoUri}")
         if (selectedPhotoUri == null){
             Log.d("RegisterActivity","Image not inserted")
             Toast.makeText(this,"Please insert photo",Toast.LENGTH_SHORT).show()
@@ -207,25 +218,27 @@ class RegisterActivity : AppCompatActivity() {
         ref.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
                 ref.downloadUrl.addOnSuccessListener {
-                    Log.d("RegisterActivity","Image Uploaded : ${it.toString()}")
+                    Log.d("RegisterActivity","Image Uploaded Successfully: ${it.toString()}")
                     uploadUserToFirebase(it.toString())
 
                 }
             }
             .addOnFailureListener {
-                Log.d("RegisterActivity","Image Upload Failed")
+                Log.d("RegisterActivity","Image Upload Failed: ${it}")
             }
 
 
     }
 
     private fun uploadUserToFirebase(imageUri:String){
+        Log.d("RegisterActivity","Function : uploadusertoFirebase : ${imageUri}")
         val uid = FirebaseAuth.getInstance().uid.toString()
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
 
         val user = User(uid, name_registration.text.toString(), email_registration.text.toString(), phone_registration.text.toString(), address_registration.text.toString(), birthdate_registration.text.toString(), gender!!, password_registration.text.toString(), imageUri)
         ref.setValue(user)
             .addOnSuccessListener {
+                Log.d("RegisterActivity","User data Inserted to Firebase")
 
                 //Firbase Auth Object
                 val auth = FirebaseAuth.getInstance()
@@ -234,14 +247,14 @@ class RegisterActivity : AppCompatActivity() {
                         if (!it.isSuccessful){
                             return@addOnCompleteListener
                         }
-                        Log.d("RegisterActivity","Registration Succesful : ${it}")
+                        Log.d("RegisterActivity","User created for authetication : ${it}")
 
                     }
                     .addOnFailureListener {
                         if(mtoast != null) mtoast!!.cancel()
                         mtoast = Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT)
                         mtoast!!.show()
-                        Log.d("RegisterActivity","Registration Failed : ${it.message}")
+                        Log.d("RegisterActivity","User could not be created for authentication : ${it.message}")
                     }
 
 
@@ -249,7 +262,7 @@ class RegisterActivity : AppCompatActivity() {
                 if(mtoast != null) mtoast!!.cancel()
                 mtoast = Toast.makeText(this,"Registration Succesful",Toast.LENGTH_SHORT)
                 mtoast!!.show()
-                Log.d("RegisterActivity","User Created Successfully")
+                Log.d("RegisterActivity","Starting Login Activity")
                 val intent = Intent(this,LoginActivity::class.java)
                 startActivity(intent)
             }
@@ -257,12 +270,13 @@ class RegisterActivity : AppCompatActivity() {
                 if(mtoast != null) mtoast!!.cancel()
                 mtoast = Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT)
                 mtoast!!.show()
-                Log.d("RegisterActivity","Failed to create user : ${it.message}")
+                Log.d("RegisterActivity","User data could not be inserted into firebase : ${it.message}")
             }
     }
 
 
     private fun EmailValidate(email: String): Boolean {
+        Log.d("RegisterActivity","Funtion : email validate")
         return Patterns.EMAIL_ADDRESS.toRegex().matches(email)
         }
 }
