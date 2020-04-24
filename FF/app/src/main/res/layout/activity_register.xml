@@ -86,7 +86,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.062" />
-        
+
         <EditText
             android:id="@+id/email_registration"
             android:layout_width="wrap_content"
@@ -152,7 +152,7 @@
             android:paddingLeft="8sp"
             android:scrollbars="vertical"
             android:textColorHighlight="@color/colorAccent"
-            android:textSize="18sp"
+            android:textSize="18sp"/>
 
 
         <LinearLayout
@@ -185,19 +185,15 @@
 
             <Spinner
                 android:id="@+id/gender_registration"
-                style="@android:style/Widget.Material.Light.Spinner"
                 android:layout_width="140sp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:layout_marginLeft="32sp"
                 android:layout_marginTop="15sp"
-                android:background="@drawable/edit_text_style"
+                android:spinnerMode="dropdown"
+                android:background="@drawable/edit_text_style" />
 
-                android:dropDownWidth="wrap_content"
-                android:entries="@array/gender"
-                android:popupBackground="@drawable/edit_text_style"
-                android:prompt="@string/prompt"
-                android:textColorHighlight="@color/colorAccent"
-                android:textSize="18sp" />
         </LinearLayout>
 
         <EditText

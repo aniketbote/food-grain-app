@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Farm Fresh</string>
-    <string name="prompt">Gender</string>
+    <string name="prompt">Select Gender</string>
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>
