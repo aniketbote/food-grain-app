@@ -15,12 +15,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register.*
+import java.security.MessageDigest
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
     private var selectedPhotoUri: Uri ?= null
     private var gender: String ?= null
     private var mtoast: Toast ?= null
+    private var userFlag: Boolean = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -203,71 +205,102 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        uploadImageToFirebase(name)
+        val emailHash = generatehash(email)
+        var userInfoObject = User(emailHash, "", name, email, phone, address, birthdate,gender!!, password,"")
 
+        uploadImageToFirebase(userInfoObject)
 
     }
 
-    private fun uploadImageToFirebase(filename : String){
-        Log.d("RegisterActivity","Function : uploadImagetoFirebase : ${filename} ${selectedPhotoUri}")
+    private fun uploadImageToFirebase(user_data: User){
+        Log.d("RegisterActivity","Function : uploadImagetoFirebase : ${user_data.email_hash} ${selectedPhotoUri}")
         if (selectedPhotoUri == null){
             Log.d("RegisterActivity","Image not inserted")
             Toast.makeText(this,"Please insert photo",Toast.LENGTH_SHORT).show()
             return
         }
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+        val ref = FirebaseStorage.getInstance().getReference("/images/${user_data.email_hash}")
         ref.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
                 ref.downloadUrl.addOnSuccessListener {
                     Log.d("RegisterActivity","Image Uploaded Successfully: ${it.toString()}")
-                    uploadUserToFirebase(it.toString())
+                    user_data.imageUri = it.toString()
+                    uploadUserToFirebase(user_data)
 
                 }
             }
             .addOnFailureListener {
                 Log.d("RegisterActivity","Image Upload Failed: ${it}")
+                return@addOnFailureListener
             }
 
 
     }
 
-    private fun uploadUserToFirebase(imageUri:String){
-        Log.d("RegisterActivity","Function : uploadusertoFirebase : ${imageUri}")
+    private fun uploadUserToFirebase(user_data: User){
+        Log.d("RegisterActivity","Function : uploadusertoFirebase : ${user_data.imageUri}")
         val uid = FirebaseAuth.getInstance().uid.toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-
-        val user = User(uid, name_registration.text.toString(), email_registration.text.toString(), phone_registration.text.toString(), address_registration.text.toString(), birthdate_registration.text.toString(), gender!!, password_registration.text.toString(), imageUri)
-        ref.setValue(user)
+        user_data.uid = uid
+        val ref = FirebaseDatabase.getInstance().getReference("/users/${user_data.email_hash}")
+        ref.setValue(user_data)
             .addOnSuccessListener {
                 Log.d("RegisterActivity","User data Inserted to Firebase")
 
                 //Firbase Auth Object
                 val auth = FirebaseAuth.getInstance()
-                auth.createUserWithEmailAndPassword(email_registration.text.toString(), password_registration.text.toString())
+                auth.createUserWithEmailAndPassword(user_data.email, user_data.password)
                     .addOnCompleteListener {
                         if (!it.isSuccessful){
                             return@addOnCompleteListener
                         }
                         Log.d("RegisterActivity","User created for authetication : ${it}")
-
+                        if(mtoast != null) mtoast!!.cancel()
+                        mtoast = Toast.makeText(this,"Registration Succesful",Toast.LENGTH_SHORT)
+                        mtoast!!.show()
+                        Log.d("RegisterActivity","Starting Login Activity")
+                        val intent = Intent(this,LoginActivity::class.java)
+                        startActivity(intent)
                     }
                     .addOnFailureListener {
+                        //delete user and image
+                        val refS = FirebaseStorage.getInstance().getReference("/images/${user_data.email_hash}")
+                        refS.delete()
+                            .addOnSuccessListener {
+                                Log.d("RegisterActivity","Failed to create user authentication : Image deleted from Firebase Storage")
+                            }
+                            .addOnFailureListener {
+                                Log.d("RegisterActivity","Failed to create user authentication: Failed to delete image : ${it}")
+                                return@addOnFailureListener
+                            }
+
+                        val refD = FirebaseDatabase.getInstance().getReference("/users/${user_data.email_hash}")
+                        refD.removeValue()
+                            .addOnSuccessListener {
+                                Log.d("RegisterActivity","Failed to create user authentication : User deleted from Firebase Database")
+                            }
+                            .addOnFailureListener {
+                                Log.d("RegisterActivity","Failed to create user authentication: Failed to delete user : ${it}")
+                                return@addOnFailureListener
+                            }
+
                         if(mtoast != null) mtoast!!.cancel()
                         mtoast = Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT)
                         mtoast!!.show()
                         Log.d("RegisterActivity","User could not be created for authentication : ${it.message}")
                     }
 
-
-
-                if(mtoast != null) mtoast!!.cancel()
-                mtoast = Toast.makeText(this,"Registration Succesful",Toast.LENGTH_SHORT)
-                mtoast!!.show()
-                Log.d("RegisterActivity","Starting Login Activity")
-                val intent = Intent(this,LoginActivity::class.java)
-                startActivity(intent)
             }
             .addOnFailureListener {
+                //delete image
+                val ref = FirebaseStorage.getInstance().getReference("/images/${user_data.email_hash}")
+                ref.delete()
+                    .addOnSuccessListener {
+                        Log.d("RegisterActivity","Failed to insert user data into firebase : Image deleted from Firebase Storage")
+                    }
+                    .addOnFailureListener {
+                        Log.d("RegisterActivity","Failed to insert user data into firebase : ${it}")
+                        return@addOnFailureListener
+                    }
                 if(mtoast != null) mtoast!!.cancel()
                 mtoast = Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT)
                 mtoast!!.show()
@@ -280,6 +313,15 @@ class RegisterActivity : AppCompatActivity() {
         Log.d("RegisterActivity","Funtion : email validate")
         return Patterns.EMAIL_ADDRESS.toRegex().matches(email)
         }
+
+
+    private fun generatehash(stringToBeHashed:String): String {
+        val bytes = stringToBeHashed.toString().toByteArray()
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(bytes)
+        return digest.fold("", { str, it -> str + "%02x".format(it) })
+    }
+
 }
 
-class User(val uid:String, val name:String, val email:String, val phone:String, val address:String, val birthdate:String, val gender:String, val password:String, val imageUri: String)
+class User(val email_hash:String, var uid:String, val name:String, val email:String, val phone:String, val address:String, val birthdate:String, val gender:String, val password:String, var imageUri: String)
