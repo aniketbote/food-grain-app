@@ -1,5 +1,6 @@
 package com.example.farmfresh
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -39,8 +40,11 @@ class LoginActivity : AppCompatActivity(){
                 if(!it.isSuccessful){
                     return@addOnCompleteListener
                 }
+                val intent = Intent(this, IndexActivity::class.java)
+                startActivity(intent)
+
                 Toast.makeText(this,"Login Successful",Toast.LENGTH_SHORT).show()
-                Log.d("LoginActivity","Login Succesful : ${it}")
+                Log.d("LoginActivity","Login Successful : ${it}")
             }
             .addOnFailureListener {
                 Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT).show()
