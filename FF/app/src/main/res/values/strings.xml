@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Farm Fresh</string>
-    <string name="prompt">Select Gender</string>
+    <string name="open">Open Nav Bar</string>
+    <string name="close">Close Nav Bar</string>
     <string-array name="gender">
         <item></item>
         <item>Male</item>
@@ -10,4 +11,7 @@
     </string-array>
 
     <string name="api_key">AIzaSyC0XPX1U7dVU2A_rYgTVeyvbSaNtT8o7ps</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
