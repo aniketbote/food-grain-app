@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
-    android:fitsSystemWindows='true'>k
-<LinearLayout
-    android:layout_width ="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/white">
+    tools:context=".IndexActivity"
+    >
 
 
-    <include layout="@layout/activity_toolbar"/>
-</LinearLayout>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/activity_toolbar"/>
+
 
     <com.google.android.material.navigation.NavigationView
         app:headerLayout="@layout/header_nav"
@@ -24,7 +27,8 @@
         app:itemIconTint="@android:color/transparent"
         android:background="@android:color/white"
         app:menu="@menu/drawer_menu"
-        android:layout_gravity="start"/>
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"/>
 
 
 
