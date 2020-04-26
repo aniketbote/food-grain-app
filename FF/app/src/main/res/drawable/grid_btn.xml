@@ -5,8 +5,8 @@
     <!-- draw another block to cut-off the left and right bars -->
     <item android:bottom="0.5dp">
         <shape>
-            <corners android:radius="9sp"/>
-            <solid android:color="#DDFFFFFF" />
+            <corners android:radius="18sp"/>
+            <solid android:color="#00FFFFFF" />
         </shape>
     </item>
 

@@ -16,16 +16,15 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorAccent"
+    android:background="@android:color/transparent"
     android:id="@+id/toolbar"
     app:popupTheme="@style/AppTheme.PopupOverlay">
 
 
 </androidx.appcompat.widget.Toolbar>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/frame_layout"/>
+
 
     </com.google.android.material.appbar.AppBarLayout>
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
