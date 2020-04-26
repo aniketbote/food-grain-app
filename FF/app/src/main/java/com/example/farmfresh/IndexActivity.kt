@@ -1,8 +1,10 @@
 package com.example.farmfresh
 
+import android.content.Context
 import android.os.Bundle
-import android.view.Gravity
+import android.util.Log
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -10,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
+
 
 
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
@@ -25,6 +28,15 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_index)
+
+        val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
+        val name = token.getString("name","")
+        Log.d("IndexActivity","Name = ${name}")
+
+        // value inside name variable to be displayed
+        //Tried code
+//        val name_header:TextView = findViewById(R.id.name_header_nav)
+//        name_header.setText("${name}")
 
         setSupportActionBar(toolbar)
         val actionBar= supportActionBar
@@ -53,6 +65,9 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             .replace(R.id.frame_layout,homeFragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
+
+
+
 
 
         }
@@ -134,4 +149,5 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
     }
 }
+
 
