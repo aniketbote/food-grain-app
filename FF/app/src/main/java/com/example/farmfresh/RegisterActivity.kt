@@ -2,6 +2,7 @@ package com.example.farmfresh
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,24 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
+        val emailHash = token.getString("EMAILHASH","")
+        val userCreated = token.getString("user","")
+        if ( emailHash!= "" ){
+            Log.d("RegisterActivity","User Already Logged In :${emailHash}")
+            val intent = Intent(this, IndexActivity::class.java)
+            Log.d("RegisterActivity","User Logged In : Starting IndexActivity")
+            startActivity(intent)
+            finish()
+        }
+        if ( userCreated!= "" ){
+            Log.d("RegisterActivity","User Already created :${userCreated}")
+            val intent = Intent(this, LoginActivity::class.java)
+            Log.d("RegisterActivity","User Already Created : Starting LoginActivity")
+            startActivity(intent)
+            finish()
+        }
 
         val genderArray = resources.getStringArray(R.array.gender)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genderArray)
@@ -260,6 +279,7 @@ class RegisterActivity : AppCompatActivity() {
                         Log.d("RegisterActivity","Starting Login Activity")
                         val intent = Intent(this,LoginActivity::class.java)
                         startActivity(intent)
+                        finish()
                     }
                     .addOnFailureListener {
                         //delete user and image
