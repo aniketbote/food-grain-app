@@ -1,6 +1,7 @@
 package com.example.farmfresh
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -50,6 +51,8 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
         val imageView:CircleImageView = navView.findViewById(R.id.showPhoto_header_nav)
         Glide.with(this).load("${photoUrl}").into(imageView)
+
+
 
 
 
@@ -134,13 +137,22 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
             }
             R.id.logout -> {
-                logOutFragment = LogOutFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frame_layout,logOutFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
-
+                Log.d("IndexActivity","Pressed Log Out")
+                val token = getSharedPreferences("UserSharedPreferences",Context.MODE_PRIVATE)
+                val editor = token.edit()
+                editor.putString("EMAILHASH","")
+                editor.putString("email","")
+                editor.putString("phone","")
+                editor.putString("address","")
+                editor.putString("name","")
+                editor.putString("gender","")
+                editor.putString("imageUri","")
+                editor.putString("birthdate","")
+                editor.commit()
+                Log.d("IndexActivity","User Info Deleted from Shared preferences")
+                val intent = Intent(this,LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
             }
 
 
