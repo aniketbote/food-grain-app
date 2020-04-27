@@ -26,7 +26,6 @@ import kotlinx.android.synthetic.main.header_nav.*
 
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
 
-    lateinit var homeFragment: HomeFragment
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,15 +80,8 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         drawerToggle.syncState()
 
 
-        nav_activity_index.setNavigationItemSelectedListener(this)
-        homeFragment = HomeFragment()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.frame_layout,homeFragment)
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .commit()
 
-        }
+    }
 
     override fun onNavigationItemSelected(MenuItem: MenuItem): Boolean {
 
@@ -154,5 +146,4 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
     }
 }
-
 
