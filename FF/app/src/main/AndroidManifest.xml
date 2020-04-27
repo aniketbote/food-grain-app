@@ -20,6 +20,11 @@
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".AddAutoActivity"></activity>
         <activity android:name=".IndexActivity"></activity>
+        <activity android:name=".CurrentOrdersActivity"></activity>
+        <activity android:name=".PreviousOrdersActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".SupportActivity"></activity>
+
 
     </application>
 
