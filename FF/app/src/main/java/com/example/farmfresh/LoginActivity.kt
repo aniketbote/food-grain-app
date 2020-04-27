@@ -73,8 +73,6 @@ class LoginActivity : AppCompatActivity(){
                         val imageUri = p0.child("imageUri").value.toString()
                         val birthdate = p0.child("birthdate").value.toString()
 
-//                        val userInfo = userData(name, email, phone, address, birthdate, gender, imageUri)
-//                        Log.d("IndexActivity","userInfo Object= ${userInfo}")
 
                         val pref = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
                         val editor = pref.edit()
@@ -86,20 +84,14 @@ class LoginActivity : AppCompatActivity(){
                         editor.putString("gender",gender)
                         editor.putString("imageUri",imageUri)
                         editor.putString("birthdate",birthdate)
+                        editor.putString("user","created")
                         editor.commit()
                         Log.d("LoginActivity","User Info hash stored in Shared preferences")
 
                         val intent:Intent = Intent(this@LoginActivity, IndexActivity::class.java)
-//                        intent.putExtra("email",email)
-//                        intent.putExtra("phone",phone)
-//                        intent.putExtra("address",address)
-//                        intent.putExtra("name",name)
-//                        intent.putExtra("gender",gender)
-//                        intent.putExtra("imageUri",imageUri)
-//                        intent.putExtra("birthdate",birthdate)
-
                         Log.d("LoginActivity","Starting IndexActivity")
                         Toast.makeText(this@LoginActivity,"Login Successful",Toast.LENGTH_SHORT).show()
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                         finish()
                     }
@@ -119,6 +111,3 @@ class LoginActivity : AppCompatActivity(){
     }
 
 }
-
-
-//class userData(val name:String, val email:String, val phone:String, val address:String, val birthdate:String, val gender:String, val imageUri: String)
