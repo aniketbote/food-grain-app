@@ -48,7 +48,7 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/explore_btn"
+                android:id="@+id/explore_index"
                 android:layout_width="131dp"
                 android:layout_height="205dp"
                 android:background="@drawable/grid_btn"
@@ -63,7 +63,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/veg_btn"
+                    android:id="@+id/veg_index"
                     android:layout_width="120sp"
                     android:layout_height="100sp"
                     android:background="@drawable/grid_btn"
@@ -72,7 +72,7 @@
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/exotic_btn"
+                    android:id="@+id/exotic_index"
                     android:layout_width="120sp"
                     android:layout_height="99dp"
                     android:layout_marginTop="5sp"
@@ -84,14 +84,14 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/pulses_btn"
+                android:id="@+id/linearlayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8sp"
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/fruits_btn"
+                    android:id="@+id/pulses_index"
                     android:layout_width="120sp"
                     android:layout_height="100sp"
                     android:background="@drawable/grid_btn"
@@ -101,6 +101,7 @@
 
                 <Button
                     android:layout_width="120sp"
+                    android:id="@+id/fruits_index"
                     android:layout_height="99dp"
                     android:layout_marginTop="5sp"
                     android:background="@drawable/grid_btn"

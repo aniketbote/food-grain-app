@@ -24,7 +24,6 @@ class RegisterActivity : AppCompatActivity() {
     private var selectedPhotoUri: Uri ?= null
     private var gender: String = ""
     private var mtoast: Toast ?= null
-    private var userFlag: Boolean = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
