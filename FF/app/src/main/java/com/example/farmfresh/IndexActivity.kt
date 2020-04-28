@@ -73,6 +73,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         {
 
         }
+
         drawerToggle.isDrawerIndicatorEnabled = true
         drawer_layout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
