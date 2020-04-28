@@ -80,7 +80,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         )
         {
 
-
         }
         drawerToggle.isDrawerIndicatorEnabled = true
         drawer_layout.addDrawerListener(drawerToggle)
@@ -97,8 +96,8 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         {
 
             R.id.home->{
+                val intent = intent
                 Log.d("IndexActivity","Pressed Home Button")
-                val intent = Intent(this, IndexActivity::class.java)
                 startActivity(intent)
             }
             R.id.current_order -> {
