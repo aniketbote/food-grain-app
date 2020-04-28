@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".RegisterActivity"
+        <activity android:name=".LoadingActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +24,7 @@
         <activity android:name=".PreviousOrdersActivity"></activity>
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".SupportActivity"></activity>
+        <activity android:name=".RegisterActivity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
