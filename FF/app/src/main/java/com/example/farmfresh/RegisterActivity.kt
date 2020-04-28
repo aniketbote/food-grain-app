@@ -24,37 +24,17 @@ class RegisterActivity : AppCompatActivity() {
     private var selectedPhotoUri: Uri ?= null
     private var gender: String = ""
     private var mtoast: Toast ?= null
-    private var fromLogin: Boolean = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        if (intent.hasExtra("fromLogin")){
-            fromLogin = intent.getBooleanExtra("fromLogin", true)
-        }
-        val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
-        val emailHash = token.getString("EMAILHASH","")
-        val userCreated = token.getString("user","")
-        if ( emailHash!= "" ){
-            Log.d("RegisterActivity","User Already Logged In :${emailHash}")
-            val loginIntent = Intent(this, LoginActivity::class.java)
-            Log.d("RegisterActivity","User Logged In : Starting IndexActivity")
-            startActivity(loginIntent)
-            finish()
-        }
-        if ( userCreated!= "" && this.fromLogin){
-            Log.d("RegisterActivity","User Already created :${userCreated}")
-            val loginIntent = Intent(this, LoginActivity::class.java)
-            Log.d("RegisterActivity","User Already Created : Starting LoginActivity")
-            startActivity(loginIntent)
-            finish()
-        }
 
         val genderArray = resources.getStringArray(R.array.gender)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genderArray)
         gender_registration.adapter = adapter
+
 
         gender_registration.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener{
