@@ -3,7 +3,7 @@
     <string name="open">Open Nav Bar</string>
     <string name="close">Close Nav Bar</string>
     <string-array name="gender">
-        <item>Select Gender</item>
+        <item></item>
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
