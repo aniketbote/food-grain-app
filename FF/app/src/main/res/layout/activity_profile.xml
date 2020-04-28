@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/profile_user">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="90sp"
         android:id="@+id/userphoto_profile"
+        android:layout_width="90sp"
         android:layout_height="90sp"
         app:civ_border_width="3sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,83 +23,84 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
             android:layout_marginTop="360sp"
             android:text="Hi!"
-            android:textStyle="bold"
             android:textSize="40sp"
-            android:layout_marginLeft="20sp"/>
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/username_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="26sp"
-            android:layout_marginLeft="20sp"/>
+            android:layout_marginLeft="20sp"
+            android:textSize="26sp" />
 
         <TextView
             android:id="@+id/useremail_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_marginLeft="20sp"/>
+            android:layout_marginLeft="20sp"
+            android:textSize="20sp" />
 
         <LinearLayout
-            android:layout_marginTop="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
-                android:text="Phone :"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:layout_marginLeft="20sp"/>
+                android:layout_marginLeft="20sp"
+                android:text="Phone :"
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/userphone_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:layout_marginLeft="20sp"/>
-
+                android:layout_marginLeft="20sp"
+                android:textSize="22sp" />
 
 
         </LinearLayout>
-<LinearLayout
-    android:layout_marginTop="5sp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="Address:"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:layout_marginLeft="20sp"/>
 
-        <TextView
-            android:id="@+id/useraddress_profile"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:layout_marginLeft="20sp"/>
+            android:layout_marginTop="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:text="Address:"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/useraddress_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:textSize="22sp" />
 
 
-
-</LinearLayout>
+        </LinearLayout>
 
         <Button
             android:layout_width="150sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="40sp"
-            android:text="Edit Profile"
+            android:background="@drawable/btn_rounded"
             android:fontFamily="@font/prata"
-            android:background="@drawable/btn_rounded"/>
-
-
+            android:text="Edit Profile" />
 
 
     </LinearLayout>
