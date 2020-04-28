@@ -3,6 +3,7 @@ package com.example.farmfresh
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -48,6 +49,12 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         val imageView:CircleImageView = navView.findViewById(R.id.showPhoto_header_nav)
         Glide.with(this).load("${photoUrl}").into(imageView)
         Log.d("IndexActivity","Image Loaded On Nav Bar")
+
+        val featuredImageListObj = intent.getSerializableExtra("featuredListObj") as featureLabels
+        val featureImageList = featuredImageListObj.featureList
+        Log.d("IndexActivity","${featureImageList[0]}")
+
+
 
         tv.setOnClickListener {
             Log.d("IndexActivity","Pressed Profile Button : ${name}")
