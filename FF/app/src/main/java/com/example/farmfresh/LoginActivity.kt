@@ -3,11 +3,7 @@ package com.example.farmfresh
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -17,7 +13,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.activity_login.*
 import java.io.Serializable
 import java.security.MessageDigest
@@ -62,10 +57,10 @@ class LoginActivity : AppCompatActivity(){
                 featuredListObj = featureLabels(featureList)
                 if ( emailHash!= "" ){
                     Log.d("LoginActivity","User Already Logged In :${emailHash}")
-                    val intent = Intent(this@LoginActivity, IndexActivity::class.java)
-                    intent.putExtra("featuredListObj", featuredListObj)
+                    val indexIntent = Intent(this@LoginActivity, IndexActivity::class.java)
+                    indexIntent.putExtra("featuredListObj", featuredListObj)
                     Log.d("LoginActivity","User Logged In : Starting IndexActivity")
-                    startActivity(intent)
+                    startActivity(indexIntent)
                     dialog.dismiss()
                     finish()
                 }
@@ -74,8 +69,9 @@ class LoginActivity : AppCompatActivity(){
         })
         registration_login.setOnClickListener {
             Log.d("LoginActivity","Clicked Register Button")
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
+            val registerIntent = Intent(this, RegisterActivity::class.java)
+            registerIntent.putExtra("fromLogin", false)
+            startActivity(registerIntent)
             finish()
         }
         login_login.setOnClickListener {
@@ -99,7 +95,7 @@ class LoginActivity : AppCompatActivity(){
             return
         }
 
-        // Firebase Sign in
+        //Dialog - Progress Bar
         val builder = AlertDialog.Builder(this)
         val dialogView = layoutInflater.inflate(R.layout.progress_bar,null)
         builder.setView(dialogView)
@@ -108,6 +104,8 @@ class LoginActivity : AppCompatActivity(){
         message.text = "Logging In"
         val dialog = builder.create()
         dialog.show()
+
+        // Firebase Sign in
         val auth = FirebaseAuth.getInstance()
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
@@ -147,12 +145,12 @@ class LoginActivity : AppCompatActivity(){
                         editor.commit()
                         Log.d("LoginActivity","User Info hash stored in Shared preferences")
 
-                        val intent:Intent = Intent(this@LoginActivity, IndexActivity::class.java)
-                        intent.putExtra("featuredListObj",featuredListObj)
+                        val indexIntent:Intent = Intent(this@LoginActivity, IndexActivity::class.java)
+                        indexIntent.putExtra("featuredListObj",featuredListObj)
                         Log.d("LoginActivity","Starting IndexActivity")
                         Toast.makeText(this@LoginActivity,"Login Successful",Toast.LENGTH_SHORT).show()
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
+                        indexIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(indexIntent)
                         dialog.dismiss()
                         finish()
                     }

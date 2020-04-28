@@ -24,29 +24,33 @@ class RegisterActivity : AppCompatActivity() {
     private var selectedPhotoUri: Uri ?= null
     private var gender: String = ""
     private var mtoast: Toast ?= null
+    private var fromLogin: Boolean = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        if (intent.hasExtra("fromLogin")){
+            fromLogin = intent.getBooleanExtra("fromLogin", true)
+        }
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         val emailHash = token.getString("EMAILHASH","")
         val userCreated = token.getString("user","")
         if ( emailHash!= "" ){
             Log.d("RegisterActivity","User Already Logged In :${emailHash}")
-            val intent = Intent(this, LoginActivity::class.java)
+            val loginIntent = Intent(this, LoginActivity::class.java)
             Log.d("RegisterActivity","User Logged In : Starting IndexActivity")
-            startActivity(intent)
+            startActivity(loginIntent)
             finish()
         }
-       // if ( userCreated!= "" ){
-           // Log.d("RegisterActivity","User Already created :${userCreated}")
-          //  val intent = Intent(this, LoginActivity::class.java)
-          //  Log.d("RegisterActivity","User Already Created : Starting LoginActivity")
-         //   startActivity(intent)
-          //  finish()
-      //  }
+        if ( userCreated!= "" && this.fromLogin){
+            Log.d("RegisterActivity","User Already created :${userCreated}")
+            val loginIntent = Intent(this, LoginActivity::class.java)
+            Log.d("RegisterActivity","User Already Created : Starting LoginActivity")
+            startActivity(loginIntent)
+            finish()
+        }
 
         val genderArray = resources.getStringArray(R.array.gender)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genderArray)
@@ -77,20 +81,20 @@ class RegisterActivity : AppCompatActivity() {
 
         login_registration.setOnClickListener {
             Log.d( "RegisterActivity","Clicked Login Button")
-            val intent = Intent(this,LoginActivity::class.java)
-            startActivity(intent)
+            val loginIntent = Intent(this,LoginActivity::class.java)
+            startActivity(loginIntent)
         }
 
         uploadphoto_registration.setOnClickListener {
             Log.d("RegisterActivity","Clicked Upload Photo")
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(intent,0)
+            val actionIntent = Intent(Intent.ACTION_PICK)
+            actionIntent.type = "image/*"
+            startActivityForResult(actionIntent,0)
         }
         address_registration.setOnClickListener{
             Log.d("Registration","Clicked address")
-            val intent = Intent(this,AddAutoActivity::class.java)
-            startActivityForResult(intent, 12)
+            val addressIntent = Intent(this,AddAutoActivity::class.java)
+            startActivityForResult(addressIntent, 12)
         }
 
         birthdate_registration.setOnClickListener {
@@ -298,8 +302,8 @@ class RegisterActivity : AppCompatActivity() {
                         mtoast = Toast.makeText(this,"Registration Succesful",Toast.LENGTH_SHORT)
                         mtoast!!.show()
                         Log.d("RegisterActivity","Starting Login Activity")
-                        val intent = Intent(this,LoginActivity::class.java)
-                        startActivity(intent)
+                        val loginIntent = Intent(this,LoginActivity::class.java)
+                        startActivity(loginIntent)
                         dialog.dismiss()
                         finish()
                     }
