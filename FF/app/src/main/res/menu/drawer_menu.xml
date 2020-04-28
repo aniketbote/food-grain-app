@@ -19,10 +19,6 @@
         android:title="Support and FAQs"
         android:icon="@drawable/ic_question"
        />
-    <item android:id="@+id/myprofile"
-        android:title="My Profile"
-        android:icon="@drawable/ic_human_resources"
-       />
     <item android:id="@+id/logout"
         android:title="Log Out"
         android:icon="@drawable/ic_exit"

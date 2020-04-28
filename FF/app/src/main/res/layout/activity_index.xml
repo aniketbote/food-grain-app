@@ -14,26 +14,44 @@
         android:layout_height="match_parent"
         layout="@layout/activity_toolbar"/>
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="55sp"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.viewpager.widget.ViewPager
+        android:foregroundGravity="center"
+        android:id="@+id/viewPager"
+        android:overScrollMode="never"
+        android:clipToPadding="false"
+        android:layout_marginTop="20sp"
         android:layout_width="match_parent"
-        android:layout_marginTop="55sp"
-        android:background="@drawable/gridindex"
+        android:layout_height="200sp">
+
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:background="@drawable/home_page_grid"
         android:layout_height="match_parent"
-        tools:context=".HomeFragment">
+        tools:context=".HomeFragment"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="165sp"
-            android:layout_marginTop="230sp"
-            android:layout_marginLeft="15sp"
-            android:orientation="horizontal">
+            android:layout_marginTop="240sp"
+            android:gravity="start"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
 
             <Button
-                android:layout_width="134dp"
-                android:layout_height="150dp"
+                android:id="@+id/explore_btn"
+                android:layout_width="131dp"
+                android:layout_height="205dp"
                 android:background="@drawable/grid_btn"
-                android:text="Fresh Fruits"
                 android:textAlignment="center"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -45,53 +63,62 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:layout_width="102dp"
-                    android:layout_height="81dp"
+                    android:id="@+id/veg_btn"
+                    android:layout_width="120sp"
+                    android:layout_height="100sp"
                     android:background="@drawable/grid_btn"
-                    android:text="Vegetables"
                     android:textAlignment="center"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <Button
-                    android:layout_width="99dp"
-                    android:layout_height="69dp"
+                    android:id="@+id/exotic_btn"
+                    android:layout_width="120sp"
+                    android:layout_height="99dp"
                     android:layout_marginTop="5sp"
-                    android:paddingBottom="17sp"
                     android:background="@drawable/grid_btn"
-                    android:text="Daily Needs"
+                    android:paddingBottom="17sp"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
-            <Button
-                android:layout_width="123dp"
-                android:layout_height="154dp"
-                android:layout_marginLeft="10sp"
-                android:background="@drawable/grid_btn"
-                android:text="Vegetables"
-                android:textAlignment="center"
-                android:textSize="12sp"
-                android:textStyle="bold"/>
+            <LinearLayout
+                android:id="@+id/pulses_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8sp"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/fruits_btn"
+                    android:layout_width="120sp"
+                    android:layout_height="100sp"
+                    android:background="@drawable/grid_btn"
+                    android:textAlignment="center"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:layout_width="120sp"
+                    android:layout_height="99dp"
+                    android:layout_marginTop="5sp"
+                    android:background="@drawable/grid_btn"
+                    android:paddingBottom="17sp"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
 
-    </LinearLayout>
-<LinearLayout
-    android:layout_marginTop="55sp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
-   <FrameLayout
-       android:id="@+id/frame_layout"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"/>
+</RelativeLayout>
 
 
-</LinearLayout>
+
+
 
 
     <com.google.android.material.navigation.NavigationView

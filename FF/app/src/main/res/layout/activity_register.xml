@@ -16,7 +16,7 @@
         android:background="#00FFFFFF"
         android:text="Register Here"
         android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:fontFamily="@font/bad_script"
         android:textColor="@android:color/black"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,6 +74,7 @@
                 android:drawableLeft="@drawable/user"
                 android:drawablePadding="10sp"
                 android:ems="10"
+                android:fontFamily="@font/alegreya_sans_medium"
                 android:hint="Name"
                 android:inputType="textPersonName"
                 android:paddingLeft="10sp"
@@ -90,6 +91,7 @@
             <EditText
                 android:id="@+id/email_registration"
                 android:layout_width="350sp"
+                android:fontFamily="@font/alegreya_sans_medium"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12sp"
                 android:background="@drawable/edit_text_style"
@@ -118,6 +120,7 @@
             android:layout_width="350sp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12sp"
+            android:fontFamily="@font/alegreya_sans_medium"
             android:background="@drawable/edit_text_style"
             android:drawableLeft="@drawable/phone"
             android:drawablePadding="10sp"
@@ -138,6 +141,7 @@
         <EditText
             android:id="@+id/address_registration"
             android:layout_width="354sp"
+            android:fontFamily="@font/alegreya_sans_medium"
             android:layout_height="wrap_content"
             android:layout_marginTop="12sp"
             android:background="@drawable/edit_text_style"
@@ -164,6 +168,7 @@
             <EditText
                 android:id="@+id/birthdate_registration"
                 android:layout_width="170sp"
+                android:fontFamily="@font/alegreya_sans_medium"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30sp"
                 android:layout_marginTop="12sp"
@@ -186,12 +191,12 @@
             <Spinner
                 android:id="@+id/gender_registration"
                 android:layout_width="140sp"
-                android:layout_height="wrap_content"
+                android:layout_height="25sp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_marginLeft="32sp"
                 android:entries="@array/gender"
-                android:layout_marginTop="12sp"
+                android:layout_marginTop="8sp"
                 android:spinnerMode="dropdown"
                 android:background="@drawable/edit_text_style" />
 
@@ -202,6 +207,7 @@
             android:layout_width="350sp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12sp"
+            android:fontFamily="@font/alegreya_sans_medium"
             android:background="@drawable/edit_text_style"
             android:drawableLeft="@drawable/lock"
             android:drawablePadding="10sp"
@@ -221,6 +227,7 @@
         <EditText
             android:id="@+id/confirmpassword_registration"
             android:layout_width="350sp"
+            android:fontFamily="@font/alegreya_sans_medium"
             android:layout_height="wrap_content"
             android:layout_marginTop="12sp"
             android:background="@drawable/edit_text_style"
@@ -245,6 +252,7 @@
 
             android:id="@+id/register_registration"
             android:layout_width="120dp"
+            android:fontFamily="@font/bad_script"
             android:layout_height="wrap_content"
             android:layout_marginTop="12sp"
             android:background="@drawable/btn_rounded"
