@@ -72,6 +72,11 @@ class LoginActivity : AppCompatActivity(){
             }
 
         })
+        registration_login.setOnClickListener {
+            Log.d("LoginActivity","Clicked Register Button")
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
         login_login.setOnClickListener {
             Log.d("LoginActivity","Login Button Pressed")
             performLogin()

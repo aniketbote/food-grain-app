@@ -36,18 +36,18 @@ class RegisterActivity : AppCompatActivity() {
         val userCreated = token.getString("user","")
         if ( emailHash!= "" ){
             Log.d("RegisterActivity","User Already Logged In :${emailHash}")
-            val intent = Intent(this, IndexActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             Log.d("RegisterActivity","User Logged In : Starting IndexActivity")
             startActivity(intent)
             finish()
         }
-        if ( userCreated!= "" ){
-            Log.d("RegisterActivity","User Already created :${userCreated}")
-            val intent = Intent(this, LoginActivity::class.java)
-            Log.d("RegisterActivity","User Already Created : Starting LoginActivity")
-            startActivity(intent)
-            finish()
-        }
+       // if ( userCreated!= "" ){
+           // Log.d("RegisterActivity","User Already created :${userCreated}")
+          //  val intent = Intent(this, LoginActivity::class.java)
+          //  Log.d("RegisterActivity","User Already Created : Starting LoginActivity")
+         //   startActivity(intent)
+          //  finish()
+      //  }
 
         val genderArray = resources.getStringArray(R.array.gender)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genderArray)
@@ -252,7 +252,7 @@ class RegisterActivity : AppCompatActivity() {
         builder.setView(dialogView)
         builder.setCancelable(false)
         val message = dialogView.findViewById<TextView>(R.id.text_progressBar)
-        message.text = "Logging In"
+        message.text = "Creating User"
         val dialog = builder.create()
         dialog.show()
 
