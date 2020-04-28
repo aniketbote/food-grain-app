@@ -12,6 +12,7 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -21,7 +22,7 @@ import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
     private var selectedPhotoUri: Uri ?= null
-    private var gender: String ?= null
+    private var gender: String = ""
     private var mtoast: Toast ?= null
     private var userFlag: Boolean = true
 
@@ -56,7 +57,7 @@ class RegisterActivity : AppCompatActivity() {
             AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 //To change body of created functions use File | Settings | File Templates.
-                gender = null
+                gender = ""
 
             }
 
@@ -145,7 +146,8 @@ class RegisterActivity : AppCompatActivity() {
 
 
 
-        //Sanity Checks : Empty
+
+//        //Sanity Checks : Empty
         if (name.isEmpty()){
             if(mtoast != null) mtoast!!.cancel()
             mtoast = Toast.makeText(this,"Name field cannot be empty",Toast.LENGTH_SHORT)
@@ -177,13 +179,19 @@ class RegisterActivity : AppCompatActivity() {
             mtoast!!.show()
             return
         }
-        if (gender!!.isEmpty()){
+        if (gender == ""){
             if(mtoast != null) mtoast!!.cancel()
             mtoast = Toast.makeText(this,"Please select gender",Toast.LENGTH_SHORT)
             mtoast!!.show()
             return
         }
         if (password.isEmpty()){
+            if(mtoast != null) mtoast!!.cancel()
+            mtoast = Toast.makeText(this,"Password field cannot be empty",Toast.LENGTH_SHORT)
+            mtoast!!.show()
+            return
+        }
+        if (confirm_password.isEmpty()){
             if(mtoast != null) mtoast!!.cancel()
             mtoast = Toast.makeText(this,"Password field cannot be empty",Toast.LENGTH_SHORT)
             mtoast!!.show()
@@ -238,17 +246,31 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this,"Please insert photo",Toast.LENGTH_SHORT).show()
             return
         }
+
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.progress_bar,null)
+        builder.setView(dialogView)
+        builder.setCancelable(false)
+        val message = dialogView.findViewById<TextView>(R.id.text_progressBar)
+        message.text = "Logging In"
+        val dialog = builder.create()
+        dialog.show()
+
         val ref = FirebaseStorage.getInstance().getReference("/images/${user_data.email_hash}")
         ref.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
                 ref.downloadUrl.addOnSuccessListener {
                     Log.d("RegisterActivity","Image Uploaded Successfully: ${it.toString()}")
                     user_data.imageUri = it.toString()
-                    uploadUserToFirebase(user_data)
+                    uploadUserToFirebase(user_data, dialog)
 
                 }
             }
             .addOnFailureListener {
+                dialog.dismiss()
+                if(mtoast != null) mtoast!!.cancel()
+                mtoast = Toast.makeText(this,"Registration Failed : ${it}",Toast.LENGTH_SHORT)
+                mtoast!!.show()
                 Log.d("RegisterActivity","Image Upload Failed: ${it}")
                 return@addOnFailureListener
             }
@@ -256,7 +278,7 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun uploadUserToFirebase(user_data: User){
+    private fun uploadUserToFirebase(user_data: User, dialog: AlertDialog){
         Log.d("RegisterActivity","Function : uploadusertoFirebase : ${user_data.imageUri}")
         val uid = FirebaseAuth.getInstance().uid.toString()
         user_data.uid = uid
@@ -279,6 +301,7 @@ class RegisterActivity : AppCompatActivity() {
                         Log.d("RegisterActivity","Starting Login Activity")
                         val intent = Intent(this,LoginActivity::class.java)
                         startActivity(intent)
+                        dialog.dismiss()
                         finish()
                     }
                     .addOnFailureListener {
@@ -302,7 +325,7 @@ class RegisterActivity : AppCompatActivity() {
                                 Log.d("RegisterActivity","Failed to create user authentication: Failed to delete user : ${it}")
                                 return@addOnFailureListener
                             }
-
+                        dialog.dismiss()
                         if(mtoast != null) mtoast!!.cancel()
                         mtoast = Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT)
                         mtoast!!.show()
@@ -321,6 +344,7 @@ class RegisterActivity : AppCompatActivity() {
                         Log.d("RegisterActivity","Failed to insert user data into firebase : ${it}")
                         return@addOnFailureListener
                     }
+                dialog.dismiss()
                 if(mtoast != null) mtoast!!.cancel()
                 mtoast = Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT)
                 mtoast!!.show()
@@ -332,7 +356,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun EmailValidate(email: String): Boolean {
         Log.d("RegisterActivity","Funtion : email validate")
         return Patterns.EMAIL_ADDRESS.toRegex().matches(email)
-        }
+    }
 
 
     private fun generatehash(stringToBeHashed:String): String {
