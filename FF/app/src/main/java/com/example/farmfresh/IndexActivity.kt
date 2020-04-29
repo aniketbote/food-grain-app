@@ -48,6 +48,17 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
 
 
+
+        //Caruosel
+
+
+
+
+
+
+
+
+
         tv.setOnClickListener {
             Log.d("IndexActivity","Pressed Profile Button : ${name}")
             val profileIntent = Intent(this, ProfileActivity::class.java)
