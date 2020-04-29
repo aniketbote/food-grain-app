@@ -266,8 +266,9 @@
         <Button
             android:id="@+id/login_registration"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1sp"
+            android:layout_height="60sp"
+            android:layout_marginBottom="10sp"
+            android:layout_marginTop="5sp"
             android:text="Already Registered ? Login here."
             android:textColor="@android:color/black"
             android:textColorHint="#FF9800"

@@ -20,18 +20,6 @@
     android:layout_marginTop="55sp"
     android:orientation="vertical">
 
-    <androidx.viewpager.widget.ViewPager
-        android:foregroundGravity="center"
-        android:id="@+id/viewPager"
-        android:overScrollMode="never"
-        android:clipToPadding="false"
-        android:layout_marginTop="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="200sp">
-
-
-    </androidx.viewpager.widget.ViewPager>
-
     <ImageView
         android:layout_width="match_parent"
         android:background="@drawable/home_page_grid"

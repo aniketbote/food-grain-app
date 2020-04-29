@@ -22,7 +22,7 @@ class LoadingActivity : AppCompatActivity(){
         val emailHash = token.getString("EMAILHASH","")
 
         if(emailHash == ""){
-            Log.d("LoadingActivity","User Logged In : Starting IndexActivity")
+            Log.d("LoadingActivity","Starting LoginActivity")
             val loginIntent = Intent(this,LoginActivity::class.java)
             startActivity(loginIntent)
             finish()

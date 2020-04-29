@@ -93,15 +93,6 @@
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="150sp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="40sp"
-            android:background="@drawable/btn_rounded"
-            android:fontFamily="@font/prata"
-            android:text="Edit Profile" />
-
 
     </LinearLayout>
 

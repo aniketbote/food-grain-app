@@ -1,9 +1,11 @@
 package com.example.farmfresh
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +32,7 @@ class ProfileActivity : AppCompatActivity(){
         val imageView: CircleImageView = constraintLayout.findViewById(R.id.userphoto_profile)
 
         Glide.with(this).load("${imageUri}").into(imageView)
+        Log.d("IndexActivity","Image Loaded On Nav Bar")
 
         val useraddress: TextView = constraintLayout.findViewById(R.id.useraddress_profile)
         useraddress.text = address
@@ -44,7 +47,5 @@ class ProfileActivity : AppCompatActivity(){
         userphone.text = phone
 
 
-
-        Log.d("IndexActivity","Image Loaded On Nav Bar")
     }
 }
