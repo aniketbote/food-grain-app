@@ -33,6 +33,17 @@
 
     </style>
 
+    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
+        <item name="fontFamily">@font/alegreya_sans_medium</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="fontFamily">@font/alegreya_sans_medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#EAE4E4</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="@android:style/Widget.Holo.Light"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 

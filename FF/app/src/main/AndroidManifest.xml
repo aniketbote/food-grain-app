@@ -24,7 +24,7 @@
         <activity android:name=".PreviousOrdersActivity"></activity>
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".SupportActivity"></activity>
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" android:theme="@android:style/Theme.Holo"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
