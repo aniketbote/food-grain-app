@@ -25,9 +25,7 @@ class LoginActivity : AppCompatActivity(){
         registration_login.setOnClickListener {
             Log.d("LoginActivity","Clicked Register Button")
             val registerIntent = Intent(this, RegisterActivity::class.java)
-            registerIntent.putExtra("fromLogin", false)
             startActivity(registerIntent)
-            finish()
         }
         login_login.setOnClickListener {
             Log.d("LoginActivity","Login Button Pressed")
