@@ -1,3 +1,7 @@
+#directories
+FF_env/
+Images/
+
 # Built application files
 *.apk
 *.aar
