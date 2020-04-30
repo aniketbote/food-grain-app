@@ -42,20 +42,11 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         Glide.with(this).load("${photoUrl}").into(imageView)
         Log.d("IndexActivity","Image Loaded On Nav Bar")
 
-        val featuredImageListObj = intent.getSerializableExtra("featuredListObj") as featureLabels
-        val featureImageList = featuredImageListObj.featureList
+        val allDataObj = intent.getSerializableExtra("dataObj") as initData
+        val featureImageList = allDataObj.featureList
+        val exoticVegetable = allDataObj.finalHash.getValue("Exotic_Vegetables")[0].getValue("Name")
         Log.d("IndexActivity","${featureImageList[0]}")
-
-
-
-
-        //Caruosel
-
-
-
-
-
-
+        Log.d("IndexActivity","${exoticVegetable}")
 
 
 
@@ -64,9 +55,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             val profileIntent = Intent(this, ProfileActivity::class.java)
             startActivity(profileIntent)
         }
-
-
-
 
 
 
@@ -100,6 +88,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         {
             R.id.home->{
                 Log.d("IndexActivity","Pressed Home Button")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             }
             R.id.current_order -> {
