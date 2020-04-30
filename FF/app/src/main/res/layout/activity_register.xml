@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:background="@drawable/regback"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/regback">
+    android:layout_height="match_parent">
     
 
     <TextView
         android:id="@+id/textView"
-        android:layout_marginTop="19sp"
+        android:layout_marginTop="15sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#00FFFFFF"
@@ -56,8 +56,8 @@
 
         android:id="@+id/LinearRegistration"
         android:layout_width="412dp"
-        android:layout_height="538dp"
-        android:layout_marginTop="186sp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="180sp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
