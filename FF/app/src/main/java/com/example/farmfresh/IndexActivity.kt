@@ -4,14 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
+import com.synnapps.carouselview.CarouselView
+import com.synnapps.carouselview.ImageListener
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
@@ -19,11 +23,15 @@ import kotlinx.android.synthetic.main.activity_toolbar.*
 
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
 
-
+    var sampleImages = arrayOf(R.drawable.indexdelivery,R.drawable.indexdelivery)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_index)
+
+       val carouselview:CarouselView = findViewById(R.id.carousel_index)
+        carouselview.setPageCount(sampleImages.size)
+        carouselview.setImageListener(imageListener)
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         val name = token.getString("name","")
@@ -34,6 +42,10 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
         val nv:NavigationView = findViewById(R.id.nav_activity_index)
         val navView:View = nv.getHeaderView(0)
+
+        nv.itemIconTintList = null
+
+
         val tv:TextView = navView.findViewById(R.id.name_header_nav)
         tv.setText("$name")
         Log.d("IndexActivity","Name Set on Nav Bar")
@@ -47,7 +59,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         val exoticVegetable = allDataObj.finalHash.getValue("Exotic_Vegetables")[0].getValue("Name")
         Log.d("IndexActivity","${featureImageList[0]}")
         Log.d("IndexActivity","${exoticVegetable}")
-
 
 
         tv.setOnClickListener {
@@ -80,9 +91,23 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
         nav_activity_index.setNavigationItemSelectedListener(this)
 
+
+
     }
 
+    var imageListener: ImageListener = object : ImageListener
+    {
+        override fun setImageForPosition(position: Int, imageView: ImageView?) {
+            imageView?.setImageResource(sampleImages[position])
+        }
+    }
+
+
+
+
     override fun onNavigationItemSelected(MenuItem: MenuItem): Boolean {
+
+
 
         when (MenuItem.itemId)
         {
@@ -142,4 +167,5 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
     }
 }
+
 
