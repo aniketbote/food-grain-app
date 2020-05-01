@@ -183,7 +183,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
         //Sanity Checks : Email
-        if(!EmailValidate(email)){
+        if(!HelperUtils.EmailValidate(email)){
             if(mtoast != null) mtoast!!.cancel()
             mtoast = Toast.makeText(this,"Enter a valid Email",Toast.LENGTH_SHORT)
             mtoast!!.show()
@@ -215,7 +215,7 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        val emailHash = generatehash(email)
+        val emailHash = HelperUtils.generatehash(email)
         var userInfoObject = User(emailHash, "", name, email, phone, address, birthdate,gender!!, password,"")
 
         uploadImageToFirebase(userInfoObject)
@@ -333,20 +333,6 @@ class RegisterActivity : AppCompatActivity() {
                 mtoast!!.show()
                 Log.d("RegisterActivity","User data could not be inserted into firebase : ${it.message}")
             }
-    }
-
-
-    private fun EmailValidate(email: String): Boolean {
-        Log.d("RegisterActivity","Funtion : email validate")
-        return Patterns.EMAIL_ADDRESS.toRegex().matches(email)
-    }
-
-
-    private fun generatehash(stringToBeHashed:String): String {
-        val bytes = stringToBeHashed.toString().toByteArray()
-        val md = MessageDigest.getInstance("SHA-256")
-        val digest = md.digest(bytes)
-        return digest.fold("", { str, it -> str + "%02x".format(it) })
     }
 
 }

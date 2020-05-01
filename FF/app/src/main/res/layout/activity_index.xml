@@ -128,7 +128,7 @@
                     app:cardCornerRadius="15sp">
 
                     <ImageView
-                        android:id="@+id/exoticveg_index"
+                        android:id="@+id/exoticfruits_index"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -152,7 +152,7 @@
                     app:cardCornerRadius="15sp">
 
                     <ImageView
-                        android:id="@+id/exoticfruits_index"
+                        android:id="@+id/exoticveg_index"
                         android:layout_width="match_parent"
                         android:layout_height="87sp"
                         android:scaleType="centerCrop"

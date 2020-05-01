@@ -14,6 +14,11 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
 import de.hdodenhof.circleimageview.CircleImageView
@@ -52,8 +57,10 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         val allDataObj = intent.getSerializableExtra("dataObj") as InitData
         featureImageList = allDataObj.featureList
         val exoticVegetable = allDataObj.finalList[0].getValue("Name")
+        val count = allDataObj.totalHashMap.getValue("Exotic_Vegetables")
         Log.d("IndexActivity","${featureImageList[0]}")
         Log.d("IndexActivity","${exoticVegetable}")
+        Log.d("IndexActivity","${count}")
 
 
         tv.setOnClickListener {
@@ -94,6 +101,123 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         carouselview.setImageClickListener {
             Log.d("IndexActivity","Image: ${it} Clicked")
         }
+
+        fruit_index.setOnClickListener {
+            Log.d("IndexActivity", "Clicked Fruits")
+            val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
+            Ref
+                .orderByKey()
+                .limitToFirst(5)
+                .addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(p0: DatabaseError) {
+                        Log.d("IndexActivity", "Error Fetching Fruits Values")
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        val itemList = HelperUtils.getList(p0)
+                        Log.d("IndexActivity","${itemList}")
+                        val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Fruits"))
+                        val fruitIntent = Intent(this@IndexActivity, FruitActivity::class.java)
+                        fruitIntent.putExtra("subDataObj",subDataObj)
+                        startActivity(fruitIntent)
+                    }
+
+                })
+        }
+
+        exoticfruits_index.setOnClickListener {
+            Log.d("Index Activity", "Clicked Exotic Fruits")
+            val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Fruits")
+            Ref
+                .orderByKey()
+                .limitToFirst(5)
+                .addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(p0: DatabaseError) {
+                        Log.d("IndexActivity", "Error Fetching Exotic Fruits Values")
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        val itemList = HelperUtils.getList(p0)
+                        Log.d("IndexActivity","${itemList}")
+                        val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Exotic_Fruits"))
+                        val exoticFruitIntent = Intent(this@IndexActivity, ExoticFruitActivity::class.java)
+                        exoticFruitIntent.putExtra("subDataObj",subDataObj)
+                        startActivity(exoticFruitIntent)
+                    }
+
+                })
+
+
+        }
+        vegetables_index.setOnClickListener {
+            Log.d("Index Activity", "Clicked Vegetables")
+            val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Vegetables")
+            Ref
+                .orderByKey()
+                .limitToFirst(5)
+                .addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(p0: DatabaseError) {
+                        Log.d("IndexActivity", "Error Fetching Vegetables Values")
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        val itemList = HelperUtils.getList(p0)
+                        Log.d("IndexActivity","${itemList}")
+                        val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Vegetables"))
+                        val vegIntent = Intent(this@IndexActivity, VegetableActivity::class.java)
+                        vegIntent.putExtra("subDataObj",subDataObj)
+                        startActivity(vegIntent)
+                    }
+
+                })
+        }
+        exoticveg_index.setOnClickListener {
+            Log.d("Index Activity", "Clicked Exotic Vegetables")
+            val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Vegetables")
+            Ref
+                .orderByKey()
+                .limitToFirst(5)
+                .addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(p0: DatabaseError) {
+                        Log.d("IndexActivity", "Error Fetching Exotic veg Values")
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        val itemList = HelperUtils.getList(p0)
+                        Log.d("IndexActivity","${itemList}")
+                        val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Exotic_Vegetables"))
+                        val exoticVegIntent = Intent(this@IndexActivity, ExoticVegetableActivity::class.java)
+                        exoticVegIntent.putExtra("subDataObj",subDataObj)
+                        startActivity(exoticVegIntent)
+                    }
+
+                })
+        }
+        grain_index.setOnClickListener {
+            Log.d("Index Activity", "Clicked Food Grains")
+            val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Foodgrains")
+            Ref
+                .orderByKey()
+                .limitToFirst(5)
+                .addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(p0: DatabaseError) {
+                        Log.d("IndexActivity", "Error Fetching Foodgrain Values")
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        val itemList = HelperUtils.getList(p0)
+                        Log.d("IndexActivity","${itemList}")
+                        val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Foodgrains"))
+                        val foodfrainIntent = Intent(this@IndexActivity, FoodGrainActivity::class.java)
+                        foodfrainIntent.putExtra("subDataObj",subDataObj)
+                        startActivity(foodfrainIntent)
+                    }
+
+                })
+        }
+
+
+
 
 
     }

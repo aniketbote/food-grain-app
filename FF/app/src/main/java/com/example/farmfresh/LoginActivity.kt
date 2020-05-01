@@ -66,7 +66,7 @@ class LoginActivity : AppCompatActivity(){
                     return@addOnCompleteListener
                 }
                 Log.d("LoginActivity","Login Successful : ${it}")
-                val emHash = generatehash(email)
+                val emHash = HelperUtils.generatehash(email)
                 val ref = FirebaseDatabase.getInstance().getReference("/users/${emHash}")
                 ref.addValueEventListener(object : ValueEventListener{
                     override fun onCancelled(p0: DatabaseError) {
@@ -108,13 +108,6 @@ class LoginActivity : AppCompatActivity(){
                 Toast.makeText(this,"${it.message}",Toast.LENGTH_SHORT).show()
                 Log.d("LoginActivity","Login Failed : ${it.message}")
             }
-    }
-
-    private fun generatehash(stringToBeHashed:String): String {
-        val bytes = stringToBeHashed.toString().toByteArray()
-        val md = MessageDigest.getInstance("SHA-256")
-        val digest = md.digest(bytes)
-        return digest.fold("", { str, it -> str + "%02x".format(it) })
     }
 
 }

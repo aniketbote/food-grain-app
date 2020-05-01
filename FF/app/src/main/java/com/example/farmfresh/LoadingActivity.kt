@@ -43,34 +43,7 @@ class LoadingActivity : AppCompatActivity() {
                 }
                 override fun onDataChange(p0: DataSnapshot) {
                     Log.d("LoadingActivity", "${p0}")
-//                    val finalHash = HashMap<String, List<HashMap<String,String>>>()
-//                    for (name in categoryList){
-//                        val tempList = mutableListOf<HashMap<String,String>>()
-//                        for(itemName in p0.child(name).children){
-//                            val tempHashMap = HashMap<String,String>()
-//                            tempHashMap.put("Name",itemName.key.toString())
-//                            for (subItem in itemName.children){
-//                                tempHashMap.put(subItem.key.toString(), subItem.value.toString())
-//                            }
-//                            Log.d("LoadingActivity","${tempHashMap}")
-//                            tempList.add(tempHashMap)
-//                        }
-//                        Log.d("LoadingActivity","${name} added in finalHash : size = ${tempList.size}")
-//                        finalHash.put(name,tempList)
-//                    }
-//
-//                    Log.d("LoadingActivity","finalHash Created: Creating dataObj")
-
-                    val finalList = mutableListOf<HashMap<String, String>>()
-                    for (itemName in p0.children) {
-                            val tempHashMap = HashMap<String, String>()
-                            tempHashMap.put("Name", itemName.key.toString())
-                            for (subItem in itemName.children) {
-                                tempHashMap.put(subItem.key.toString(), subItem.value.toString())
-                            }
-                            Log.d("LoadingActivity", "${tempHashMap}")
-                            finalList.add(tempHashMap)
-                        }
+                    val finalList = HelperUtils.getList(p0)
                     Log.d("LoadingActivity","finalList Created: ${finalList}")
 
 
@@ -122,4 +95,4 @@ class LoadingActivity : AppCompatActivity() {
 }
 
 
-class InitData(val featureList: List<String>, val finalList: List<HashMap<String,String>>, totalHashMap: HashMap<String, String>) : Serializable
+class InitData(val featureList: List<String>, val finalList: List<HashMap<String,String>>, val totalHashMap: HashMap<String, String>) : Serializable

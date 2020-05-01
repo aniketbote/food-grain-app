@@ -25,6 +25,12 @@
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".SupportActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".FoodGrainActivity"></activity>
+        <activity android:name=".FruitActivity"></activity>
+        <activity android:name=".ExoticFruitActivity"></activity>
+        <activity android:name=".VegetableActivity"></activity>
+        <activity android:name=".ExoticVegetableActivity"></activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
