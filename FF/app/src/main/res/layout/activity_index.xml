@@ -22,8 +22,10 @@
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_index"
             android:layout_width="408sp"
             android:layout_height="223dp"
+            android:layout_marginLeft="3sp"
             android:layout_marginTop="30sp"
             app:cardCornerRadius="15sp">
             >
@@ -34,8 +36,8 @@
                 android:layout_height="match_parent"
                 app:fillColor="#FFFF"
                 app:indicatorGravity="center_horizontal"
-                app:pageColor="@android:color/black"
-                app:radius="5sp"
+                app:pageColor="@android:color/darker_gray"
+                app:radius="3sp"
                 app:slideInterval="3000"
                 app:strokeColor="@color/color2"
                 app:strokeWidth="1sp"></com.synnapps.carouselview.CarouselView>
@@ -94,7 +96,7 @@
                 android:layout_height="150sp"
                 android:layout_below="@id/veg_index"
                 android:scaleType="centerCrop"
-                android:src="@drawable/fruits" />
+                android:src="@drawable/fruits_normal" />
 
             <TextView
                 android:layout_width="98dp"
@@ -163,6 +165,35 @@
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
         </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="390sp"
+            android:layout_height="90sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="630sp"
+            android:elevation="3sp"
+            app:cardCornerRadius="15sp">
+
+            <ImageView
+                android:id="@+id/fruitsexotic_index"
+                android:layout_width="390sp"
+                android:layout_height="90sp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/fruits" />
+
+            <TextView
+                android:layout_width="159dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/gridtext"
+                android:fontFamily="@font/paprika"
+                android:text="Exotic Fruits"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+        </androidx.cardview.widget.CardView>
+
+
 
 
     </RelativeLayout>

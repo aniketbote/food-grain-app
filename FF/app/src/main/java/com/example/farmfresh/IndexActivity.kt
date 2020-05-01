@@ -4,13 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
@@ -22,16 +22,10 @@ import kotlinx.android.synthetic.main.activity_toolbar.*
 
 
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
-
-    var sampleImages = arrayOf(R.drawable.delivering,R.drawable.strawberry,R.drawable.greens)
-
+    lateinit var featureImageList:List<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_index)
-
-       val carouselview:CarouselView = findViewById(R.id.carousel_index)
-        carouselview.setPageCount(sampleImages.size)
-        carouselview.setImageListener(imageListener)
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         val name = token.getString("name","")
@@ -54,8 +48,9 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         Glide.with(this).load("${photoUrl}").into(imageView)
         Log.d("IndexActivity","Image Loaded On Nav Bar")
 
+
         val allDataObj = intent.getSerializableExtra("dataObj") as initData
-        val featureImageList = allDataObj.featureList
+        featureImageList = allDataObj.featureList
         val exoticVegetable = allDataObj.finalHash.getValue("Exotic_Vegetables")[0].getValue("Name")
         Log.d("IndexActivity","${featureImageList[0]}")
         Log.d("IndexActivity","${exoticVegetable}")
@@ -91,6 +86,14 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
         nav_activity_index.setNavigationItemSelectedListener(this)
 
+        val carouselview:CarouselView = findViewById(R.id.carousel_index)
+        carouselview.setPageCount(featureImageList.size)
+        carouselview.setImageListener(imageListener)
+
+        val card_index = findViewById<CardView>(R.id.card_index)
+        card_index.setOnClickListener {
+            Log.d("IndexActivity","${carouselview.getTag()}")
+        }
 
 
     }
@@ -98,7 +101,10 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     var imageListener: ImageListener = object : ImageListener
     {
         override fun setImageForPosition(position: Int, imageView: ImageView?) {
-            imageView?.setImageResource(sampleImages[position])
+            if (imageView != null) {
+                Glide.with(this@IndexActivity).load("${featureImageList[position]}").into(imageView)
+                imageView.setTag("image${position}")
+            }
         }
     }
 
