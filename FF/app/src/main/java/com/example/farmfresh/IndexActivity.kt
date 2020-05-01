@@ -84,6 +84,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         drawerToggle.syncState()
 
 
+
         nav_activity_index.setNavigationItemSelectedListener(this)
 
         val carouselview:CarouselView = findViewById(R.id.carousel_index)
@@ -163,6 +164,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+
             drawer_layout.closeDrawer(GravityCompat.START)
 
         }

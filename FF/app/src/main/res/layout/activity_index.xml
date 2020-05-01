@@ -39,7 +39,7 @@
                 app:pageColor="@android:color/darker_gray"
                 app:radius="3sp"
                 app:slideInterval="3000"
-                app:strokeColor="@color/color2"
+                app:strokeColor="@android:color/secondary_text_dark"
                 app:strokeWidth="1sp"></com.synnapps.carouselview.CarouselView>
 
         </androidx.cardview.widget.CardView>
