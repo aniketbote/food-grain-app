@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_toolbar.*
 
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
 
-    var sampleImages = arrayOf(R.drawable.indexdelivery,R.drawable.indexdelivery)
+    var sampleImages = arrayOf(R.drawable.delivering,R.drawable.strawberry,R.drawable.greens)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
