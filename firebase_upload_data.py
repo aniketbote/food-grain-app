@@ -7,6 +7,8 @@ import pandas as pd
 from pprint import pprint
 
 final_dict = {}
+final_len_dict = {}
+combined_dict = {}
 cat = ['Exotic_Vegetables.csv','Exotic_Fruits.csv','Vegetables.csv','Fruits.csv','Foodgrains.csv']
 
 for name in cat:
@@ -15,6 +17,7 @@ for name in cat:
     data_cols = list(data.columns)
     name_col = data_cols.pop(0)
     temp_sing = {}
+    final_len_dict[name.split('.')[0]] = len(data)
     for i in range(len(data)):
         temp_data = {}
         for col in data_cols:
@@ -23,6 +26,7 @@ for name in cat:
                 continue
             temp_data[col] = data[col][i].item()
         temp_sing[data[name_col][i]] = temp_data
+        combined_dict[data[name_col][i]] = temp_data
     final_dict[name.split('.')[0]] = temp_sing
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:/Users/Aniket/Desktop/Aniket/food-grain-app/farmfresh-9c7fd-firebase-adminsdk-dx65j-9533ee02a1.json"
@@ -34,9 +38,17 @@ firebase_admin.initialize_app(cred, {
 
 featured = pd.read_csv('data/featured.csv')
 featured_list = list(featured['featured'])
-final_dict['featured'] = featured_list
+# final_dict['featured'] = featured_list
 
-# pprint(final_dict)
+pprint(combined_dict)
+
+ref = db.reference('combined_items')
+ref.set(combined_dict)
+
 ref = db.reference('all_items')
 ref.set(final_dict)
+
+ref = db.reference('featured')
+ref.set(featured_list)
+
 pprint('Done')

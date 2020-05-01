@@ -49,9 +49,9 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         Log.d("IndexActivity","Image Loaded On Nav Bar")
 
 
-        val allDataObj = intent.getSerializableExtra("dataObj") as initData
+        val allDataObj = intent.getSerializableExtra("dataObj") as InitData
         featureImageList = allDataObj.featureList
-        val exoticVegetable = allDataObj.finalHash.getValue("Exotic_Vegetables")[0].getValue("Name")
+        val exoticVegetable = allDataObj.finalList[0].getValue("Name")
         Log.d("IndexActivity","${featureImageList[0]}")
         Log.d("IndexActivity","${exoticVegetable}")
 
@@ -91,9 +91,8 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         carouselview.setPageCount(featureImageList.size)
         carouselview.setImageListener(imageListener)
 
-        val card_index = findViewById<CardView>(R.id.card_index)
-        card_index.setOnClickListener {
-            Log.d("IndexActivity","${carouselview.getTag()}")
+        carouselview.setImageClickListener {
+            Log.d("IndexActivity","Image: ${it} Clicked")
         }
 
 
@@ -104,7 +103,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         override fun setImageForPosition(position: Int, imageView: ImageView?) {
             if (imageView != null) {
                 Glide.with(this@IndexActivity).load("${featureImageList[position]}").into(imageView)
-                imageView.setTag("image${position}")
             }
         }
     }
