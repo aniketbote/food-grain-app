@@ -2,22 +2,38 @@ package com.example.farmfresh
 
 import android.util.Log
 import android.util.Patterns
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.DataSnapshot
 import java.io.Serializable
 import java.security.MessageDigest
 
+
+fun ImageView.loadImage(uri: String?) {
+    val options = RequestOptions()
+        .placeholder(R.drawable.home)
+        .circleCrop()
+        .error(R.mipmap.ic_launcher_round)
+    Glide.with(this.context)
+        .setDefaultRequestOptions(options)
+        .load(uri)
+        .into(this)
+}
+
 object HelperUtils {
 
-    fun getList(p0: DataSnapshot): MutableList<HashMap<String, String>> {
-        val finalList = mutableListOf<HashMap<String, String>>()
+    fun getList(p0: DataSnapshot): MutableList<Product> {
+        val finalList = mutableListOf<Product>()
         for (itemName in p0.children) {
-            val tempHashMap = HashMap<String, String>()
-            tempHashMap.put("Name", itemName.key.toString())
-            for (subItem in itemName.children) {
-                tempHashMap.put(subItem.key.toString(), subItem.value.toString())
-            }
-            Log.d("LoadingActivity", "${tempHashMap}")
-            finalList.add(tempHashMap)
+            val productObj = Product(
+                itemName.key.toString(),
+                itemName.child("Description").value.toString(),
+                itemName.child("Image").value.toString(),
+                itemName.child("Size").value.toString(),
+                itemName.child("Price").value.toString(),
+                itemName.child("Available Quantity").value.toString())
+            finalList.add(productObj)
         }
         return finalList
     }
@@ -33,11 +49,15 @@ object HelperUtils {
         Log.d("RegisterActivity","Funtion : email validate")
         return Patterns.EMAIL_ADDRESS.toRegex().matches(email)
     }
-    fun getCatObj(itemList:List<HashMap<String, String>>, totalCount:String): subCategoryData {
-        val catDataObj = subCategoryData(itemList, totalCount.toInt())
+    fun getCatObj(itemList:List<Product>, totalCount:String): SubData {
+        val catDataObj = SubData(itemList, totalCount.toInt())
         return catDataObj
     }
 
 }
 
-class subCategoryData(val itemList:List<HashMap<String, String>>, val totalCount: Int): Serializable
+data class SubData(val itemList:List<Product>, val totalCount:Int): Serializable
+
+data class AllData(val itemList:List<Product>, val totalHashMap: HashMap<String, String>, val featureList: List<String>): Serializable
+
+data class Product(val name:String, val description: String, val imageUrl:String, val size: String, val price:String, val availableQuantity:String): Serializable

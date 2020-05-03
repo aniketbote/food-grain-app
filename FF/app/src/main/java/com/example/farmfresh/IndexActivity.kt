@@ -54,9 +54,9 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         Log.d("IndexActivity","Image Loaded On Nav Bar")
 
 
-        val allDataObj = intent.getSerializableExtra("dataObj") as InitData
+        val allDataObj = intent.getSerializableExtra("dataObj") as AllData
         featureImageList = allDataObj.featureList
-        val exoticVegetable = allDataObj.finalList[0].getValue("Name")
+        val exoticVegetable = allDataObj.itemList[0].name
         val count = allDataObj.totalHashMap.getValue("Exotic_Vegetables")
         Log.d("IndexActivity","${featureImageList[0]}")
         Log.d("IndexActivity","${exoticVegetable}")

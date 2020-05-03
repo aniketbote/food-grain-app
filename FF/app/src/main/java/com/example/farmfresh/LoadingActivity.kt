@@ -78,7 +78,7 @@ class LoadingActivity : AppCompatActivity() {
                                     }
 
                                     Log.d("LoadingActivity","Creating dataObj")
-                                    val dataObj = InitData(featureList, finalList, totalHashMap)
+                                    val dataObj = AllData(finalList, totalHashMap, featureList)
                                     val indexIntent = Intent(this@LoadingActivity, IndexActivity::class.java)
                                     indexIntent.putExtra("dataObj", dataObj)
                                     Log.d("LoadingActivity", "User Logged In : Starting IndexActivity")
@@ -95,4 +95,3 @@ class LoadingActivity : AppCompatActivity() {
 }
 
 
-class InitData(val featureList: List<String>, val finalList: List<HashMap<String,String>>, val totalHashMap: HashMap<String, String>) : Serializable
