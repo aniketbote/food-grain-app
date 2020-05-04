@@ -13,9 +13,9 @@ class FoodGrainActivity : AppCompatActivity(){
         val subDataObj = intent.getSerializableExtra("subDataObj") as SubData
         Log.d("FoodGrainActivity","${subDataObj.itemList}")
 
-        var recyclerView: RecyclerView = findViewById(R.id.recycleview)
+        val recyclerView: RecyclerView = findViewById(R.id.recycleview)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        var adapter= ProductAdapter(subDataObj.itemList)
+        val adapter= ProductAdapter(subDataObj.itemList)
         recyclerView.adapter = adapter
     }
 }
