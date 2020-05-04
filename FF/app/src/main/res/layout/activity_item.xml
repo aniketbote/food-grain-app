@@ -1,42 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-
+    android:layout_height="130sp"
+    android:orientation="horizontal"
+    android:layout_marginTop="10sp">
     <ImageView
         android:id="@+id/product_image"
-        android:layout_width="110dp"
+        android:layout_width="95dp"
         android:layout_height="95dp"
         android:layout_marginLeft="10sp"
-        android:layout_marginTop="5sp"
-        android:src="@drawable/home"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.127"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="20sp"
-        android:id="@+id/product_name"
-        android:layout_marginLeft="150sp"
-        android:layout_marginTop="30sp"
-        android:text="Product Name"/>
+        android:layout_marginTop="15sp"
+        android:layout_marginBottom="5sp"
+        android:src="@drawable/home"/>
+    <LinearLayout
+        android:layout_width="140sp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:id="@+id/product_name"
+            android:fontFamily="@font/alegreya_sans_medium"
+            android:layout_marginTop="20sp"
+            android:text="Product Name"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="20sp"
-        android:id="@+id/product_price"
-        android:layout_marginLeft="150sp"
-        android:layout_marginTop="55sp"
-        android:text="Product Price"/>
+        <Spinner
+            style="@style/spinnerItemStyle"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:gravity="center"
+            android:spinnerMode="dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/product_weight"
+            android:fontFamily="@font/alegreya_sans_medium"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="25sp"
+            android:text="Weight Dropdown"/>
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="160sp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25sp"
+            android:textStyle="bold"
+            android:id="@+id/product_price"
+            android:fontFamily="@font/alegreya_sans_medium"
+            android:layout_gravity="center"
+            android:layout_marginTop="20sp"
+            android:text="Product Price"/>
 
-</RelativeLayout>
+        <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+            android:layout_width="80sp"
+            android:layout_height="28sp"
+            android:layout_marginLeft="40sp"
+            android:layout_marginTop="10sp"
+            app:backGroundColor="@android:color/transparent"
+            app:textColor="@android:color/black"/>
+
+        <Button
+            android:background="@drawable/btn_add_to_cart"
+            android:layout_width="100sp"
+            android:layout_height="35sp"
+            android:layout_marginTop="5sp"
+            android:layout_gravity="center"
+            android:textSize="12sp"
+            android:text="Add to Cart"/>
+
+    </LinearLayout>
+</LinearLayout>
