@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
@@ -18,7 +17,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.ktx.Firebase
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
 import de.hdodenhof.circleimageview.CircleImageView
@@ -117,7 +115,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val itemList = HelperUtils.getList(p0)
                         Log.d("IndexActivity","${itemList}")
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Fruits"))
-                        val fruitIntent = Intent(this@IndexActivity, FruitActivity::class.java)
+                        val fruitIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         fruitIntent.putExtra("subDataObj",subDataObj)
                         startActivity(fruitIntent)
                     }
@@ -140,7 +138,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val itemList = HelperUtils.getList(p0)
                         Log.d("IndexActivity","${itemList}")
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Exotic_Fruits"))
-                        val exoticFruitIntent = Intent(this@IndexActivity, ExoticFruitActivity::class.java)
+                        val exoticFruitIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         exoticFruitIntent.putExtra("subDataObj",subDataObj)
                         startActivity(exoticFruitIntent)
                     }
@@ -164,7 +162,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val itemList = HelperUtils.getList(p0)
                         Log.d("IndexActivity","${itemList}")
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Vegetables"))
-                        val vegIntent = Intent(this@IndexActivity, VegetableActivity::class.java)
+                        val vegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         vegIntent.putExtra("subDataObj",subDataObj)
                         startActivity(vegIntent)
                     }
@@ -186,7 +184,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val itemList = HelperUtils.getList(p0)
                         Log.d("IndexActivity","${itemList}")
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Exotic_Vegetables"))
-                        val exoticVegIntent = Intent(this@IndexActivity, ExoticVegetableActivity::class.java)
+                        val exoticVegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         exoticVegIntent.putExtra("subDataObj",subDataObj)
                         startActivity(exoticVegIntent)
                     }
@@ -208,7 +206,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val itemList = HelperUtils.getList(p0)
                         Log.d("IndexActivity","${itemList}")
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Foodgrains"))
-                        val foodfrainIntent = Intent(this@IndexActivity, FoodGrainActivity::class.java)
+                        val foodfrainIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         foodfrainIntent.putExtra("subDataObj",subDataObj)
                         startActivity(foodfrainIntent)
                     }

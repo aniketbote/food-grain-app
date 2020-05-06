@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/currentorders">
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70sp"
-        android:layout_marginTop="205sp"
-        android:textSize="50sp"
-        android:text="Current Orders"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"/>
+    android:background="@drawable/current">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/current_recycleview"
+            android:layout_width="350sp"
+            android:layout_height="360sp"
+            android:layout_marginTop="250sp"
+            android:layout_gravity="center_horizontal"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/current_order_item"/>
+
 </LinearLayout>

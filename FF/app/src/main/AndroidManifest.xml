@@ -29,7 +29,7 @@
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".FoodGrainActivity"></activity>
         <activity android:name=".FruitActivity"></activity>
-        <activity android:name=".ExoticFruitActivity"></activity>
+        <activity android:name=".ProductActivity"></activity>
         <activity android:name=".VegetableActivity"></activity>
         <activity android:name=".ExoticVegetableActivity"></activity>
 
