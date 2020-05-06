@@ -22,7 +22,6 @@ fun ImageView.loadImage(uri: String?) {
 }
 
 object HelperUtils {
-
     fun getList(p0: DataSnapshot): MutableList<Product> {
         val finalList = mutableListOf<Product>()
         for (itemName in p0.children) {
@@ -53,11 +52,13 @@ object HelperUtils {
         val catDataObj = SubData(itemList, totalCount.toInt())
         return catDataObj
     }
-
 }
+
 
 data class SubData(val itemList:List<Product>, val totalCount:Int): Serializable
 
 data class AllData(val itemList:List<Product>, val totalHashMap: HashMap<String, String>, val featureList: List<String>): Serializable
 
 data class Product(val name:String, val description: String, val imageUrl:String, val size: String, val price:String, val availableQuantity:String): Serializable
+
+data class CartItem(val name:String, val imageUrl:String, val size: String, val price:String, val count:String)
