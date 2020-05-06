@@ -38,7 +38,7 @@ firebase_admin.initialize_app(cred, {
 
 featured = pd.read_csv('data/featured.csv')
 featured_list = list(featured['featured'])
-# final_dict['featured'] = featured_list
+
 
 pprint(combined_dict)
 
@@ -50,5 +50,8 @@ ref.set(final_dict)
 
 ref = db.reference('featured')
 ref.set(featured_list)
+
+ref = db.reference('total_items')
+ref.set(final_len_dict)
 
 pprint('Done')
