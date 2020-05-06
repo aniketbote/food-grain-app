@@ -1,6 +1,8 @@
 package com.example.farmfresh
 
 import android.content.Context
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +31,6 @@ class ProductAdapter(val productList: List<Product>,
         holder.name.text = product.name
         holder.price.text = product.price
         holder.size.text = product.size
-        holder.img.loadImage(product.imageUrl)
 
         for(i in 0 until cartList.size){
             if(product.name == cartList[i].name){
@@ -39,6 +40,18 @@ class ProductAdapter(val productList: List<Product>,
             }
         }
 
+        Log.d("ProductAdapter","AvailableQuantity is ${product.availableQuantity}")
+        if(product.availableQuantity == 0.toString()){
+            Log.d("ProductAdapter","AvailableQuantity is zero")
+            val colorMatrix:ColorMatrix = ColorMatrix()
+            colorMatrix.setSaturation(0.toFloat())
+            val filter = ColorMatrixColorFilter(colorMatrix)
+            holder.img.colorFilter = filter
+            holder.addToCart.visibility = View.INVISIBLE
+            holder.count.visibility = View.INVISIBLE
+            holder.unavailable.visibility = View.VISIBLE
+        }
+        holder.img.loadImage(product.imageUrl)
 
         val context = holder.img.context
         holder.addToCart.setOnClickListener {
@@ -85,6 +98,7 @@ class ProductAdapter(val productList: List<Product>,
         val size:TextView = item.findViewById(R.id.product_weight)
         val addToCart:Button = item.findViewById(R.id.product_addtocart)
         val count:ElegantNumberButton = item.findViewById((R.id.product_count))
+        val unavailable:TextView = item.findViewById(R.id.product_unavailable)
 
     }
 }

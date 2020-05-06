@@ -94,13 +94,7 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
         val cv = ContentValues()
         cv.put(COL_COUNT, count)
         db.update(TABLE_NAME, cv, "$COL_NAME=?", arrayOf(name))
+        db.close()
     }
-    fun checkTableExist(): Boolean {
-        val tableExistQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='$TABLE_NAME'"
-        val db = this.readableDatabase
-        val result = db.rawQuery(tableExistQuery, null)
-        return result.count > 0
-    }
-
 
 }
