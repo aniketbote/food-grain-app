@@ -36,19 +36,18 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <Spinner
+        <TextView
             android:id="@+id/product_weight"
-            style="@style/spinnerItemStyle"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10sp"
             android:layout_marginTop="20sp"
-            android:clickable="true"
+            android:textSize="18sp"
             android:fontFamily="@font/alegreya_sans_medium"
             android:gravity="center"
-            android:spinnerMode="dropdown"
-            android:text="Weight Dropdown" />
+            android:text="Size" />
 
     </LinearLayout>
 
