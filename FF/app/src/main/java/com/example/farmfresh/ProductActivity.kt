@@ -16,10 +16,14 @@ class ProductActivity : AppCompatActivity(){
         val subDataObj = intent.getSerializableExtra("subDataObj") as SubData
         Log.d("ProductActivity","${subDataObj.itemList}")
 
+        val db = CartDatabase(this)
+        val cartList = db.readData()
+        Log.d("ProductActivity","$cartList")
+
 
         val recyclerView:RecyclerView = findViewById(R.id.recycleview)
-        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        val adapter= ProductAdapter(subDataObj.itemList)
+        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false) as RecyclerView.LayoutManager?
+        val adapter= ProductAdapter(subDataObj.itemList, cartList)
         recyclerView.adapter = adapter
     }
 }
