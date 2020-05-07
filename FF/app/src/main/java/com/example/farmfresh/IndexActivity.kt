@@ -1,9 +1,11 @@
 package com.example.farmfresh
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -26,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_toolbar.*
 
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
     lateinit var featureImageList:List<String>
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_index)
@@ -228,6 +231,15 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             }
         }
     }
+
+
+  //  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+  //      val menuItem:MenuItem = menu!!.findItem(R.id.item_count)
+  //      menuInflater.inflate(R.menu.cart_menu,menu)
+   //     val actionView: View = menuItem.actionView
+   //     return super.onCreateOptionsMenu(menu)
+
+  //  }
 
 
 

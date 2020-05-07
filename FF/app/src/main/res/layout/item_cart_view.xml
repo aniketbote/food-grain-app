@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100sp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/product_image_cart"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginLeft="10sp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/home"/>
+
+    <TextView
+        android:id="@+id/product_name_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/product_image_cart"
+        android:text="Product Name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Type"
+        android:id="@+id/product_type_cart"
+        android:layout_toRightOf="@id/product_name_cart"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10sp"/>
+
+    <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+        android:id="@+id/product_count_cart"
+        android:layout_width="83dp"
+        android:layout_height="34dp"
+        android:layout_toRightOf="@id/product_type_cart"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20sp"
+        android:background="@drawable/btn_add_to_cart"
+        app:textColor="@android:color/darker_gray" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount"
+        android:layout_toRightOf="@id/product_count_cart"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15sp"/>
+
+
+</RelativeLayout>
