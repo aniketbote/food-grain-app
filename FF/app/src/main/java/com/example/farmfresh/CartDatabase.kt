@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-// Aniket is great :)
+// Aniket is great :) hello
 val DATABASE_NAME = "FarmFreshDB"
 
 class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,null,3){
