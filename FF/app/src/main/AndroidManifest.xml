@@ -13,7 +13,7 @@
         tools:replace="android:theme"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".LoadingActivity"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,11 +27,7 @@
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".SupportActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".FoodGrainActivity"></activity>
-        <activity android:name=".FruitActivity"></activity>
         <activity android:name=".ProductActivity"></activity>
-        <activity android:name=".VegetableActivity"></activity>
-        <activity android:name=".ExoticVegetableActivity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
