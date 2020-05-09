@@ -68,6 +68,10 @@ class ProductAdapter(val productList: List<Product>,
             holder.addToCart.visibility = View.INVISIBLE
             holder.count.visibility = View.VISIBLE
             cartList.add(cartItemObj)
+
+            // SOME CODE HERE TO UPDATE THE NUMBER OF ITEMS IN CART
+
+
         }
 
 
