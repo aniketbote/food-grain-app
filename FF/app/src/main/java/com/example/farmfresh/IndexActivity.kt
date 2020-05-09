@@ -5,10 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -28,10 +27,17 @@ import kotlinx.android.synthetic.main.activity_toolbar.*
 
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
     lateinit var featureImageList:List<String>
-    @SuppressLint("ResourceType")
+    lateinit var cartList:MutableList<CartItem>
+    lateinit var mMenu:Menu
+    lateinit var mthis:IndexActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_index)
+
+        val db = CartDatabase(this)
+        cartList = db.readData()
+        val cartListObj = CartList(cartList)
+        Log.d("ProductActivity","$cartList")
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         val name = token.getString("name","")
@@ -91,6 +97,10 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         drawer_layout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
+//        val itemCount:TextView = findViewById(R.id.item_count)
+//        itemCount.text = cartList.size.toString()
+
+
 
 
         nav_activity_index.setNavigationItemSelectedListener(this)
@@ -120,6 +130,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Fruits"))
                         val fruitIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         fruitIntent.putExtra("subDataObj",subDataObj)
+                        fruitIntent.putExtra("cartList",cartListObj)
                         startActivity(fruitIntent)
                     }
 
@@ -143,6 +154,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Exotic_Fruits"))
                         val exoticFruitIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         exoticFruitIntent.putExtra("subDataObj",subDataObj)
+                        exoticFruitIntent.putExtra("cartList",cartListObj)
                         startActivity(exoticFruitIntent)
                     }
 
@@ -167,6 +179,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Vegetables"))
                         val vegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         vegIntent.putExtra("subDataObj",subDataObj)
+                        vegIntent.putExtra("cartList",cartListObj)
                         startActivity(vegIntent)
                     }
 
@@ -189,6 +202,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Exotic_Vegetables"))
                         val exoticVegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         exoticVegIntent.putExtra("subDataObj",subDataObj)
+                        exoticVegIntent.putExtra("cartList",cartListObj)
                         startActivity(exoticVegIntent)
                     }
 
@@ -209,9 +223,10 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val itemList = HelperUtils.getList(p0)
                         Log.d("IndexActivity","${itemList}")
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Foodgrains"))
-                        val foodfrainIntent = Intent(this@IndexActivity, ProductActivity::class.java)
-                        foodfrainIntent.putExtra("subDataObj",subDataObj)
-                        startActivity(foodfrainIntent)
+                        val foodgrainIntent = Intent(this@IndexActivity, ProductActivity::class.java)
+                        foodgrainIntent.putExtra("subDataObj",subDataObj)
+                        foodgrainIntent.putExtra("cartList",cartListObj)
+                        startActivity(foodgrainIntent)
                     }
 
                 })
@@ -232,22 +247,22 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
     }
 
-
-  //  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-  //      val menuItem:MenuItem = menu!!.findItem(R.id.item_count)
-  //      menuInflater.inflate(R.menu.cart_menu,menu)
-   //     val actionView: View = menuItem.actionView
-   //     return super.onCreateOptionsMenu(menu)
-
-  //  }
-
-
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.cart_menu, menu)
+        val count:View = menu!!.findItem(R.id.select_cart).actionView
+        val itemText:TextView = count.findViewById(R.id.item_count)
+        if(cartList.size == 0){
+            itemText.visibility = View.INVISIBLE
+        }
+        if(cartList.size > 0) {
+            itemText.visibility = View.VISIBLE
+            itemText.text = cartList.size.toString()
+        }
+        return true
+    }
 
 
     override fun onNavigationItemSelected(MenuItem: MenuItem): Boolean {
-
-
-
         when (MenuItem.itemId)
         {
             R.id.home->{
@@ -306,6 +321,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
 
     }
+
 }
 
 

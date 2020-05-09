@@ -5,6 +5,7 @@ import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -66,6 +67,7 @@ class ProductAdapter(val productList: List<Product>,
             }
             holder.addToCart.visibility = View.INVISIBLE
             holder.count.visibility = View.VISIBLE
+            cartList.add(cartItemObj)
         }
 
 
@@ -78,6 +80,7 @@ class ProductAdapter(val productList: List<Product>,
                 db.deleteData(product.name)
                 holder.addToCart.visibility = View.VISIBLE
                 holder.count.visibility = View.INVISIBLE
+                cartList.dropWhile { it.name == product.name }
             }
             if(newValue > 1){
                 //update
@@ -90,7 +93,6 @@ class ProductAdapter(val productList: List<Product>,
 
 
     }
-
     class ViewHolder(item: View): RecyclerView.ViewHolder(item){
         val name:TextView = item.findViewById(R.id.product_name)
         val price:TextView = item.findViewById(R.id.product_price)
