@@ -188,14 +188,14 @@
                     android:scaleType="centerCrop"/>
 
                 <TextView
-                    android:textAlignment="center"
-                    android:layout_width="96dp"
-                    android:layout_height="47dp"
+                    android:layout_width="95dp"
+                    android:layout_height="32dp"
                     android:layout_gravity="center"
                     android:fontFamily="@font/paprika"
                     android:text="Whole grain and Pulses"
+                    android:textAlignment="center"
                     android:textColor="@android:color/background_dark"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
 
 
             </androidx.cardview.widget.CardView>

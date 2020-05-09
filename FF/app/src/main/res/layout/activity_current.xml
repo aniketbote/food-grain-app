@@ -10,10 +10,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/current_recycleview"
             android:layout_width="350sp"
-            android:layout_height="360sp"
-            android:layout_marginTop="250sp"
+            android:layout_height="448dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="250sp"
             android:scrollbars="vertical"
-            tools:listitem="@layout/current_order_item"/>
+            tools:listitem="@layout/current_order_item" />
 
 </LinearLayout>
