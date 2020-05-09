@@ -15,8 +15,10 @@ class ProductActivity : AppCompatActivity(){
 
         val subDataObj = intent.getSerializableExtra("subDataObj") as SubData
         Log.d("ProductActivity","${subDataObj.itemList}")
-        val cartListObj = intent.getSerializableExtra("cartList") as CartList
-        val cartList = cartListObj.cartList
+
+        val db = CartDatabase(this)
+        val cartList = db.readData()
+        Log.d("ProductActivity","$cartList")
 
 
         val recyclerView:RecyclerView = findViewById(R.id.recycleview)

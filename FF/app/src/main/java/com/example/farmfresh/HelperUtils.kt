@@ -63,4 +63,3 @@ data class Product(val name:String, val description: String, val imageUrl:String
 
 data class CartItem(val name:String, val imageUrl:String, val size: String, val price:String, val count:String):Serializable
 
-data class CartList(val cartList:MutableList<CartItem>): Serializable

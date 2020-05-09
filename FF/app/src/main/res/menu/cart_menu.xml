@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/select_cart"
-        app:showAsAction="always"
+        android:title="Cart"
         app:actionLayout="@layout/cart_layout"
-        android:title="Cart"/>
+        app:showAsAction="always" />
 
     <item android:id="@+id/toolbar_search"
         android:title="Search"

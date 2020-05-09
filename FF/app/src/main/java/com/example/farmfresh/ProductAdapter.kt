@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
 import java.util.stream.IntStream.range
@@ -67,11 +68,10 @@ class ProductAdapter(val productList: List<Product>,
             }
             holder.addToCart.visibility = View.INVISIBLE
             holder.count.visibility = View.VISIBLE
-            cartList.add(cartItemObj)
-
             // SOME CODE HERE TO UPDATE THE NUMBER OF ITEMS IN CART
-
-
+            cartCount += 1
+            itemText.visibility = View.VISIBLE
+            itemText.text = cartCount.toString()
         }
 
 
@@ -84,9 +84,17 @@ class ProductAdapter(val productList: List<Product>,
                 db.deleteData(product.name)
                 holder.addToCart.visibility = View.VISIBLE
                 holder.count.visibility = View.INVISIBLE
-                cartList.dropWhile { it.name == product.name }
+                cartCount -= 1
+                if(cartCount == 0){
+                    itemText.visibility = View.INVISIBLE
+                }
+                else {
+                    itemText.visibility = View.VISIBLE
+                    itemText.text = cartCount.toString()
+                }
+
             }
-            if(newValue > 1){
+            if(newValue >= 1){
                 //update
                 db.updateData(product.name, newValue.toString())
             }

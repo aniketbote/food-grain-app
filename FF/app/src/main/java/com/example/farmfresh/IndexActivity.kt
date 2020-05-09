@@ -24,19 +24,19 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
 
+var cartCount:Int = 0
+lateinit var itemText:TextView
+
 
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
     lateinit var featureImageList:List<String>
     lateinit var cartList:MutableList<CartItem>
-    lateinit var mMenu:Menu
-    lateinit var mthis:IndexActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_index)
 
         val db = CartDatabase(this)
         cartList = db.readData()
-        val cartListObj = CartList(cartList)
         Log.d("ProductActivity","$cartList")
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
@@ -97,10 +97,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         drawer_layout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
-//        val itemCount:TextView = findViewById(R.id.item_count)
-//        itemCount.text = cartList.size.toString()
-
-
 
 
         nav_activity_index.setNavigationItemSelectedListener(this)
@@ -130,7 +126,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Fruits"))
                         val fruitIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         fruitIntent.putExtra("subDataObj",subDataObj)
-                        fruitIntent.putExtra("cartList",cartListObj)
                         startActivity(fruitIntent)
                     }
 
@@ -154,7 +149,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Exotic_Fruits"))
                         val exoticFruitIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         exoticFruitIntent.putExtra("subDataObj",subDataObj)
-                        exoticFruitIntent.putExtra("cartList",cartListObj)
                         startActivity(exoticFruitIntent)
                     }
 
@@ -179,7 +173,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Vegetables"))
                         val vegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         vegIntent.putExtra("subDataObj",subDataObj)
-                        vegIntent.putExtra("cartList",cartListObj)
                         startActivity(vegIntent)
                     }
 
@@ -202,7 +195,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Exotic_Vegetables"))
                         val exoticVegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         exoticVegIntent.putExtra("subDataObj",subDataObj)
-                        exoticVegIntent.putExtra("cartList",cartListObj)
                         startActivity(exoticVegIntent)
                     }
 
@@ -225,7 +217,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Foodgrains"))
                         val foodgrainIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         foodgrainIntent.putExtra("subDataObj",subDataObj)
-                        foodgrainIntent.putExtra("cartList",cartListObj)
                         startActivity(foodgrainIntent)
                     }
 
@@ -250,13 +241,16 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.cart_menu, menu)
         val count:View = menu!!.findItem(R.id.select_cart).actionView
-        val itemText:TextView = count.findViewById(R.id.item_count)
+
         if(cartList.size == 0){
+            itemText = count.findViewById(R.id.item_count)
             itemText.visibility = View.INVISIBLE
         }
         if(cartList.size > 0) {
+            itemText = count.findViewById(R.id.item_count)
             itemText.visibility = View.VISIBLE
-            itemText.text = cartList.size.toString()
+            cartCount = cartList.size
+            itemText.text = cartCount.toString()
         }
         return true
     }

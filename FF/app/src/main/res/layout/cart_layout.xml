@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cart_layout_relative"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true">
 
     <RelativeLayout
+        android:id="@+id/cart_layout_internal"
         android:layout_width="wrap_content"
         android:layout_height="55sp"
-        android:paddingRight="10sp"
-        android:gravity="center">
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingRight="10sp">
 
-    <ImageView
-        android:id="@+id/cart_img"
-        android:layout_width="30sp"
-        android:layout_height="30sp"
-        android:background="@drawable/shopping"
-        android:foreground="?attr/selectableItemBackgroundBorderless" />
+        <ImageView
+            android:id="@+id/cart_img"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/shopping" />
 
-    <TextView
-        android:id="@+id/item_count"
-        android:layout_width="18sp"
-        android:textAlignment="center"
-        android:layout_height="18sp"
-        android:textColor="@android:color/white"
-        android:text="0"
-        android:textSize="12sp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/itemcount" />
+        <TextView
+            android:id="@+id/item_count"
+            android:layout_width="18sp"
+            android:layout_height="18sp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/itemcount"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 
