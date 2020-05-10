@@ -3,16 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/current">
+    android:layout_height="match_parent">
+
+        <include
+            android:layout_height="55sp"
+            android:layout_width="match_parent"
+            layout="@layout/activity_toolbar"/>
+
+        <TextView
+            android:layout_marginTop="10sp"
+            android:layout_width="200sp"
+            android:layout_height="60sp"
+            android:layout_marginLeft="10sp"
+            android:text="Current Orders :"
+            android:textAlignment="center"
+            android:textSize="25sp"/>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/current_recycleview"
-            android:layout_width="350sp"
-            android:layout_height="448dp"
+            android:layout_width="360sp"
+            android:layout_height="557dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="250sp"
+            android:layout_marginTop="30sp"
             android:scrollbars="vertical"
             tools:listitem="@layout/current_order_item" />
 

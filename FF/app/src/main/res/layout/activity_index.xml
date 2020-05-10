@@ -23,9 +23,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_index"
-            android:layout_width="408sp"
-            android:layout_height="223dp"
-            android:layout_marginLeft="2sp"
+            android:layout_width="380sp"
+            android:layout_height="220dp"
+            android:layout_marginLeft="15sp"
             android:layout_marginTop="30sp"
             app:cardCornerRadius="15sp">
             >
@@ -49,10 +49,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15sp"
             android:layout_marginTop="275sp"
+            android:textSize="22sp"
             android:textColor="@android:color/secondary_text_light"
-            android:fontFamily="@font/paprika"
-            android:text="Categories :"
-            android:textStyle="bold" />
+            android:fontFamily="@font/alegreya_sans_medium"
+            android:text="Categories :" />
 
         <LinearLayout
             android:layout_marginTop="310sp"
@@ -83,9 +83,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Fruits"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/paprika"
+                        android:fontFamily="@font/alegreya_sans_medium"
                         android:textColor="@android:color/background_dark"/>
                     </androidx.cardview.widget.CardView>
 
@@ -107,9 +107,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Vegetables"
-                            android:textSize="12sp"
+                            android:textSize="16sp"
                             android:layout_gravity="center"
-                            android:fontFamily="@font/paprika"
+                            android:fontFamily="@font/alegreya_sans_medium"
                             android:textColor="@android:color/background_dark"/>
                     </androidx.cardview.widget.CardView>
 
@@ -138,9 +138,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Exotic Fruits"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/paprika"
+                        android:fontFamily="@font/alegreya_sans_medium"
                         android:textColor="@android:color/background_dark"/>
                 </androidx.cardview.widget.CardView>
 
@@ -162,9 +162,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Exotic Vegetables"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/paprika"
+                        android:fontFamily="@font/alegreya_sans_medium"
                         android:textColor="@android:color/background_dark"/>
                 </androidx.cardview.widget.CardView>
 
@@ -188,14 +188,14 @@
                     android:scaleType="centerCrop"/>
 
                 <TextView
-                    android:layout_width="95dp"
-                    android:layout_height="32dp"
+                    android:layout_width="95sp"
+                    android:layout_height="40sp"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/paprika"
+                    android:fontFamily="@font/alegreya_sans_medium"
                     android:text="Whole grain and Pulses"
                     android:textAlignment="center"
                     android:textColor="@android:color/background_dark"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
 
             </androidx.cardview.widget.CardView>
