@@ -61,4 +61,5 @@ data class AllData(val itemList:List<Product>, val totalHashMap: HashMap<String,
 
 data class Product(val name:String, val description: String, val imageUrl:String, val size: String, val price:String, val availableQuantity:String): Serializable
 
-data class CartItem(val name:String, val imageUrl:String, val size: String, val price:String, val count:String)
+data class CartItem(val name:String, val imageUrl:String, val size: String, val price:String, val count:String):Serializable
+

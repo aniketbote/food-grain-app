@@ -5,10 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -25,13 +24,20 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
 
+var cartCount:Int = 0
+lateinit var itemText:TextView
+
 
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
     lateinit var featureImageList:List<String>
-    @SuppressLint("ResourceType")
+    lateinit var cartList:MutableList<CartItem>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_index)
+
+        val db = CartDatabase(this)
+        cartList = db.readData()
+        Log.d("ProductActivity","$cartList")
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         val name = token.getString("name","")
@@ -209,9 +215,9 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val itemList = HelperUtils.getList(p0)
                         Log.d("IndexActivity","${itemList}")
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Foodgrains"))
-                        val foodfrainIntent = Intent(this@IndexActivity, ProductActivity::class.java)
-                        foodfrainIntent.putExtra("subDataObj",subDataObj)
-                        startActivity(foodfrainIntent)
+                        val foodgrainIntent = Intent(this@IndexActivity, ProductActivity::class.java)
+                        foodgrainIntent.putExtra("subDataObj",subDataObj)
+                        startActivity(foodgrainIntent)
                     }
 
                 })
@@ -232,22 +238,25 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.cart_menu, menu)
+        val count:View = menu!!.findItem(R.id.select_cart).actionView
 
-  //  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-  //      val menuItem:MenuItem = menu!!.findItem(R.id.item_count)
-  //      menuInflater.inflate(R.menu.cart_menu,menu)
-   //     val actionView: View = menuItem.actionView
-   //     return super.onCreateOptionsMenu(menu)
-
-  //  }
-
-
+        if(cartList.size == 0){
+            itemText = count.findViewById(R.id.item_count)
+            itemText.visibility = View.INVISIBLE
+        }
+        if(cartList.size > 0) {
+            itemText = count.findViewById(R.id.item_count)
+            itemText.visibility = View.VISIBLE
+            cartCount = cartList.size
+            itemText.text = cartCount.toString()
+        }
+        return true
+    }
 
 
     override fun onNavigationItemSelected(MenuItem: MenuItem): Boolean {
-
-
-
         when (MenuItem.itemId)
         {
             R.id.home->{
@@ -306,6 +315,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
 
     }
+
 }
 
 

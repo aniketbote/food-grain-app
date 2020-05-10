@@ -5,11 +5,13 @@ import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
 import java.util.stream.IntStream.range
@@ -66,6 +68,10 @@ class ProductAdapter(val productList: List<Product>,
             }
             holder.addToCart.visibility = View.INVISIBLE
             holder.count.visibility = View.VISIBLE
+            // SOME CODE HERE TO UPDATE THE NUMBER OF ITEMS IN CART
+            cartCount += 1
+            itemText.visibility = View.VISIBLE
+            itemText.text = cartCount.toString()
         }
 
 
@@ -78,8 +84,17 @@ class ProductAdapter(val productList: List<Product>,
                 db.deleteData(product.name)
                 holder.addToCart.visibility = View.VISIBLE
                 holder.count.visibility = View.INVISIBLE
+                cartCount -= 1
+                if(cartCount == 0){
+                    itemText.visibility = View.INVISIBLE
+                }
+                else {
+                    itemText.visibility = View.VISIBLE
+                    itemText.text = cartCount.toString()
+                }
+
             }
-            if(newValue > 1){
+            if(newValue >= 1){
                 //update
                 db.updateData(product.name, newValue.toString())
             }
@@ -90,7 +105,6 @@ class ProductAdapter(val productList: List<Product>,
 
 
     }
-
     class ViewHolder(item: View): RecyclerView.ViewHolder(item){
         val name:TextView = item.findViewById(R.id.product_name)
         val price:TextView = item.findViewById(R.id.product_price)
