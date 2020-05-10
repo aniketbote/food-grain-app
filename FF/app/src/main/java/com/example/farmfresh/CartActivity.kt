@@ -2,6 +2,8 @@ package com.example.farmfresh
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.ListView
+import android.widget.SimpleAdapter
 import androidx.appcompat.app.AppCompatActivity
 
 class CartActivity : AppCompatActivity(){
@@ -12,5 +14,7 @@ class CartActivity : AppCompatActivity(){
         val db = CartDatabase(this)
         val cartList = db.readData()
         Log.d("CartActivity","$cartList")
+
+
     }
 }
