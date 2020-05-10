@@ -241,6 +241,14 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.cart_menu, menu)
         val count:View = menu!!.findItem(R.id.select_cart).actionView
+        val icon=count.findViewById<ImageView>(R.id.cart_img)
+
+        icon.setOnClickListener{
+            Log.d("Index Activity", "Clicked Add to cart button")
+            val cartIntent = Intent(this, CartActivity::class.java)
+            startActivity(cartIntent)
+
+        }
 
         if(cartList.size == 0){
             itemText = count.findViewById(R.id.item_count)

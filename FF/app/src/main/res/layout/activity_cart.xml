@@ -1,10 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/placeOrder_cart"
+    <ListView
+        android:id="@+id/cart_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Place Order" />
-</RelativeLayout>
+        tools:listitem="@layout/item_cart_view"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:background="@color/quantum_vanillablue200"
+        android:layout_alignParentEnd="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:fontFamily="@font/alegreya_sans_medium"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:text="Total Amount:"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cart_amount"
+            android:fontFamily="@font/alegreya_sans_medium"
+            android:text="100"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5sp"/>
+        <Button
+            android:background="@drawable/place_order"
+            android:layout_width="wrap_content"
+            android:layout_height="40sp"
+            android:padding="5sp"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/alegreya_sans_medium"
+            android:text="Place Order"
+            android:layout_marginLeft="145sp"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

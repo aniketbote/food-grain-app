@@ -28,6 +28,7 @@
         <activity android:name=".SupportActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".ProductActivity"></activity>
+        <activity android:name=".CartActivity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
