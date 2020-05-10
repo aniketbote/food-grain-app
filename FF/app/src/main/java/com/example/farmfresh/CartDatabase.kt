@@ -6,6 +6,9 @@ import android.content.SharedPreferences
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+
 // Aniket is great :) hello
 val DATABASE_NAME = "FarmFreshDB"
 
@@ -80,6 +83,29 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
         result.close()
         db.close()
         return cartList
+    }
+    fun readDataJson(): JsonObject {
+        val cartObjJson = JsonObject()
+        val db = this.readableDatabase
+        val readQuery = "SELECT * FROM $TABLE_NAME"
+        val result = db.rawQuery(readQuery,null)
+        var countItems = 0
+        if(result.moveToFirst()){
+            do {
+                val name = result.getString(result.getColumnIndex(COL_NAME))
+                val size = result.getString(result.getColumnIndex(COL_SIZE))
+                val price = result.getString(result.getColumnIndex(COL_PRICE))
+                val count = result.getString(result.getColumnIndex(COL_COUNT))
+                val tempJsonObj = JsonObject()
+                tempJsonObj.addProperty("name",name)
+                tempJsonObj.addProperty("size",size)
+                tempJsonObj.addProperty("price",price)
+                tempJsonObj.addProperty("count",count)
+                cartObjJson.add(countItems.toString(), tempJsonObj)
+                countItems += 1
+            }while (result.moveToNext())
+        }
+        return cartObjJson
     }
 
     fun deleteData(name:String){
