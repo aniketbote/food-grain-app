@@ -111,6 +111,11 @@ def placeorder():
             tdict['message'] = "Some Error Ocuured"
             tdict['deficiency'] = ''
             tdict['errorCode'] = errorCode
+        elif errorCode == 0:
+            tdict['message'] = "Some Error Ocuured"
+            tdict['deficiency'] = ''
+            tdict['errorCode'] = 4
+
         print("Transaction Failed")
 
     return jsonify(tdict)

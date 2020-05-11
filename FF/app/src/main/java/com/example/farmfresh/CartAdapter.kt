@@ -35,18 +35,24 @@ class CartAdapter(private val context: Context, private val data:MutableList<Car
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        val db = CartDatabase(context)
         val item: CartItem = data[position]
         holder.name.text  = item.name
         holder.cost.text = (item.price.toInt()*item.count.toInt()).toString()
-        holder.count.number = item.count
+        if(item.available.toInt() < item.count.toInt()) {
+            holder.count.number = item.available
+            db.updateData(item.name,item.available)
+            Toast.makeText(context,"Not Enough Available Quantity", Toast.LENGTH_SHORT).show()
+        }
+        else {
+            holder.count.number = item.count
+        }
         holder.image.loadImage(item.imageUrl)
 //        holder.size.text = item.size
 
         holder.count.setOnValueChangeListener { view, oldValue, newValue ->
             Log.d("Product","Number for ${item.name} is $newValue")
             val context = view.context
-            val db = CartDatabase(context)
             if(newValue == 0){
                 //delete
                 db.deleteData(item.name)
