@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_cart_view_rel"
     android:layout_width="match_parent"
-    android:layout_height="80sp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="80sp">
+
     <ImageView
         android:id="@+id/product_image_cart"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:layout_marginLeft="10sp"
         android:layout_centerVertical="true"
-        android:src="@drawable/home"/>
+        android:layout_marginLeft="10sp"
+        android:src="@drawable/home" />
 
     <TextView
         android:id="@+id/product_name_cart"
@@ -21,21 +23,21 @@
         android:text="Product Name" />
 
     <TextView
+        android:id="@+id/product_size_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Type"
-        android:id="@+id/product_type_cart"
-        android:layout_toRightOf="@id/product_name_cart"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10sp"/>
+        android:layout_marginLeft="10sp"
+        android:layout_toRightOf="@id/product_name_cart"
+        android:text="Size" />
 
     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
         android:id="@+id/product_count_cart"
         android:layout_width="80sp"
         android:layout_height="30sp"
-        android:layout_toRightOf="@id/product_type_cart"
         android:layout_centerVertical="true"
         android:layout_marginLeft="20sp"
+        android:layout_toRightOf="@id/product_size_cart"
         android:background="@drawable/btn_add_to_cart"
         app:textColor="@android:color/darker_gray" />
 
@@ -43,10 +45,10 @@
         android:id="@+id/product_amount_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Amount"
-        android:layout_toRightOf="@id/product_count_cart"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="15sp"/>
+        android:layout_marginLeft="15sp"
+        android:layout_toRightOf="@id/product_count_cart"
+        android:text="Amount" />
 
 
 </RelativeLayout>

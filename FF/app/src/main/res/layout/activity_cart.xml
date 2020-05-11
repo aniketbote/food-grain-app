@@ -36,7 +36,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5sp"
             android:fontFamily="@font/alegreya_sans_medium"
-            android:text="100"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 

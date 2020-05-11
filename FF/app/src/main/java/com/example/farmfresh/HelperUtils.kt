@@ -52,6 +52,14 @@ object HelperUtils {
         val catDataObj = SubData(itemList, totalCount.toInt())
         return catDataObj
     }
+
+    fun getCost(data: MutableList<CartItem>): Int {
+        var total = 0
+        for(i in 0 until data.size){
+            total += (data[i].price.toInt() * data[i].count.toInt())
+        }
+        return total
+    }
 }
 
 
