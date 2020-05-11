@@ -5,10 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide.with
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
@@ -67,9 +64,15 @@ class CartAdapter(private val context: Context, private val data:MutableList<Car
             }
             if(newValue >= 1){
                 //update
-                holder.cost.text = (item.price.toInt() * newValue).toString()
-                cartTotal.text = (cartTotal.text.toString().toInt() + (newValue - oldValue) * item.price.toInt()).toString()
-                db.updateData(item.name, newValue.toString())
+                if((item.available.toInt() - newValue) < 0){
+                    Toast.makeText(context,"Not Enough Available",Toast.LENGTH_SHORT).show()
+                    holder.count.number = oldValue.toString()
+                }
+                else {
+                    holder.cost.text = (item.price.toInt() * newValue).toString()
+                    cartTotal.text = (cartTotal.text.toString().toInt() + (newValue - oldValue) * item.price.toInt()).toString()
+                    db.updateData(item.name, newValue.toString())
+                }
             }
         }
 

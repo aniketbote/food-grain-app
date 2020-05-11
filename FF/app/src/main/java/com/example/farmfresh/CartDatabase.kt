@@ -12,7 +12,7 @@ import com.google.gson.JsonObject
 
 val DATABASE_NAME = "FarmFreshDB"
 
-class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,null,4){
+class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,null,5){
     private val token: SharedPreferences = context.getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
     private val emailHash = token.getString("EMAILHASH", "")
 
@@ -23,6 +23,7 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
     private val COL_SIZE = "SIZE"
     private val COL_COUNT = "COUNT"
     private val COL_TYPE = "TYPE"
+    private val COL_AVAILABLE = "AVAILABLE"
 
     override fun onOpen(db: SQLiteDatabase?) {
         super.onOpen(db)
@@ -40,6 +41,7 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
                 COL_PRICE + " VARCHAR(64)," +
                 COL_SIZE + " VARCHAR(64)," +
                 COL_TYPE + " VARCHAR(64)," +
+                COL_AVAILABLE + " VARCHAR(64)," +
                 COL_IMAGE + " VARCHAR(1024)," +
                 COL_COUNT + " VARCHAR(64))"
 
@@ -62,6 +64,7 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
         cv.put(COL_IMAGE, cartItem.imageUrl)
         cv.put(COL_COUNT, cartItem.count)
         cv.put(COL_TYPE, cartItem.type)
+        cv.put(COL_AVAILABLE,cartItem.available)
         val result = db.insert(TABLE_NAME,null, cv)
         db.close()
         return result
@@ -80,7 +83,8 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
                     result.getString(result.getColumnIndex(COL_SIZE)),
                     result.getString(result.getColumnIndex(COL_PRICE)),
                     result.getString(result.getColumnIndex(COL_COUNT)),
-                    result.getString(result.getColumnIndex(COL_TYPE)))
+                    result.getString(result.getColumnIndex(COL_TYPE)),
+                    result.getString(result.getColumnIndex(COL_AVAILABLE)))
                 cartList.add(cartItem)
             }while (result.moveToNext())
         }
@@ -97,13 +101,11 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
         if(result.moveToFirst()){
             do {
                 val name = result.getString(result.getColumnIndex(COL_NAME))
-                val size = result.getString(result.getColumnIndex(COL_SIZE))
                 val price = result.getString(result.getColumnIndex(COL_PRICE))
                 val count = result.getString(result.getColumnIndex(COL_COUNT))
                 val type = result.getString(result.getColumnIndex(COL_TYPE))
                 val tempJsonObj = JsonObject()
                 tempJsonObj.addProperty("name",name)
-                tempJsonObj.addProperty("size",size)
                 tempJsonObj.addProperty("price",price)
                 tempJsonObj.addProperty("count",count)
                 tempJsonObj.addProperty("type",type)

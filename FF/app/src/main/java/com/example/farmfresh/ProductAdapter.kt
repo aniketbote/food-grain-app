@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
@@ -60,7 +61,7 @@ class ProductAdapter(val productList: List<Product>,
         holder.addToCart.setOnClickListener {
             holder.count.number = 1.toString()
             Log.d("Product","Clicked ${product.name}, count = ${holder.count.number}")
-            val cartItemObj = CartItem(product.name,product.imageUrl, product.size, product.price, holder.count.number, type)
+            val cartItemObj = CartItem(product.name,product.imageUrl, product.size, product.price, holder.count.number, type, product.availableQuantity)
             val db = CartDatabase(context)
             val result = db.insertData(cartItemObj)
             if(result == (-1).toLong()){
@@ -97,7 +98,13 @@ class ProductAdapter(val productList: List<Product>,
             }
             if(newValue >= 1){
                 //update
-                db.updateData(product.name, newValue.toString())
+                if((product.availableQuantity.toInt() - newValue) < 0){
+                    Toast.makeText(context,"Not Enough Quantity Available",Toast.LENGTH_SHORT).show()
+                    holder.count.number = oldValue.toString()
+                }
+                else {
+                    db.updateData(product.name, newValue.toString())
+                }
             }
         }
 
