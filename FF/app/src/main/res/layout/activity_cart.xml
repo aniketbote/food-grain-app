@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="50sp"
        android:layout_alignParentBottom="true"
-        android:background="@color/quantum_vanillablue200"
+        android:background="@color/quantum_lightgreen200"
         android:orientation="horizontal">
 
         <TextView

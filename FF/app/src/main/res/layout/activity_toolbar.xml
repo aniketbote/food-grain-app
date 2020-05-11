@@ -15,6 +15,9 @@
 <androidx.appcompat.widget.Toolbar
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
+    app:title="Farm Fresh"
+    app:titleTextColor="@color/cardview_light_background"
+    app:subtitleTextAppearance="@font/alegreya_sans_medium"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/transparent"
     android:id="@+id/toolbar"
