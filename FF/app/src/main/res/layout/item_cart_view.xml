@@ -40,12 +40,13 @@
         app:textColor="@android:color/darker_gray" />
 
     <TextView
+        android:id="@+id/product_amount_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Amount"
         android:layout_toRightOf="@id/product_count_cart"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="18sp"/>
+        android:layout_marginLeft="15sp"/>
 
 
 </RelativeLayout>

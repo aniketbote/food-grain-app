@@ -3,7 +3,11 @@ package com.example.farmfresh
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.widget.ListView
+import android.widget.SimpleAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_cart.*
 import retrofit2.Call
@@ -20,6 +24,11 @@ class CartActivity : AppCompatActivity(){
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         val emailHash = token.getString("EMAILHASH", "")
         Log.d("CartActivity","$cartList")
+
+        val recycleView: RecyclerView = findViewById(R.id.cart_list)
+        recycleView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL,false) as RecyclerView.LayoutManager?
+        val adapter = CartAdapter(this, cartList)
+        recycleView.adapter = adapter
 
 
 
@@ -40,5 +49,6 @@ class CartActivity : AppCompatActivity(){
 
                 })
         }
+
     }
 }
