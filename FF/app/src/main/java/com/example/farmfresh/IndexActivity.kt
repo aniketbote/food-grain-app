@@ -80,7 +80,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
         setSupportActionBar(toolbar)
         val actionBar= supportActionBar
-        actionBar?.title = "Farm Fresh"
+       // actionBar?.title = "Farm Fresh"
 
         val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
             this,

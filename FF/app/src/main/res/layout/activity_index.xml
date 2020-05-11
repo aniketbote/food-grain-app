@@ -23,9 +23,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_index"
-            android:layout_width="380sp"
+            android:layout_width="350sp"
             android:layout_height="220dp"
-            android:layout_marginLeft="15sp"
+            android:layout_marginLeft="29sp"
             android:layout_marginTop="30sp"
             app:cardCornerRadius="15sp">
             >
@@ -52,24 +52,24 @@
             android:textSize="22sp"
             android:textColor="@android:color/secondary_text_light"
             android:fontFamily="@font/alegreya_sans_medium"
-            android:text="Categories :" />
+            android:text="Shop By Category :" />
 
         <LinearLayout
             android:layout_marginTop="310sp"
             android:layout_width="match_parent"
-            android:layout_height="180sp"
+            android:layout_height="200sp"
             android:orientation="horizontal">
 
 
                 <LinearLayout
                     android:layout_width="133sp"
-                    android:layout_height="180sp"
+                    android:layout_height="200sp"
                     android:layout_marginLeft="5sp"
                     android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="133sp"
-                        android:layout_height="87sp"
+                        android:layout_height="97sp"
                         app:cardCornerRadius="15sp">
 
                     <ImageView
@@ -92,14 +92,14 @@
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="133sp"
-                        android:layout_height="87sp"
+                        android:layout_height="97sp"
                         android:layout_marginTop="6sp"
                         app:cardCornerRadius="15sp">
 
                         <ImageView
                             android:id="@+id/vegetables_index"
                             android:layout_width="match_parent"
-                            android:layout_height="87sp"
+                            android:layout_height="97sp"
                             android:scaleType="centerCrop"
                             android:src="@drawable/veg" />
 
@@ -118,13 +118,13 @@
 
             <LinearLayout
                 android:layout_width="128sp"
-                android:layout_height="180sp"
+                android:layout_height="200sp"
                 android:layout_marginLeft="4sp"
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="128sp"
-                    android:layout_height="87sp"
+                    android:layout_height="97sp"
                     app:cardCornerRadius="15sp">
 
                     <ImageView
@@ -147,14 +147,14 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="128sp"
-                    android:layout_height="87sp"
+                    android:layout_height="97sp"
                     android:layout_marginTop="6sp"
                     app:cardCornerRadius="15sp">
 
                     <ImageView
                         android:id="@+id/exoticveg_index"
                         android:layout_width="match_parent"
-                        android:layout_height="87sp"
+                        android:layout_height="97sp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/exotic" />
 
