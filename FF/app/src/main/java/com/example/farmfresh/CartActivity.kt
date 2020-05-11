@@ -1,5 +1,6 @@
 package com.example.farmfresh
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,9 @@ class CartActivity : AppCompatActivity(){
         setContentView(R.layout.activity_cart)
         val db = CartDatabase(this)
         val cartList = db.readData()
+
+        val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
+        val emailHash = token.getString("EMAILHASH", "")
         Log.d("CartActivity","$cartList")
 
 
@@ -24,7 +28,7 @@ class CartActivity : AppCompatActivity(){
             val cartJsonObj = db.readDataJson()
             Log.d("CartActivity","$cartJsonObj")
             Log.d("CartActivity","Pressed Place Order Button")
-            RetrofitClient.instance.hello(cartJsonObj)
+            RetrofitClient.instance.hello(cartJsonObj, emailHash.toString())
                 .enqueue(object : Callback<PlaceOrderResponse>{
                     override fun onFailure(call: Call<PlaceOrderResponse>, t: Throwable) {
                         Log.d("CartActivity","Failed : ${t.message}")

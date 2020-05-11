@@ -17,7 +17,8 @@ import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
 import java.util.stream.IntStream.range
 
 class ProductAdapter(val productList: List<Product>,
-                     val cartList:MutableList<CartItem>) :
+                     val cartList:MutableList<CartItem>,
+                     val type:String) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.activity_item, parent, false)
@@ -59,7 +60,7 @@ class ProductAdapter(val productList: List<Product>,
         holder.addToCart.setOnClickListener {
             holder.count.number = 1.toString()
             Log.d("Product","Clicked ${product.name}, count = ${holder.count.number}")
-            val cartItemObj = CartItem(product.name,product.imageUrl, product.size, product.price, holder.count.number)
+            val cartItemObj = CartItem(product.name,product.imageUrl, product.size, product.price, holder.count.number, type)
             val db = CartDatabase(context)
             val result = db.insertData(cartItemObj)
             if(result == (-1).toLong()){

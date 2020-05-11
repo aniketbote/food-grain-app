@@ -16,6 +16,9 @@ class ProductActivity : AppCompatActivity(){
         val subDataObj = intent.getSerializableExtra("subDataObj") as SubData
         Log.d("ProductActivity","${subDataObj.itemList}")
 
+        val type = intent.getStringExtra("type")
+        Log.d("ProductActivity", "$type")
+
         val db = CartDatabase(this)
         val cartList = db.readData()
         Log.d("ProductActivity","$cartList")
@@ -23,7 +26,7 @@ class ProductActivity : AppCompatActivity(){
 
         val recyclerView:RecyclerView = findViewById(R.id.recycleview)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false) as RecyclerView.LayoutManager?
-        val adapter= ProductAdapter(subDataObj.itemList, cartList)
+        val adapter= ProductAdapter(subDataObj.itemList, cartList, type)
         recyclerView.adapter = adapter
     }
 }
