@@ -9,10 +9,10 @@ import android.util.Log
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 
-// Aniket is great :) hello
+
 val DATABASE_NAME = "FarmFreshDB"
 
-class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,null,3){
+class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,null,4){
     private val token: SharedPreferences = context.getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
     private val emailHash = token.getString("EMAILHASH", "")
 
@@ -22,6 +22,7 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
     private val COL_PRICE = "PRICE"
     private val COL_SIZE = "SIZE"
     private val COL_COUNT = "COUNT"
+    private val COL_TYPE = "TYPE"
 
     override fun onOpen(db: SQLiteDatabase?) {
         super.onOpen(db)
@@ -38,6 +39,7 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
                 COL_NAME + " VARCHAR(256)," +
                 COL_PRICE + " VARCHAR(64)," +
                 COL_SIZE + " VARCHAR(64)," +
+                COL_TYPE + " VARCHAR(64)," +
                 COL_IMAGE + " VARCHAR(1024)," +
                 COL_COUNT + " VARCHAR(64))"
 
@@ -47,7 +49,7 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
         Log.d("CartDataBase", "Version Changed")
-        p0?.execSQL("DROP TABLE IF EXISTS CartItem")
+        p0?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(p0)
     }
 
@@ -59,6 +61,7 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
         cv.put(COL_PRICE, cartItem.price)
         cv.put(COL_IMAGE, cartItem.imageUrl)
         cv.put(COL_COUNT, cartItem.count)
+        cv.put(COL_TYPE, cartItem.type)
         val result = db.insert(TABLE_NAME,null, cv)
         db.close()
         return result
@@ -76,7 +79,8 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
                     result.getString(result.getColumnIndex(COL_IMAGE)),
                     result.getString(result.getColumnIndex(COL_SIZE)),
                     result.getString(result.getColumnIndex(COL_PRICE)),
-                    result.getString(result.getColumnIndex(COL_COUNT)))
+                    result.getString(result.getColumnIndex(COL_COUNT)),
+                    result.getString(result.getColumnIndex(COL_TYPE)))
                 cartList.add(cartItem)
             }while (result.moveToNext())
         }
@@ -96,11 +100,13 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
                 val size = result.getString(result.getColumnIndex(COL_SIZE))
                 val price = result.getString(result.getColumnIndex(COL_PRICE))
                 val count = result.getString(result.getColumnIndex(COL_COUNT))
+                val type = result.getString(result.getColumnIndex(COL_TYPE))
                 val tempJsonObj = JsonObject()
                 tempJsonObj.addProperty("name",name)
                 tempJsonObj.addProperty("size",size)
                 tempJsonObj.addProperty("price",price)
                 tempJsonObj.addProperty("count",count)
+                tempJsonObj.addProperty("type",type)
                 cartObjJson.add(countItems.toString(), tempJsonObj)
                 countItems += 1
             }while (result.moveToNext())

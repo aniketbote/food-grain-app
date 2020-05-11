@@ -52,6 +52,14 @@ object HelperUtils {
         val catDataObj = SubData(itemList, totalCount.toInt())
         return catDataObj
     }
+
+    fun getCost(data: MutableList<CartItem>): Int {
+        var total = 0
+        for(i in 0 until data.size){
+            total += (data[i].price.toInt() * data[i].count.toInt())
+        }
+        return total
+    }
 }
 
 
@@ -61,5 +69,5 @@ data class AllData(val itemList:List<Product>, val totalHashMap: HashMap<String,
 
 data class Product(val name:String, val description: String, val imageUrl:String, val size: String, val price:String, val availableQuantity:String): Serializable
 
-data class CartItem(val name:String, val imageUrl:String, val size: String, val price:String, val count:String)
+data class CartItem(val name:String, val imageUrl:String, val size: String, val price:String, val count:String, val type:String)
 
