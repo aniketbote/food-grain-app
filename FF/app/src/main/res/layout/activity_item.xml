@@ -90,7 +90,7 @@
             android:layout_marginTop="67sp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/btn_add_to_cart"
-            android:drawableLeft="@drawable/shopping"
+            android:drawableLeft="@drawable/shopping2"
             android:drawablePadding="4sp"
             android:paddingLeft="5sp"
             android:paddingRight="5sp"

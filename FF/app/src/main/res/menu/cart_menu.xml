@@ -9,7 +9,7 @@
 
     <item android:id="@+id/toolbar_search"
         android:title="Search"
-        android:icon="@drawable/ic_search_black_24dp"
+        android:icon="@drawable/searchicon"
         app:showAsAction ="always"
         app:actionViewClass="android.widget.SearchView"/>
 

@@ -21,7 +21,7 @@ class CartAdapter(private val context: Context, private val data:MutableList<Car
         val cost: TextView = rowView.findViewById(R.id.product_amount_cart)
         val count: ElegantNumberButton = rowView.findViewById(R.id.product_count_cart)
         val image:ImageView = rowView.findViewById(R.id.product_image_cart)
-        val size: TextView = rowView.findViewById(R.id.product_size_cart)
+//        val size: TextView = rowView.findViewById(R.id.product_size_cart)
 
 
     }
@@ -44,7 +44,7 @@ class CartAdapter(private val context: Context, private val data:MutableList<Car
         holder.cost.text = (item.price.toInt()*item.count.toInt()).toString()
         holder.count.number = item.count
         holder.image.loadImage(item.imageUrl)
-        holder.size.text = item.size
+//        holder.size.text = item.size
 
         holder.count.setOnValueChangeListener { view, oldValue, newValue ->
             Log.d("Product","Number for ${item.name} is $newValue")
