@@ -77,13 +77,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/fruits_normal" />
+                        android:src="@drawable/fruitsnormal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Fruits"
-                        android:textSize="16sp"
+                        android:textSize="17sp"
                         android:layout_gravity="center"
                         android:fontFamily="@font/alegreya_sans_medium"
                         android:textColor="@android:color/background_dark"/>
@@ -101,7 +101,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="97sp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/veg" />
+                            android:src="@drawable/vegg" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -132,7 +132,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/fruits" />
+                        android:src="@drawable/exfruits" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -141,7 +141,7 @@
                         android:textSize="16sp"
                         android:layout_gravity="center"
                         android:fontFamily="@font/alegreya_sans_medium"
-                        android:textColor="@android:color/background_dark"/>
+                        android:textColor="@android:color/black"/>
                 </androidx.cardview.widget.CardView>
 
 
@@ -156,7 +156,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="97sp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/exotic" />
+                        android:src="@drawable/exveg" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -184,7 +184,7 @@
                     android:id="@+id/grain_index"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/grains"
+                    android:src="@drawable/grain2"
                     android:scaleType="centerCrop"/>
 
                 <TextView

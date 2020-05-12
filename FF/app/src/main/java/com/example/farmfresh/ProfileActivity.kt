@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +29,7 @@ class ProfileActivity : AppCompatActivity(){
         val birthdate = token.getString("birthdate","")
         Log.d("ProfileActivity","${imageUri}")
 
-        val constraintLayout: ConstraintLayout = findViewById(R.id.constraintLayout_profile)
+        val constraintLayout: LinearLayout = findViewById(R.id.constraintLayout_profile)
         val imageView: CircleImageView = constraintLayout.findViewById(R.id.userphoto_profile)
 
         Glide.with(this).load("${imageUri}").into(imageView)
