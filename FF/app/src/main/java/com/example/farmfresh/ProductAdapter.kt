@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
@@ -30,6 +31,8 @@ class ProductAdapter(val productList: List<Product>,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val context = holder.img.context
+        val db = CartDatabase(context)
         val product:Product = productList[position]
         holder.name.text = product.name
         holder.price.text = product.price
@@ -37,7 +40,14 @@ class ProductAdapter(val productList: List<Product>,
 
         for(i in 0 until cartList.size){
             if(product.name == cartList[i].name){
-                holder.count.number = cartList[i].count
+                if(cartList[i].available.toInt() < cartList[i].count.toInt()){
+                    holder.count.number = cartList[i].available
+                    db.updateData(cartList[i].name, cartList[i].available)
+                    Toast.makeText(context, "Not Enough Quantity Available",Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    holder.count.number = cartList[i].count
+                }
                 holder.addToCart.visibility = View.INVISIBLE
                 holder.count.visibility = View.VISIBLE
             }
@@ -55,13 +65,10 @@ class ProductAdapter(val productList: List<Product>,
             holder.unavailable.visibility = View.VISIBLE
         }
         holder.img.loadImage(product.imageUrl)
-
-        val context = holder.img.context
         holder.addToCart.setOnClickListener {
             holder.count.number = 1.toString()
             Log.d("Product","Clicked ${product.name}, count = ${holder.count.number}")
-            val cartItemObj = CartItem(product.name,product.imageUrl, product.size, product.price, holder.count.number, type)
-            val db = CartDatabase(context)
+            val cartItemObj = CartItem(product.name,product.imageUrl, product.size, product.price, holder.count.number, type, product.availableQuantity)
             val result = db.insertData(cartItemObj)
             if(result == (-1).toLong()){
                 Log.d("ProductAdapter","Error in Inserting values")
@@ -97,7 +104,13 @@ class ProductAdapter(val productList: List<Product>,
             }
             if(newValue >= 1){
                 //update
-                db.updateData(product.name, newValue.toString())
+                if((product.availableQuantity.toInt() - newValue) < 0){
+                    Toast.makeText(context,"Not Enough Quantity Available",Toast.LENGTH_SHORT).show()
+                    holder.count.number = oldValue.toString()
+                }
+                else {
+                    db.updateData(product.name, newValue.toString())
+                }
             }
         }
 

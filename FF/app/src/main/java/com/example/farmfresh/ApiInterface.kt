@@ -10,9 +10,16 @@ import retrofit2.http.POST
 interface ApiInterface {
 
     @FormUrlEncoded
-    @POST("hello")
-    fun hello(
+    @POST("placeorder")
+    fun placeorder(
         @Field("cartList") cartList:JsonObject,
         @Field("emailHash") emailHash:String
     ):Call<PlaceOrderResponse>
+
+    @FormUrlEncoded
+    @POST("orderreceived")
+    fun orderreceived(
+        @Field("emailHash") emailHash:String
+    ):Call<PlaceOrderResponse>
+
 }

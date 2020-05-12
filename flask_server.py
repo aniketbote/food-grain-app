@@ -2,12 +2,18 @@ from flask import Flask, jsonify, request
 import json
 from pprint import pprint
 import os
+import random
+import string
+from datetime import date
 
 #Firebase realtime database
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
+cartList = []
+errorCode = 0
+itemDeficiency = ''
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:/Users/Aniket/Desktop/Aniket/food-grain-app/farmfresh-9c7fd-firebase-adminsdk-dx65j-9533ee02a1.json"
 cred = credentials.Certificate('farmfresh-9c7fd-firebase-adminsdk-dx65j-9533ee02a1.json')
@@ -19,58 +25,57 @@ firebase_admin.initialize_app(cred, {
 
 app = Flask(__name__)
 
-def checkForCurrentOrder(emHash):
-    ref = db.reference('all_orders/{}/current'.format(emHash))
-    if ref.get() == None:
-        return True
-    else:
-        return False,"No Pending "
 
-def segragateCart(cart_list):
-    segragateDict = {}
-    Fruits = []
-    Exotic_Fruits = []
-    Vegetables = []
-    Exotic_Vegetables = []
-    Foodgrains = []
-    for cart_item in cart_list:
-        if cart_item['type'] == "Fruits":
-            Fruits.append(cart_item)
-        elif cart_item['type'] == "Exotic_Fruits":
-            Exotic_Fruits.append(cart_item)
-        elif cart_item['type'] == "Vegetables":
-            Vegetables.append(cart_item)
-        elif cart_item['type'] == "Exotic_Vegetables":
-            Exotic_Vegetables.append(cart_item)
-        elif cart_item['type'] == "Foodgrains":
-            Foodgrains.append(cart_item)
+def generateOrderId():
+    chars = string.ascii_uppercase + string.digits
+    return ''.join(random.choice(chars) for _ in range(10))
+
+def updateData(current_value, cart_list, email_hash):
+    orderDict = {}
+    itemDict = {}
+    tempalldict = {}
+    orderId = generateOrderId()
+    totalAmount = 0
+    global errorCode
+    global itemDeficiency
+    errorCode = 0
+    itemDeficiency = ''
+
+    for item in cart_list:
+        tdict = {}
+        tdict['Count'] = item['count']
+        tdict['Amount'] = str(int(item['price']) * int(item['count']))
+        totalAmount += int(tdict['Amount'])
+        tempalldict[item['name']] = tdict
+
+        tempAQ = current_value[item['type']][item['name']]['Available Quantity']
+        if (int(tempAQ) - int(item['count'])) >= 0:
+            current_value[item['type']][item['name']]['Available Quantity'] = str(int(tempAQ) - int(item['count']))
         else:
-            print("Got Wrong Value")
-    if len(Fruits) > 0:
-        segragateDict["Fruits"] = Fruits
-    if len(Exotic_Fruits) > 0:
-        segragateDict["Exotic_Fruits"] = Exotic_Fruits
-    if len(Vegetables) > 0:
-        segragateDict["Vegetables"] = Vegetables
-    if len(Exotic_Vegetables) > 0:
-        segragateDict["Exotic_Vegetables"] = Exotic_Vegetables
-    if len(Foodgrains) > 0:
-        segragateDict["Foodgrains"] = Foodgrains
-    return segragateDict
+            errorCode = 1
+            itemDeficiency = itemDeficiency + item['name'] + ','
+    if errorCode == 1:
+        raise db.TransactionAbortedError("Transaction Failed")
 
-def getUpdateDict(seg_dict):
-    updateDict = {}
-    typeList = list(segDict.keys())
-    for type in typeList:
-        itemList = segDict[key]
-        for item in itemList:
-            updateDict['{}/{}/Available Quantity']
+    itemDict['Items'] = tempalldict
+    itemDict['Date of Order'] = date.today().strftime('%Y-%m-%d')
+    itemDict['Date of Completion'] = "PENDING"
+    itemDict['Total'] = totalAmount
+    orderDict[orderId] = itemDict
 
+    try:
+        orderRef = db.reference('all_orders/{}/current'.format(email_hash))
+        orderRef.set(orderDict)
+    except db.FirebaseError:
+        errorCode = 2
+        raise db.TransactionAbortedError("Transaction Failed")
 
+    # pprint(orderDict)
+    return current_value
 
-def updateDatabaseTransaction(cart_list):
-    segDict = segragateCart(cart_list)
-    updateDict = getUpdateDict(segDict)
+def transactionOp(current_value):
+    new_value = updateData(current_value, cartList, emhash_global)
+    return current_value
 
 
 
@@ -78,31 +83,59 @@ def updateDatabaseTransaction(cart_list):
 
 
 
-@app.route("/hello", methods = ['POST','GET'])
-def hello():
+
+@app.route("/placeorder", methods = ['POST','GET'])
+def placeorder():
+    global cartList
+    global emhash_global
     tdict = {}
     jsonString = request.form['cartList']
     emailHash = request.form['emailHash']
-    cartList = list(json.loads(jsonString).values())
-    print(cartList)
     print(emailHash)
-    currentOrderFlag = checkForCurrentOrder(emailHash)
-    #check for Pending order
-    if currentOrderFlag:
-        tdict['message'] = "You have a pending order"
-        return jsonify(tdict)
-        #No Pending Order
-    else:
-        #Executng transaction
-        updateDatabaseTransaction(cartList)
+    print('\n')
+    try:
+        tranRef = db.reference('all_items')
+        cartList = list(json.loads(jsonString).values())
+        emhash_global = emailHash
+        new_transRef = tranRef.transaction(transactionOp)
+        print("Transaction Completed")
+        tdict['message'] = "Ordered Successfully"
+        tdict['deficiency'] = ''
+        tdict['errorCode'] = errorCode
+    except db.TransactionAbortedError:
+        if errorCode == 1:
+            tdict['message'] = "Selected Items Unavailable"
+            tdict['deficiency'] = itemDeficiency
+            tdict['errorCode'] = errorCode
+        elif errorCode == 2:
+            tdict['message'] = "Some Error Ocuured"
+            tdict['deficiency'] = ''
+            tdict['errorCode'] = errorCode
+        elif errorCode == 0:
+            tdict['message'] = "Some Error Ocuured"
+            tdict['deficiency'] = ''
+            tdict['errorCode'] = 4
 
+        print("Transaction Failed")
 
-
-
-
-
-    tdict['hello'] = "hello from python"
     return jsonify(tdict)
+
+@app.route("/orderreceived", methods = ['POST','GET'])
+def orderreceived():
+    responseDict = {}
+    emailHash = request.form['emailHash']
+    currentref = db.reference('all_orders/{}/current'.format(emailHash))
+    orderData = currentref.get()
+    currentref.set({})
+    orderId = list(orderData.keys())[0]
+    itemDict = list(orderData.values())[0]
+    itemDict['Date of Completion'] = date.today().strftime('%Y-%m-%d')
+    previousref = db.reference('all_orders/{}/previous/{}'.format(emailHash, orderId))
+    previousref.set(itemDict)
+    responseDict['message'] = "Thank You for your Response"
+    responseDict['errorCode'] = 0
+    return jsonify(responseDict)
+
 
 
 if __name__ == "__main__":

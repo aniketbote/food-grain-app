@@ -20,13 +20,19 @@
             android:textSize="25sp"/>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/current_recycleview"
-            android:layout_width="360sp"
-            android:layout_height="557dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30sp"
-            android:scrollbars="vertical"
-            tools:listitem="@layout/current_order_item" />
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/current_recycleview"-->
+<!--            android:layout_width="360sp"-->
+<!--            android:layout_height="557dp"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginTop="30sp"-->
+<!--            android:scrollbars="vertical"-->
+<!--            tools:listitem="@layout/current_order_item" />-->
+
+        <Button
+            android:id="@+id/receivedOrder_current"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I recieved order" />
 
 </LinearLayout>
