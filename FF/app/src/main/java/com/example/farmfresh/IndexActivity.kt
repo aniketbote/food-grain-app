@@ -9,6 +9,7 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -23,6 +24,7 @@ import com.synnapps.carouselview.ImageListener
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
+
 
 var cartCount:Int = 0
 lateinit var itemText:TextView
@@ -110,6 +112,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
 
         fruit_index.setOnClickListener {
+
             Log.d("IndexActivity", "Clicked Fruits")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
             Ref
@@ -328,6 +331,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
 
     }
+
 
 }
 
