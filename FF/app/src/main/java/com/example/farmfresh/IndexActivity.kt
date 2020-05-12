@@ -3,6 +3,9 @@ package com.example.farmfresh
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -28,13 +31,15 @@ import kotlinx.android.synthetic.main.activity_toolbar.*
 
 var cartCount:Int = 0
 lateinit var itemText:TextView
-
+var emailHashGlobal: String = ""
+lateinit var indexActivityGlobal: Intent
 
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
     lateinit var featureImageList:List<String>
     lateinit var cartList:MutableList<CartItem>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        indexActivityGlobal = this.intent
         setContentView(R.layout.activity_index)
 
         val db = CartDatabase(this)
@@ -42,6 +47,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         Log.d("ProductActivity","$cartList")
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
+        emailHashGlobal = token.getString("EMAILHASH", "").toString()
         val name = token.getString("name","")
         val photoUrl = token.getString("imageUri","").toString()
         Log.d("IndexActivity","Name = ${name}")
@@ -81,8 +87,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
 
         setSupportActionBar(toolbar)
-        val actionBar= supportActionBar
-       // actionBar?.title = "Farm Fresh"
 
         val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
             this,
@@ -124,7 +128,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        val itemList = HelperUtils.getList(p0)
+                        val itemList = HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Fruits"))
                         val fruitIntent = Intent(this@IndexActivity, ProductActivity::class.java)
@@ -148,7 +152,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        val itemList = HelperUtils.getList(p0)
+                        val itemList = HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Exotic_Fruits"))
                         val exoticFruitIntent = Intent(this@IndexActivity, ProductActivity::class.java)
@@ -173,7 +177,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        val itemList = HelperUtils.getList(p0)
+                        val itemList = HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Vegetables"))
                         val vegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
@@ -196,7 +200,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        val itemList = HelperUtils.getList(p0)
+                        val itemList = HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Exotic_Vegetables"))
                         val exoticVegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
@@ -219,7 +223,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        val itemList = HelperUtils.getList(p0)
+                        val itemList = HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
                         val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Foodgrains"))
                         val foodgrainIntent = Intent(this@IndexActivity, ProductActivity::class.java)
@@ -282,13 +286,54 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             }
             R.id.current_order -> {
                 Log.d("IndexActivity","Pressed Current Orders")
-                val currentOrdersIntent = Intent(this, CurrentOrdersActivity::class.java)
-                startActivity(currentOrdersIntent)
+                val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/${emailHashGlobal}/current")
+                currentRef.addValueEventListener(object : ValueEventListener{
+                    override fun onCancelled(p0: DatabaseError) {
+                        Log.d("IndexActivity","Error occured: ${p0}")
+                        return
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        Log.d("IndexActivity", "${p0}")
+                        if(p0.value == null){
+                            val pref = this@IndexActivity.getSharedPreferences(
+                                "UserSharedPreferences",
+                                Context.MODE_PRIVATE
+                            )
+                            val editor = pref.edit()
+                            editor.putString("pendingOrder", false.toString())
+                            editor.commit()
+                        }
+                        val orderList = HelperUtils.getOrderList(p0)
+                        val orderListObj = OrderList(orderList)
+                        Log.d("IndexActivity","${orderList}")
+                        val currentOrdersIntent = Intent(this@IndexActivity, CurrentOrdersActivity::class.java)
+                        currentOrdersIntent.putExtra("orderListObj",orderListObj)
+                        startActivity(currentOrdersIntent)
+                    }
+
+                })
             }
             R.id.previous_orders -> {
                 Log.d("IndexActivity","Pressed Previous Orders")
-                val previousOrdersIntent = Intent(this, PreviousOrdersActivity::class.java)
-                startActivity(previousOrdersIntent)
+                val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/${emailHashGlobal}/previous")
+                currentRef.addValueEventListener(object : ValueEventListener{
+                    override fun onCancelled(p0: DatabaseError) {
+                        Log.d("IndexActivity","Error occured: ${p0}")
+                        return
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        Log.d("IndexActivity", "${p0}")
+                        val orderList = HelperUtils.getOrderList(p0)
+                        val orderListObj = OrderList(orderList)
+                        Log.d("IndexActivity","${orderList}")
+                        val previousOrdersIntent = Intent(this@IndexActivity, PreviousOrdersActivity::class.java)
+                        previousOrdersIntent.putExtra("orderListObj",orderListObj)
+                        startActivity(previousOrdersIntent)
+                    }
+
+                })
             }
             R.id.support -> {
                 Log.d("IndexActivity","Pressed Support")
@@ -320,10 +365,10 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
+        Log.d("Back","IndexActivity")
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
 
             drawer_layout.closeDrawer(GravityCompat.START)
-
         }
         else
         {

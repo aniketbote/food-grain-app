@@ -22,7 +22,24 @@ fun ImageView.loadImage(uri: String?) {
 }
 
 object HelperUtils {
-    fun getList(p0: DataSnapshot): MutableList<Product> {
+    fun getOrderList(p0: DataSnapshot): MutableList<Order> {
+        val orderItemList = mutableListOf<OrderItem>()
+        val finalList = mutableListOf<Order>()
+        for(order in p0.children){
+            val orderId = order.key.toString()
+            val dateofCompletion = order.child("Date of Completion").value.toString()
+            val dateofCreation = order.child("Date of Order").value.toString()
+            val total = order.child("Total").value.toString()
+            for (item in order.child("Items").children){
+                val orderitemObj = OrderItem(item.key.toString(),item.child("Amount").value.toString(),item.child("Count").value.toString())
+                orderItemList.add(orderitemObj)
+            }
+            val orderObj = Order(orderId,dateofCreation,dateofCompletion,orderItemList,total)
+            finalList.add(orderObj)
+        }
+        return finalList
+    }
+    fun getAllItemsList(p0: DataSnapshot): MutableList<Product> {
         val finalList = mutableListOf<Product>()
         for (itemName in p0.children) {
             val productObj = Product(
@@ -63,11 +80,4 @@ object HelperUtils {
 }
 
 
-data class SubData(val itemList:List<Product>, val totalCount:Int): Serializable
-
-data class AllData(val itemList:List<Product>, val totalHashMap: HashMap<String, String>, val featureList: List<String>): Serializable
-
-data class Product(val name:String, val description: String, val imageUrl:String, val size: String, val price:String, val availableQuantity:String): Serializable
-
-data class CartItem(val name:String, val imageUrl:String, val size: String, val price:String, val count:String, val type:String, val available:String)
 

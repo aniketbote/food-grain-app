@@ -43,7 +43,7 @@ class LoadingActivity : AppCompatActivity() {
                 }
                 override fun onDataChange(p0: DataSnapshot) {
                     Log.d("LoadingActivity", "${p0}")
-                    val finalList = HelperUtils.getList(p0)
+                    val finalList = HelperUtils.getAllItemsList(p0)
                     Log.d("LoadingActivity","finalList Created: ${finalList}")
 
 

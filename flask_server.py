@@ -5,6 +5,7 @@ import os
 import random
 import string
 from datetime import date
+import time
 
 #Firebase realtime database
 import firebase_admin
@@ -112,28 +113,32 @@ def placeorder():
             tdict['deficiency'] = ''
             tdict['errorCode'] = errorCode
         elif errorCode == 0:
-            tdict['message'] = "Some Error Ocuured"
+            tdict['message'] = "Some Error Ocuured Try again later"
             tdict['deficiency'] = ''
-            tdict['errorCode'] = 4
-
+            tdict['errorCode'] = 3
         print("Transaction Failed")
 
     return jsonify(tdict)
 
 @app.route("/orderreceived", methods = ['POST','GET'])
 def orderreceived():
-    responseDict = {}
-    emailHash = request.form['emailHash']
-    currentref = db.reference('all_orders/{}/current'.format(emailHash))
-    orderData = currentref.get()
-    currentref.set({})
-    orderId = list(orderData.keys())[0]
-    itemDict = list(orderData.values())[0]
-    itemDict['Date of Completion'] = date.today().strftime('%Y-%m-%d')
-    previousref = db.reference('all_orders/{}/previous/{}'.format(emailHash, orderId))
-    previousref.set(itemDict)
-    responseDict['message'] = "Thank You for your Response"
-    responseDict['errorCode'] = 0
+    try:
+        responseDict = {}
+        emailHash = request.form['emailHash']
+        currentref = db.reference('all_orders/{}/current'.format(emailHash))
+        orderData = currentref.get()
+        currentref.set({})
+        orderId = list(orderData.keys())[0]
+        itemDict = list(orderData.values())[0]
+        itemDict['Date of Completion'] = date.today().strftime('%Y-%m-%d')
+        previousref = db.reference('all_orders/{}/previous/{}'.format(emailHash, orderId))
+        previousref.set(itemDict)
+        responseDict['message'] = "Thank You for your Response"
+        responseDict['errorCode'] = 0
+
+    except:
+        responseDict['message'] = "Some error Occured. Try again later"
+        responseDict['errorCode'] = 2
     return jsonify(responseDict)
 
 
