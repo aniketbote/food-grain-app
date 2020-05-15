@@ -8,7 +8,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/current_order_view"
+        android:background="@drawable/previous_order_view"
         android:textAlignment="textStart"
         android:textColor="@android:color/darker_gray"
         android:paddingLeft="10sp"
@@ -22,31 +22,39 @@
 
 
         <TextView
-            android:id="@+id/order_number_prev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="Order Number"
+            android:text="Order Number:"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="12sp"/>
+            android:layout_marginLeft="5sp"/>
 
         <TextView
-            android:id="@+id/order_date_prev"
+            android:id="@+id/order_number_prev"
+            android:layout_width="60sp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="1234"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5sp"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="Order Date"
+            android:text="Status:"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="12sp"/>
+            android:layout_marginLeft="5sp"/>
 
         <TextView
             android:id="@+id/order_status_prev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="Order Status"
+            android:text="Delivered"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="12sp"/>
+            android:layout_marginLeft="5sp"/>
+
 
 
 

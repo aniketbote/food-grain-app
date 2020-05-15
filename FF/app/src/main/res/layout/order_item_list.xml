@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80sp"
+    android:layout_marginTop="10sp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/product_image_order"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20sp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/home"/>
+
+    <TextView
+        android:id="@+id/product_name_order"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/product_image_order"
+        android:text="Product Name" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/product_name_order"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20sp"
+        android:text="Qty: "/>
+
+
+    <TextView
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/product_name_order"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="52sp"
+        android:id="@+id/product_count_order"/>
+
+    <TextView
+        android:id="@+id/product_amount_cart"
+        android:layout_width="55sp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/product_count_order"
+        android:text="Amount"
+        android:layout_marginLeft="35sp"/>
+
+
+</RelativeLayout>

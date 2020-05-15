@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <include
+        android:layout_height="55sp"
+        android:layout_width="match_parent"
+        layout="@layout/activity_toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_marginTop="70sp"
+        android:orientation="horizontal">
+
+    <TextView
+        android:layout_marginLeft="10sp"
+        android:layout_width="130sp"
+        android:layout_height="40sp"
+        android:text = "Order Number :"
+        android:textSize="16sp"/>
+
+
+        <TextView
+            android:layout_width="70sp"
+            android:layout_height="40sp"
+            android:id="@+id/order_number"
+            android:text="123"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=" Delivery Status:"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="65sp"
+            android:layout_height="match_parent"
+            android:id="@+id/order_status"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Date : "
+        android:id="@+id/orderdate"
+        android:layout_marginTop="110sp"
+        android:layout_marginLeft="10sp"/>
+    <TextView
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110sp"
+        android:text="1/1/2020"
+        android:layout_toRightOf="@id/orderdate"
+        android:id="@+id/order_date"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Details : "
+        android:layout_marginTop="140sp"
+        android:layout_marginLeft="10sp"/>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:scrollbars= "vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="500sp"
+        android:layout_marginTop="170sp"
+        android:layout_marginLeft="12sp"
+        tools:listitem="@layout/order_item_list"/>
+
+</RelativeLayout>
