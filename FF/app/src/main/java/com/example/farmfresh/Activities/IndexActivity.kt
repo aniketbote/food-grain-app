@@ -1,22 +1,22 @@
-package com.example.farmfresh
+package com.example.farmfresh.Activities
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
+import com.example.farmfresh.*
+import com.example.farmfresh.Database.CartDatabase
+import com.example.farmfresh.Model.AllData
+import com.example.farmfresh.Model.CartItem
+import com.example.farmfresh.Model.OrderList
+import com.example.farmfresh.Utilities.HelperUtils
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -128,9 +128,14 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        val itemList = HelperUtils.getAllItemsList(p0)
+                        val itemList =
+                            HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
-                        val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Fruits"))
+                        val subDataObj =
+                            HelperUtils.getCatObj(
+                                itemList,
+                                allDataObj.totalHashMap.getValue("Fruits")
+                            )
                         val fruitIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         fruitIntent.putExtra("subDataObj",subDataObj)
                         fruitIntent.putExtra("type","Fruits")
@@ -152,9 +157,14 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        val itemList = HelperUtils.getAllItemsList(p0)
+                        val itemList =
+                            HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
-                        val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Exotic_Fruits"))
+                        val subDataObj =
+                            HelperUtils.getCatObj(
+                                itemList,
+                                allDataObj.totalHashMap.getValue("Exotic_Fruits")
+                            )
                         val exoticFruitIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         exoticFruitIntent.putExtra("subDataObj",subDataObj)
                         exoticFruitIntent.putExtra("type","Exotic_Fruits")
@@ -177,9 +187,14 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        val itemList = HelperUtils.getAllItemsList(p0)
+                        val itemList =
+                            HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
-                        val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Vegetables"))
+                        val subDataObj =
+                            HelperUtils.getCatObj(
+                                itemList,
+                                allDataObj.totalHashMap.getValue("Vegetables")
+                            )
                         val vegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         vegIntent.putExtra("subDataObj",subDataObj)
                         vegIntent.putExtra("type","Vegetables")
@@ -200,9 +215,14 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        val itemList = HelperUtils.getAllItemsList(p0)
+                        val itemList =
+                            HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
-                        val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Exotic_Vegetables"))
+                        val subDataObj =
+                            HelperUtils.getCatObj(
+                                itemList,
+                                allDataObj.totalHashMap.getValue("Exotic_Vegetables")
+                            )
                         val exoticVegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         exoticVegIntent.putExtra("subDataObj",subDataObj)
                         exoticVegIntent.putExtra("type","Exotic_Vegetables")
@@ -223,9 +243,14 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        val itemList = HelperUtils.getAllItemsList(p0)
+                        val itemList =
+                            HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
-                        val subDataObj = HelperUtils.getCatObj(itemList, allDataObj.totalHashMap.getValue("Foodgrains"))
+                        val subDataObj =
+                            HelperUtils.getCatObj(
+                                itemList,
+                                allDataObj.totalHashMap.getValue("Foodgrains")
+                            )
                         val foodgrainIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         foodgrainIntent.putExtra("subDataObj",subDataObj)
                         foodgrainIntent.putExtra("type","Foodgrains")
@@ -263,11 +288,15 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
 
         if(cartList.size == 0){
-            itemText = count.findViewById(R.id.item_count)
+            itemText = count.findViewById(
+                R.id.item_count
+            )
             itemText.visibility = View.INVISIBLE
         }
         if(cartList.size > 0) {
-            itemText = count.findViewById(R.id.item_count)
+            itemText = count.findViewById(
+                R.id.item_count
+            )
             itemText.visibility = View.VISIBLE
             cartCount = cartList.size
             itemText.text = cartCount.toString()
@@ -279,14 +308,14 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(MenuItem: MenuItem): Boolean {
         when (MenuItem.itemId)
         {
-            R.id.home->{
+            R.id.home ->{
                 Log.d("IndexActivity","Pressed Home Button")
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             }
             R.id.current_order -> {
                 Log.d("IndexActivity","Pressed Current Orders")
-                val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/${emailHashGlobal}/current")
+                val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHashGlobal/current")
                 currentRef.addValueEventListener(object : ValueEventListener{
                     override fun onCancelled(p0: DatabaseError) {
                         Log.d("IndexActivity","Error occured: ${p0}")
@@ -304,8 +333,10 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                             editor.putString("pendingOrder", false.toString())
                             editor.commit()
                         }
-                        val orderList = HelperUtils.getOrderList(p0)
-                        val orderListObj = OrderList(orderList)
+                        val orderList =
+                            HelperUtils.getOrderList(p0)
+                        val orderListObj =
+                            OrderList(orderList)
                         Log.d("IndexActivity","${orderList}")
                         val currentOrdersIntent = Intent(this@IndexActivity, CurrentOrdersActivity::class.java)
                         currentOrdersIntent.putExtra("orderListObj",orderListObj)
@@ -316,7 +347,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             }
             R.id.previous_orders -> {
                 Log.d("IndexActivity","Pressed Previous Orders")
-                val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/${emailHashGlobal}/previous")
+                val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHashGlobal/previous")
                 currentRef.addValueEventListener(object : ValueEventListener{
                     override fun onCancelled(p0: DatabaseError) {
                         Log.d("IndexActivity","Error occured: ${p0}")
@@ -325,8 +356,10 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
                     override fun onDataChange(p0: DataSnapshot) {
                         Log.d("IndexActivity", "${p0}")
-                        val orderList = HelperUtils.getOrderList(p0)
-                        val orderListObj = OrderList(orderList)
+                        val orderList =
+                            HelperUtils.getOrderList(p0)
+                        val orderListObj =
+                            OrderList(orderList)
                         Log.d("IndexActivity","${orderList}")
                         val previousOrdersIntent = Intent(this@IndexActivity, PreviousOrdersActivity::class.java)
                         previousOrdersIntent.putExtra("orderListObj",orderListObj)
@@ -353,7 +386,8 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                 editor.putString("imageUri","")
                 editor.commit()
                 Log.d("IndexActivity","User Info Deleted from Shared preferences")
-                val loginIntent = Intent(this,LoginActivity::class.java)
+                val loginIntent = Intent(this,
+                    LoginActivity::class.java)
                 loginIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(loginIntent)
             }

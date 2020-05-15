@@ -1,4 +1,4 @@
-package com.example.farmfresh
+package com.example.farmfresh.Activities
 
 import android.content.Context
 import android.content.Intent
@@ -8,14 +8,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.farmfresh.Utilities.HelperUtils
+import com.example.farmfresh.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_login.*
-import java.io.Serializable
-import java.security.MessageDigest
 
 class LoginActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +66,8 @@ class LoginActivity : AppCompatActivity(){
                     return@addOnCompleteListener
                 }
                 Log.d("LoginActivity","Login Successful : ${it}")
-                val emHash = HelperUtils.generatehash(email)
+                val emHash =
+                    HelperUtils.generatehash(email)
                 val ref = FirebaseDatabase.getInstance().getReference("/users/${emHash}")
                 ref.addValueEventListener(object : ValueEventListener{
                     override fun onCancelled(p0: DatabaseError) {

@@ -1,4 +1,4 @@
-package com.example.farmfresh
+package com.example.farmfresh.Model
 
 import java.io.Serializable
 
@@ -14,7 +14,7 @@ data class Product(val name:String, val description: String, val imageUrl:String
 
 data class CartItem(val name:String, val imageUrl:String, val size: String, val price:String, val count:String, val type:String, val available:String)
 
-data class OrderItem(val name: String, val amount:String, val count:String): Serializable
+data class OrderItem(val name: String, val amount:String, val count:String, val imageUrl: String): Serializable
 
 data class Order(val orderId:String, val orderCreatedDate:String, val orderCompletionDate:String, val orderItems:List<OrderItem>, val total: String): Serializable
 

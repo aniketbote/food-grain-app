@@ -1,21 +1,24 @@
-package com.example.farmfresh
+package com.example.farmfresh.Adapters
 
-import android.content.Context
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-import java.util.stream.IntStream.range
+import com.example.farmfresh.Activities.cartCount
+import com.example.farmfresh.Activities.itemText
+import com.example.farmfresh.Database.CartDatabase
+import com.example.farmfresh.Model.CartItem
+import com.example.farmfresh.Model.Product
+import com.example.farmfresh.R
+import com.example.farmfresh.Utilities.loadImage
 
 class ProductAdapter(val productList: List<Product>,
                      val cartList:MutableList<CartItem>,
@@ -33,7 +36,7 @@ class ProductAdapter(val productList: List<Product>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val context = holder.img.context
         val db = CartDatabase(context)
-        val product:Product = productList[position]
+        val product: Product = productList[position]
         holder.name.text = product.name
         holder.price.text = product.price
         holder.size.text = product.size
@@ -66,15 +69,23 @@ class ProductAdapter(val productList: List<Product>,
         }
         holder.img.loadImage(product.imageUrl)
         holder.addToCart.setOnClickListener {
+            holder.addToCart.visibility = View.GONE
             holder.count.number = 1.toString()
             Log.d("Product","Clicked ${product.name}, count = ${holder.count.number}")
-            val cartItemObj = CartItem(product.name,product.imageUrl, product.size, product.price, holder.count.number, type, product.availableQuantity)
+            val cartItemObj = CartItem(
+                product.name,
+                product.imageUrl,
+                product.size,
+                product.price,
+                holder.count.number,
+                type,
+                product.availableQuantity
+            )
             val result = db.insertData(cartItemObj)
             if(result == (-1).toLong()){
                 Log.d("ProductAdapter","Error in Inserting values")
                 return@setOnClickListener
             }
-            holder.addToCart.visibility = View.INVISIBLE
             holder.count.visibility = View.VISIBLE
             // SOME CODE HERE TO UPDATE THE NUMBER OF ITEMS IN CART
             cartCount += 1

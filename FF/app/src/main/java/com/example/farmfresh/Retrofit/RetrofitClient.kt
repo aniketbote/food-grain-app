@@ -1,4 +1,4 @@
-package com.example.farmfresh
+package com.example.farmfresh.Retrofit
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

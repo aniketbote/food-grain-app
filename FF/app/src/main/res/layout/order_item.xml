@@ -4,15 +4,17 @@
     android:layout_width="330sp"
     android:layout_height="50sp"
     android:layout_marginBottom="10sp">
+
     <Button
+        android:id="@+id/previousOrder_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/previous_order_view"
-        android:textAlignment="textStart"
-        android:textColor="@android:color/darker_gray"
-        android:paddingLeft="10sp"
         android:drawableRight="@drawable/ic_arrow_forward_black_24dp"
-        android:paddingRight="20sp" />
+        android:paddingLeft="10sp"
+        android:paddingRight="20sp"
+        android:textAlignment="textStart"
+        android:textColor="@android:color/darker_gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,13 +22,14 @@
         android:orientation="horizontal">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="Order Number"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="5sp"/>
+        <TextView
+            android:id="@+id/orderNo_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5sp"
+            android:gravity="center_vertical"
+            android:text="Order Number" />
 
         <TextView
             android:id="@+id/order_number_prev"

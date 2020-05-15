@@ -1,15 +1,17 @@
-package com.example.farmfresh
+package com.example.farmfresh.Activities
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.farmfresh.Model.AllData
+import com.example.farmfresh.Utilities.HelperUtils
+import com.example.farmfresh.R
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.io.Serializable
 
 
 class LoadingActivity : AppCompatActivity() {
@@ -43,7 +45,8 @@ class LoadingActivity : AppCompatActivity() {
                 }
                 override fun onDataChange(p0: DataSnapshot) {
                     Log.d("LoadingActivity", "${p0}")
-                    val finalList = HelperUtils.getAllItemsList(p0)
+                    val finalList =
+                        HelperUtils.getAllItemsList(p0)
                     Log.d("LoadingActivity","finalList Created: ${finalList}")
 
 
@@ -78,7 +81,12 @@ class LoadingActivity : AppCompatActivity() {
                                     }
 
                                     Log.d("LoadingActivity","Creating dataObj")
-                                    val dataObj = AllData(finalList, totalHashMap, featureList)
+                                    val dataObj =
+                                        AllData(
+                                            finalList,
+                                            totalHashMap,
+                                            featureList
+                                        )
                                     val indexIntent = Intent(this@LoadingActivity, IndexActivity::class.java)
                                     indexIntent.putExtra("dataObj", dataObj)
                                     Log.d("LoadingActivity", "User Logged In : Starting IndexActivity")

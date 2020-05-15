@@ -1,4 +1,4 @@
-package com.example.farmfresh
+package com.example.farmfresh.Activities
 
 import android.content.Context
 import android.content.Intent
@@ -6,19 +6,23 @@ import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.widget.ListView
-import android.widget.SimpleAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.farmfresh.*
+import com.example.farmfresh.Adapters.CartAdapter
+import com.example.farmfresh.Database.CartDatabase
+import com.example.farmfresh.Model.OrderList
+import com.example.farmfresh.Model.PlaceOrderResponse
+import com.example.farmfresh.Retrofit.RetrofitClient
+import com.example.farmfresh.Utilities.HelperUtils
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_cart.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,7 +35,9 @@ class CartActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
 
-        cartTotal = findViewById(R.id.cart_amount)
+        cartTotal = findViewById(
+            R.id.cart_amount
+        )
 
         val db = CartDatabase(this)
         val cartList = db.readData()
@@ -47,7 +53,9 @@ class CartActivity : AppCompatActivity(){
         Log.d("CartActivity","$pendingOrder")
         Log.d("CartActivity","$cartList")
 
-        cartTotal.text = HelperUtils.getCost(cartList).toString()
+        cartTotal.text = HelperUtils.getCost(
+            cartList
+        ).toString()
 
         val recycleView: RecyclerView = findViewById(R.id.cart_list)
         recycleView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL,false) as RecyclerView.LayoutManager?
@@ -108,7 +116,7 @@ class CartActivity : AppCompatActivity(){
                             cartCount = 0
                             itemText.visibility = View.INVISIBLE
 
-                            val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/${emailHashGlobal}/current")
+                            val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHashGlobal/current")
                             currentRef.addValueEventListener(object : ValueEventListener {
                                 override fun onCancelled(p0: DatabaseError) {
                                     Log.d("CartActivity","Error occured: ${p0}")
@@ -116,15 +124,21 @@ class CartActivity : AppCompatActivity(){
                                 }
 
                                 override fun onDataChange(p0: DataSnapshot) {
-                                    val orderList = HelperUtils.getOrderList(p0)
-                                    val orderListObj = OrderList(orderList)
+                                    val orderList =
+                                        HelperUtils.getOrderList(
+                                            p0
+                                        )
+                                    val orderListObj =
+                                        OrderList(
+                                            orderList
+                                        )
                                     Log.d("CartActivity","${orderList}")
                                     val currentOrdersIntent = Intent(this@CartActivity, CurrentOrdersActivity::class.java)
                                     currentOrdersIntent.putExtra("orderListObj",orderListObj)
                                     currentOrdersIntent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
-                                    dialog.dismiss()
                                     Toast.makeText(this@CartActivity,"${response.body()?.message}",Toast.LENGTH_SHORT).show()
-                                    startActivity(indexActivityGlobal)
+                                    startActivity(currentOrdersIntent)
+                                    dialog.dismiss()
                                     finish()
                                 }
                             })
@@ -155,14 +169,17 @@ class CartActivity : AppCompatActivity(){
                     }
 
                 })
+
         }
 
     }
 
+
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if(keyCode == KeyEvent.KEYCODE_BACK){
             Log.d("Back","CartActivity")
-            val indexIntent = indexActivityGlobal
+            val indexIntent =
+                indexActivityGlobal
             indexIntent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
             indexIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(indexIntent)

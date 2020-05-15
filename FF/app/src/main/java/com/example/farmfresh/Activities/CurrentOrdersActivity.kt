@@ -1,16 +1,22 @@
-package com.example.farmfresh
+package com.example.farmfresh.Activities
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
-import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.farmfresh.*
+import com.example.farmfresh.Adapters.OrderAdapter
+import com.example.farmfresh.Model.Order
+import com.example.farmfresh.Model.OrderList
+import com.example.farmfresh.Model.PlaceOrderResponse
+import com.example.farmfresh.Retrofit.RetrofitClient
 import kotlinx.android.synthetic.main.activity_current.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,6 +34,16 @@ class CurrentOrdersActivity : AppCompatActivity(){
 
         val orderListObj = intent.getSerializableExtra("orderListObj") as OrderList
         Log.d("CurrentActivity","${orderListObj.orderList}")
+        val recycleView: RecyclerView = findViewById(R.id.current_recycler)
+        recycleView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL,false) as RecyclerView.LayoutManager?
+        val adapter = OrderAdapter(
+            this,
+            orderListObj.orderList as MutableList<Order>
+        )
+        recycleView.adapter = adapter
+
+
+
 
         receivedOrder_current.setOnClickListener {
             if(pendingOrder == false.toString()){
@@ -71,7 +87,10 @@ class CurrentOrdersActivity : AppCompatActivity(){
                             editor.putString("pendingOrder", false.toString())
                             editor.commit()
                             Toast.makeText(this@CurrentOrdersActivity, "${response.body()?.message}", Toast.LENGTH_SHORT).show()
-                            val orderListObj = OrderList(mutableListOf())
+                            val orderListObj =
+                                OrderList(
+                                    mutableListOf()
+                                )
                             val currentOrdersIntent = Intent(this@CurrentOrdersActivity, CurrentOrdersActivity::class.java)
                             currentOrdersIntent.putExtra("orderListObj",orderListObj)
                             currentOrdersIntent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
@@ -92,7 +111,8 @@ class CurrentOrdersActivity : AppCompatActivity(){
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if(keyCode == KeyEvent.KEYCODE_BACK){
-            val indexIntent = indexActivityGlobal
+            val indexIntent =
+                indexActivityGlobal
             indexIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(indexIntent)
             finish()

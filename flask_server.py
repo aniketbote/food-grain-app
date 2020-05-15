@@ -45,6 +45,7 @@ def updateData(current_value, cart_list, email_hash):
     for item in cart_list:
         tdict = {}
         tdict['Count'] = item['count']
+        tdict['Image'] = item['image']
         tdict['Amount'] = str(int(item['price']) * int(item['count']))
         totalAmount += int(tdict['Amount'])
         tempalldict[item['name']] = tdict

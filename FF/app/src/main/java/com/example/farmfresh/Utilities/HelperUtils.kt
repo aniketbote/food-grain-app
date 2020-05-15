@@ -1,12 +1,13 @@
-package com.example.farmfresh
+package com.example.farmfresh.Utilities
 
 import android.util.Log
 import android.util.Patterns
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.farmfresh.Model.*
+import com.example.farmfresh.R
 import com.google.firebase.database.DataSnapshot
-import java.io.Serializable
 import java.security.MessageDigest
 
 
@@ -31,10 +32,21 @@ object HelperUtils {
             val dateofCreation = order.child("Date of Order").value.toString()
             val total = order.child("Total").value.toString()
             for (item in order.child("Items").children){
-                val orderitemObj = OrderItem(item.key.toString(),item.child("Amount").value.toString(),item.child("Count").value.toString())
+                val orderitemObj = OrderItem(
+                    item.key.toString(),
+                    item.child("Amount").value.toString(),
+                    item.child("Count").value.toString(),
+                    item.child("Image").value.toString()
+                )
                 orderItemList.add(orderitemObj)
             }
-            val orderObj = Order(orderId,dateofCreation,dateofCompletion,orderItemList,total)
+            val orderObj = Order(
+                orderId,
+                dateofCreation,
+                dateofCompletion,
+                orderItemList,
+                total
+            )
             finalList.add(orderObj)
         }
         return finalList
@@ -48,7 +60,8 @@ object HelperUtils {
                 itemName.child("Image").value.toString(),
                 itemName.child("Size").value.toString(),
                 itemName.child("Price").value.toString(),
-                itemName.child("Available Quantity").value.toString())
+                itemName.child("Available Quantity").value.toString()
+            )
             finalList.add(productObj)
         }
         return finalList
@@ -66,7 +79,8 @@ object HelperUtils {
         return Patterns.EMAIL_ADDRESS.toRegex().matches(email)
     }
     fun getCatObj(itemList:List<Product>, totalCount:String): SubData {
-        val catDataObj = SubData(itemList, totalCount.toInt())
+        val catDataObj =
+            SubData(itemList, totalCount.toInt())
         return catDataObj
     }
 

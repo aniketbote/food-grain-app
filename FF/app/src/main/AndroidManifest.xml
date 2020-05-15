@@ -13,23 +13,24 @@
         android:supportsRtl="true"
         tools:replace="android:theme"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".LoadingActivity"
+        <activity android:name=".Activities.LoadingActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".AddAutoActivity"></activity>
-        <activity android:name=".IndexActivity"></activity>
-        <activity android:name=".CurrentOrdersActivity"></activity>
-        <activity android:name=".PreviousOrdersActivity"></activity>
-        <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".SupportActivity"></activity>
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".ProductActivity"></activity>
-        <activity android:name=".CartActivity"></activity>
+        <activity android:name=".Activities.LoginActivity"></activity>
+        <activity android:name=".Activities.AddAutoActivity"></activity>
+        <activity android:name=".Activities.IndexActivity"></activity>
+        <activity android:name=".Activities.CurrentOrdersActivity"></activity>
+        <activity android:name=".Activities.PreviousOrdersActivity"></activity>
+        <activity android:name=".Activities.ProfileActivity"></activity>
+        <activity android:name=".Activities.SupportActivity"></activity>
+        <activity android:name=".Activities.RegisterActivity"></activity>
+        <activity android:name=".Activities.ProductActivity"></activity>
+        <activity android:name=".Activities.CartActivity"></activity>
+        <activity android:name=".Activities.OrderDetailActivity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

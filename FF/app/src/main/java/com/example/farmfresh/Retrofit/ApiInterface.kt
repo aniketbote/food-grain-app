@@ -1,6 +1,6 @@
-package com.example.farmfresh
+package com.example.farmfresh.Retrofit
 
-import com.google.gson.JsonArray
+import com.example.farmfresh.Model.PlaceOrderResponse
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.http.Field

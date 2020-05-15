@@ -1,23 +1,22 @@
-package com.example.farmfresh
+package com.example.farmfresh.Activities
 
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.util.Patterns
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import com.example.farmfresh.Utilities.HelperUtils
+import com.example.farmfresh.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register.*
-import java.security.MessageDigest
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
@@ -61,7 +60,8 @@ class RegisterActivity : AppCompatActivity() {
 
         login_registration.setOnClickListener {
             Log.d( "RegisterActivity","Clicked Login Button")
-            val loginIntent = Intent(this,LoginActivity::class.java)
+            val loginIntent = Intent(this,
+                LoginActivity::class.java)
             startActivity(loginIntent)
         }
 
@@ -73,7 +73,8 @@ class RegisterActivity : AppCompatActivity() {
         }
         address_registration.setOnClickListener{
             Log.d("Registration","Clicked address")
-            val addressIntent = Intent(this,AddAutoActivity::class.java)
+            val addressIntent = Intent(this,
+                AddAutoActivity::class.java)
             startActivityForResult(addressIntent, 12)
         }
 
@@ -216,7 +217,18 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         val emailHash = HelperUtils.generatehash(email)
-        var userInfoObject = User(emailHash, "", name, email, phone, address, birthdate,gender!!, password,"")
+        var userInfoObject = User(
+            emailHash,
+            "",
+            name,
+            email,
+            phone,
+            address,
+            birthdate,
+            gender!!,
+            password,
+            ""
+        )
 
         uploadImageToFirebase(userInfoObject)
 
@@ -282,7 +294,8 @@ class RegisterActivity : AppCompatActivity() {
                         mtoast = Toast.makeText(this,"Registration Succesful",Toast.LENGTH_SHORT)
                         mtoast!!.show()
                         Log.d("RegisterActivity","Starting Login Activity")
-                        val loginIntent = Intent(this,LoginActivity::class.java)
+                        val loginIntent = Intent(this,
+                            LoginActivity::class.java)
                         startActivity(loginIntent)
                         dialog.dismiss()
                         finish()

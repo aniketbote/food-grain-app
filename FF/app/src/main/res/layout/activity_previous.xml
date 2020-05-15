@@ -27,6 +27,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30sp"
         android:scrollbars="vertical"
-        tools:listitem="@layout/previous_order_item" />
+        tools:listitem="@layout/order_item" />
 
 </LinearLayout>

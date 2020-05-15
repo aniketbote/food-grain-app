@@ -1,4 +1,4 @@
-package com.example.farmfresh
+package com.example.farmfresh.Adapters
 
 import android.content.Context
 import android.util.Log
@@ -7,8 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide.with
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+import com.example.farmfresh.Activities.cartCount
+import com.example.farmfresh.Activities.cartTotal
+import com.example.farmfresh.Activities.itemText
+import com.example.farmfresh.Database.CartDatabase
+import com.example.farmfresh.Model.CartItem
+import com.example.farmfresh.R
+import com.example.farmfresh.Utilities.loadImage
 
 
 class CartAdapter(private val context: Context, private val data:MutableList<CartItem>) : RecyclerView.Adapter<CartAdapter.ViewHolder>()

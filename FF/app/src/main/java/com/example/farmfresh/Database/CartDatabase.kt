@@ -1,4 +1,4 @@
-package com.example.farmfresh
+package com.example.farmfresh.Database
 
 import android.content.ContentValues
 import android.content.Context
@@ -6,13 +6,14 @@ import android.content.SharedPreferences
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import com.google.gson.JsonArray
+import com.example.farmfresh.Model.CartItem
 import com.google.gson.JsonObject
 
 
 val DATABASE_NAME = "FarmFreshDB"
 
-class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,null,5){
+class CartDatabase(context: Context) : SQLiteOpenHelper(context,
+    DATABASE_NAME,null,1){
     private val token: SharedPreferences = context.getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
     private val emailHash = token.getString("EMAILHASH", "")
 
@@ -37,7 +38,7 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
 
     override fun onCreate(p0: SQLiteDatabase?) {
         val createTable = "CREATE TABLE " + TABLE_NAME + " (" +
-                COL_NAME + " VARCHAR(256)," +
+                COL_NAME + " VARCHAR(256) UNIQUE," +
                 COL_PRICE + " VARCHAR(64)," +
                 COL_SIZE + " VARCHAR(64)," +
                 COL_TYPE + " VARCHAR(64)," +
@@ -84,7 +85,8 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
                     result.getString(result.getColumnIndex(COL_PRICE)),
                     result.getString(result.getColumnIndex(COL_COUNT)),
                     result.getString(result.getColumnIndex(COL_TYPE)),
-                    result.getString(result.getColumnIndex(COL_AVAILABLE)))
+                    result.getString(result.getColumnIndex(COL_AVAILABLE))
+                )
                 cartList.add(cartItem)
             }while (result.moveToNext())
         }
@@ -104,11 +106,13 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
                 val price = result.getString(result.getColumnIndex(COL_PRICE))
                 val count = result.getString(result.getColumnIndex(COL_COUNT))
                 val type = result.getString(result.getColumnIndex(COL_TYPE))
+                val image = result.getString(result.getColumnIndex(COL_IMAGE))
                 val tempJsonObj = JsonObject()
                 tempJsonObj.addProperty("name",name)
                 tempJsonObj.addProperty("price",price)
                 tempJsonObj.addProperty("count",count)
                 tempJsonObj.addProperty("type",type)
+                tempJsonObj.addProperty("image",image)
                 cartObjJson.add(countItems.toString(), tempJsonObj)
                 countItems += 1
             }while (result.moveToNext())

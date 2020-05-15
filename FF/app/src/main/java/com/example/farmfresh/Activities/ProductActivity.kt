@@ -1,12 +1,14 @@
-package com.example.farmfresh
+package com.example.farmfresh.Activities
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_toolbar.*
+import com.example.farmfresh.Database.CartDatabase
+import com.example.farmfresh.Model.SubData
+import com.example.farmfresh.Adapters.ProductAdapter
+import com.example.farmfresh.R
 
 class ProductActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +28,11 @@ class ProductActivity : AppCompatActivity(){
 
         val recyclerView:RecyclerView = findViewById(R.id.recycleview)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false) as RecyclerView.LayoutManager?
-        val adapter= ProductAdapter(subDataObj.itemList, cartList, type)
+        val adapter= ProductAdapter(
+            subDataObj.itemList,
+            cartList,
+            type
+        )
         recyclerView.adapter = adapter
     }
 }
