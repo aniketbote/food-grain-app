@@ -146,3 +146,4 @@ def orderreceived():
 
 if __name__ == "__main__":
     app.run(host='192.168.29.242', port=5000, debug = True )
+    # app.run(host='192.168.29.242', port=5000, debug = True )
