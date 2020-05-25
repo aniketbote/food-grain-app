@@ -76,6 +76,9 @@ class CartActivity : AppCompatActivity(){
                 Toast.makeText(this,"You have a pending order",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            val paymentIntent = Intent(this, PaymentActivity::class.java)
+            startActivityForResult(paymentIntent, 739)
             //progress bar
             val builder = AlertDialog.Builder(this)
             val dialogView = layoutInflater.inflate(R.layout.progress_bar,null)

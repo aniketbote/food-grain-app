@@ -31,10 +31,14 @@
         <activity android:name=".Activities.ProductActivity"></activity>
         <activity android:name=".Activities.CartActivity"></activity>
         <activity android:name=".Activities.OrderDetailActivity"></activity>
+        <activity android:name=".Activities.PaymentActivity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true"/>
 
 
     </application>
