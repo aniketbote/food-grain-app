@@ -29,7 +29,7 @@ app = Flask(__name__)
 
 def generateOrderId():
     chars = string.ascii_uppercase + string.digits
-    return ''.join(random.choice(chars) for _ in range(10))
+    return ''.join(random.choice(chars) for _ in range(5))
 
 def updateData(current_value, cart_list, email_hash):
     orderDict = {}
@@ -145,4 +145,4 @@ def orderreceived():
 
 
 if __name__ == "__main__":
-    app.run(host='192.168.29.242', port=5000, debug = True )
+    app.run(host='192.168.0.5', port=5000, debug = True )

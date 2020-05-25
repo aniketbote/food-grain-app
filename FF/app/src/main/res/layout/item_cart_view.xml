@@ -39,7 +39,5 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/product_count_cart"
         android:text="Amount"
-        android:layout_marginLeft="340sp"/>
-
-
+        android:layout_marginLeft="24sp"/>
 </RelativeLayout>
