@@ -4,17 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.farmfresh.Database.CartDatabase
 import com.example.farmfresh.Model.SubData
 import com.example.farmfresh.Adapters.ProductAdapter
+import com.example.farmfresh.Model.CartItem
+import com.example.farmfresh.Database.CartDatabase
 import com.example.farmfresh.Model.OrderList
 import com.example.farmfresh.R
 import com.example.farmfresh.Utilities.HelperUtils
@@ -26,10 +29,15 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
 
+
 class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var cartList:MutableList<CartItem>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_itemlist)
+
+        val db_ = CartDatabase(this)
+        cartList = db_.readData()
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         val name = token.getString("name","")
@@ -92,6 +100,35 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             type
         )
         recyclerView.adapter = adapter
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.cart_menu, menu)
+        val count:View = menu!!.findItem(R.id.select_cart).actionView
+        val icon=count.findViewById<ImageView>(R.id.cart_img)
+
+        icon.setOnClickListener{
+            Log.d("Index Activity", "Clicked Add to cart button")
+            val cartIntent = Intent(this, CartActivity::class.java)
+            startActivity(cartIntent)
+
+        }
+
+        if(cartList.size == 0){
+            itemText = count.findViewById(
+                R.id.item_count
+            )
+            itemText.visibility = View.INVISIBLE
+        }
+        if(cartList.size > 0) {
+            itemText = count.findViewById(
+                R.id.item_count
+            )
+            itemText.visibility = View.VISIBLE
+            cartCount = cartList.size
+            itemText.text = cartCount.toString()
+        }
+        return true
     }
 
     override fun onNavigationItemSelected(MenuItem: MenuItem): Boolean {
