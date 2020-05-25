@@ -17,14 +17,14 @@
 
     <TextView
         android:layout_marginLeft="10sp"
-        android:layout_width="130sp"
+        android:layout_width="wrap_content"
         android:layout_height="40sp"
-        android:text = "Order Number :"
+        android:text = "Order No:"
         android:textSize="16sp"/>
 
 
         <TextView
-            android:layout_width="70sp"
+            android:layout_width="110sp"
             android:layout_height="40sp"
             android:id="@+id/order_number"
             android:text="123"
@@ -33,11 +33,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text=" Delivery Status:"
+            android:text="Delivery Date:"
             android:textSize="16sp"/>
 
         <TextView
-            android:layout_width="65sp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="105sp"
             android:layout_height="match_parent"
             android:id="@+id/order_status"/>
 

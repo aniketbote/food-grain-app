@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="330sp"
+    android:layout_width="350sp"
     android:layout_height="50sp"
     android:layout_marginBottom="10sp">
 
@@ -29,11 +29,11 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5sp"
             android:gravity="center_vertical"
-            android:text="Order Number" />
+            android:text="Order No:" />
 
         <TextView
             android:id="@+id/order_number_prev"
-            android:layout_width="60sp"
+            android:layout_width="100sp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="123"

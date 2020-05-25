@@ -29,7 +29,7 @@ app = Flask(__name__)
 
 def generateOrderId():
     chars = string.ascii_uppercase + string.digits
-    return ''.join(random.choice(chars) for _ in range(10))
+    return ''.join(random.choice(chars) for _ in range(5))
 
 def updateData(current_value, cart_list, email_hash):
     orderDict = {}
