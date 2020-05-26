@@ -25,6 +25,7 @@ for name in cat:
                 temp_data[col] = data[col][i]
                 continue
             temp_data[col] = data[col][i].item()
+            temp_data['Type'] = name.split('.')[0]
         temp_sing[data[name_col][i]] = temp_data
         combined_dict[data[name_col][i]] = temp_data
     final_dict[name.split('.')[0]] = temp_sing
