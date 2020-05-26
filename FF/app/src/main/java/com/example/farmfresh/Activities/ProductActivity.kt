@@ -29,15 +29,15 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
 
-
+//var cartCount_:Int = 0
 class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var cartList:MutableList<CartItem>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_itemlist)
 
-        val db_ = CartDatabase(this)
-        cartList = db_.readData()
+        val db = CartDatabase(this)
+        cartList= db.readData()
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         val name = token.getString("name","")
@@ -87,9 +87,6 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val type = intent.getStringExtra("type")
         Log.d("ProductActivity", "$type")
 
-        val db = CartDatabase(this)
-        val cartList = db.readData()
-        Log.d("ProductActivity","$cartList")
 
 
         val recyclerView:RecyclerView = findViewById(R.id.recycleview)

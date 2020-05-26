@@ -3,6 +3,7 @@ package com.example.farmfresh.Activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
@@ -45,6 +46,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         val db = CartDatabase(this)
         cartList = db.readData()
         Log.d("ProductActivity","$cartList")
+
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         emailHashGlobal = token.getString("EMAILHASH", "").toString()
@@ -115,37 +117,41 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             Log.d("IndexActivity","Image: ${it} Clicked")
         }
 
-        fruit_index.setOnClickListener {
 
-            Log.d("IndexActivity", "Clicked Fruits")
-            val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
-            Ref
-                .orderByKey()
-                .limitToFirst(5)
-                .addListenerForSingleValueEvent(object : ValueEventListener{
-                    override fun onCancelled(p0: DatabaseError) {
-                        Log.d("IndexActivity", "Error Fetching Fruits Values")
-                    }
+            fruit_index.setSafeOnClickListener {
+                    Log.d("IndexActivity", "Clicked Fruits")
+                    val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
+                    Ref
+                    .orderByKey()
+                    .limitToFirst(5)
+                    .addListenerForSingleValueEvent(
+                    object : ValueEventListener {
+                        override fun onCancelled(p0: DatabaseError) {
+                            Log.d("IndexActivity", "Error Fetching Fruits Values")
+                        }
 
-                    override fun onDataChange(p0: DataSnapshot) {
-                        val itemList =
-                            HelperUtils.getAllItemsList(p0)
-                        Log.d("IndexActivity","${itemList}")
-                        val subDataObj =
-                            HelperUtils.getCatObj(
-                                itemList,
-                                allDataObj.totalHashMap.getValue("Fruits")
-                            )
-                        val fruitIntent = Intent(this@IndexActivity, ProductActivity::class.java)
-                        fruitIntent.putExtra("subDataObj",subDataObj)
-                        fruitIntent.putExtra("type","Fruits")
-                        startActivity(fruitIntent)
-                    }
+                        override fun onDataChange(p0: DataSnapshot) {
+                            val itemList =
+                                HelperUtils.getAllItemsList(p0)
+                            Log.d("IndexActivity", "${itemList}")
+                            val subDataObj =
+                                HelperUtils.getCatObj(
+                                    itemList,
+                                    allDataObj.totalHashMap.getValue("Fruits")
+                                )
+                            val fruitIntent =
+                                Intent(this@IndexActivity, ProductActivity::class.java)
+                            fruitIntent.putExtra("subDataObj", subDataObj)
+                            fruitIntent.putExtra("type", "Fruits")
+                            startActivity(fruitIntent)
+                        }
 
-                })
+
+                    })
+
         }
 
-        exoticfruits_index.setOnClickListener {
+        exoticfruits_index.setSafeOnClickListener {
             Log.d("Index Activity", "Clicked Exotic Fruits")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Fruits")
             Ref
@@ -175,7 +181,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
 
         }
-        vegetables_index.setOnClickListener {
+        vegetables_index.setSafeOnClickListener {
             Log.d("Index Activity", "Clicked Vegetables")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Vegetables")
             Ref
@@ -203,7 +209,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
                 })
         }
-        exoticveg_index.setOnClickListener {
+        exoticveg_index.setSafeOnClickListener {
             Log.d("Index Activity", "Clicked Exotic Vegetables")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Vegetables")
             Ref
@@ -231,7 +237,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
                 })
         }
-        grain_index.setOnClickListener {
+        grain_index.setSafeOnClickListener {
             Log.d("Index Activity", "Clicked Food Grains")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Foodgrains")
             Ref
@@ -409,6 +415,26 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
 
+    }
+    class SafeClickListener(
+        private var defaultInterval: Int = 300,
+        private val onSafeCLick: (View) -> Unit
+    ) : View.OnClickListener {
+        private var lastTimeClicked: Long = 0
+        override fun onClick(v: View) {
+            if (SystemClock.elapsedRealtime() - lastTimeClicked < defaultInterval) {
+                return
+            }
+            lastTimeClicked = SystemClock.elapsedRealtime()
+            onSafeCLick(v)
+        }
+    }
+
+    fun View.setSafeOnClickListener(onSafeClick: (View) -> Unit) {
+        val safeClickListener = SafeClickListener {
+            onSafeClick(it)
+        }
+        setOnClickListener(safeClickListener)
     }
 
 
