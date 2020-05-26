@@ -14,6 +14,7 @@ import com.example.farmfresh.Activities.itemText
 import com.example.farmfresh.Database.CartDatabase
 import com.example.farmfresh.Model.CartItem
 import com.example.farmfresh.R
+import com.example.farmfresh.Utilities.HelperUtils.getPosition
 import com.example.farmfresh.Utilities.loadImage
 
 
@@ -63,7 +64,7 @@ class CartAdapter(private val context: Context, private val data:MutableList<Car
                 //delete
                 db.deleteData(item.name)
                 cartCount -= 1
-                if(cartCount == 0){
+                if(cartCount <= 0){
                     itemText.visibility = View.INVISIBLE
                 }
                 else {
@@ -71,8 +72,16 @@ class CartAdapter(private val context: Context, private val data:MutableList<Car
                     itemText.text = cartCount.toString()
                 }
                 cartTotal.text = (cartTotal.text.toString().toInt() - item.price.toInt()).toString()
-                data.removeAt(position)
-                notifyItemRemoved(position)
+                val remPosition = getPosition(data, item.name)
+//                Log.d("CartActivity","Before : ${remPosition}")
+//                Log.d("CartActivity","Before : ${data[remPosition]}")
+//                Log.d("CartActivity","Before : ${data}")
+//                Log.d("CartActivity","Before : ${item.name}")
+                data.removeAt(remPosition)
+                notifyItemRemoved(remPosition)
+//                Log.d("CartActivity","After : ${remPosition}")
+//                Log.d("CartActivity","After : ${data[remPosition]}")
+//                Log.d("CartActivity","After : ${data}")
             }
             if(newValue >= 1){
                 //update
