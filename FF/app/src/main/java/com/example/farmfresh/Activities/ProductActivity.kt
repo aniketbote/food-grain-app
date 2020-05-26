@@ -118,15 +118,9 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
 
         if(cartList.size == 0){
-            itemText = count.findViewById(
-                R.id.item_count
-            )
             itemText.visibility = View.INVISIBLE
         }
         if(cartList.size > 0) {
-            itemText = count.findViewById(
-                R.id.item_count
-            )
             itemText.visibility = View.VISIBLE
             cartCount = cartList.size
             itemText.text = cartCount.toString()
