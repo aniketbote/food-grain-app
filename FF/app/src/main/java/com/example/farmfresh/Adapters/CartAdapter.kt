@@ -73,15 +73,8 @@ class CartAdapter(private val context: Context, private val data:MutableList<Car
                 }
                 cartTotal.text = (cartTotal.text.toString().toInt() - item.price.toInt()).toString()
                 val remPosition = getPosition(data, item.name)
-//                Log.d("CartActivity","Before : ${remPosition}")
-//                Log.d("CartActivity","Before : ${data[remPosition]}")
-//                Log.d("CartActivity","Before : ${data}")
-//                Log.d("CartActivity","Before : ${item.name}")
                 data.removeAt(remPosition)
                 notifyItemRemoved(remPosition)
-//                Log.d("CartActivity","After : ${remPosition}")
-//                Log.d("CartActivity","After : ${data[remPosition]}")
-//                Log.d("CartActivity","After : ${data}")
             }
             if(newValue >= 1){
                 //update
