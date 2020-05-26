@@ -14,7 +14,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import java.util.*
 
-class AddAutoActivity : AppCompatActivity(){
+class AddressActivity : AppCompatActivity(){
     lateinit var placesClient: PlacesClient
     var placeFields = Arrays.asList(
         Place.Field.ID,

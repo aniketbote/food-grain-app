@@ -37,7 +37,7 @@ lateinit var indexActivityGlobal: Intent
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
     lateinit var featureImageList:List<String>
     lateinit var cartList:MutableList<CartItem>
-    private var flag = false
+//    private var flag = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         indexActivityGlobal = this.intent
@@ -48,16 +48,16 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         cartList = db.readData()
         Log.d("ProductActivity","$cartList")
 
-        if(flag){
-            if(cartList.size == 0){
-                itemText.visibility = View.INVISIBLE
-            }
-            if(cartList.size > 0) {
-                itemText.visibility = View.VISIBLE
-                cartCount = cartList.size
-                itemText.text = cartCount.toString()
-            }
-        }
+//        if(flag){
+//            if(cartList.size == 0){
+//                itemText.visibility = View.INVISIBLE
+//            }
+//            if(cartList.size > 0) {
+//                itemText.visibility = View.VISIBLE
+//                cartCount = cartList.size
+//                itemText.text = cartCount.toString()
+//            }
+//        }
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         emailHashGlobal = token.getString("EMAILHASH", "").toString()
@@ -145,14 +145,14 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                             val itemList =
                                 HelperUtils.getAllItemsList(p0)
                             Log.d("IndexActivity", "${itemList}")
-                            val subDataObj =
+                            val productlistObj =
                                 HelperUtils.getCatObj(
                                     itemList,
                                     allDataObj.totalHashMap.getValue("Fruits")
                                 )
                             val fruitIntent =
                                 Intent(this@IndexActivity, ProductActivity::class.java)
-                            fruitIntent.putExtra("subDataObj", subDataObj)
+                            fruitIntent.putExtra("productlistObj", productlistObj)
                             fruitIntent.putExtra("type", "Fruits")
                             startActivity(fruitIntent)
                         }
@@ -177,13 +177,13 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val itemList =
                             HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
-                        val subDataObj =
+                        val productlistObj =
                             HelperUtils.getCatObj(
                                 itemList,
                                 allDataObj.totalHashMap.getValue("Exotic_Fruits")
                             )
                         val exoticFruitIntent = Intent(this@IndexActivity, ProductActivity::class.java)
-                        exoticFruitIntent.putExtra("subDataObj",subDataObj)
+                        exoticFruitIntent.putExtra("productlistObj",productlistObj)
                         exoticFruitIntent.putExtra("type","Exotic_Fruits")
                         startActivity(exoticFruitIntent)
                     }
@@ -207,13 +207,13 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val itemList =
                             HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
-                        val subDataObj =
+                        val productlistObj =
                             HelperUtils.getCatObj(
                                 itemList,
                                 allDataObj.totalHashMap.getValue("Vegetables")
                             )
                         val vegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
-                        vegIntent.putExtra("subDataObj",subDataObj)
+                        vegIntent.putExtra("productlistObj",productlistObj)
                         vegIntent.putExtra("type","Vegetables")
                         startActivity(vegIntent)
                     }
@@ -235,13 +235,13 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val itemList =
                             HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
-                        val subDataObj =
+                        val productlistObj =
                             HelperUtils.getCatObj(
                                 itemList,
                                 allDataObj.totalHashMap.getValue("Exotic_Vegetables")
                             )
                         val exoticVegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
-                        exoticVegIntent.putExtra("subDataObj",subDataObj)
+                        exoticVegIntent.putExtra("productlistObj",productlistObj)
                         exoticVegIntent.putExtra("type","Exotic_Vegetables")
                         startActivity(exoticVegIntent)
                     }
@@ -263,13 +263,13 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val itemList =
                             HelperUtils.getAllItemsList(p0)
                         Log.d("IndexActivity","${itemList}")
-                        val subDataObj =
+                        val productlistObj =
                             HelperUtils.getCatObj(
                                 itemList,
                                 allDataObj.totalHashMap.getValue("Foodgrains")
                             )
                         val foodgrainIntent = Intent(this@IndexActivity, ProductActivity::class.java)
-                        foodgrainIntent.putExtra("subDataObj",subDataObj)
+                        foodgrainIntent.putExtra("productlistObj",productlistObj)
                         foodgrainIntent.putExtra("type","Foodgrains")
                         startActivity(foodgrainIntent)
                     }
@@ -318,7 +318,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             cartCount = cartList.size
             itemText.text = cartCount.toString()
         }
-        flag = true
+//        flag = true
         return true
     }
 

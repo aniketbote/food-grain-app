@@ -5,7 +5,7 @@ import java.io.Serializable
 
 data class PlaceOrderResponse(val message:String, val deficiency:String, val errorCode:Int)
 
-data class SubData(val itemList:List<Product>, val totalCount:Int): Serializable
+data class ProductList(val itemList:List<Product>, val totalCount:Int): Serializable
 
 data class AllData(val itemList:List<Product>, val totalHashMap: HashMap<String, String>, val featureList: List<String>):
     Serializable
@@ -20,5 +20,3 @@ data class OrderItem(val name: String, val amount:String, val count:String, val 
 data class Order(val orderId:String, val orderCreatedDate:String, val orderCompletionDate:String, val orderItems:List<OrderItem>, val total: String): Serializable
 
 data class OrderList(val orderList: List<Order>): Serializable
-
-data class PassIntent(val intentB:String): Serializable

@@ -74,7 +74,7 @@ class RegisterActivity : AppCompatActivity() {
         address_registration.setOnClickListener{
             Log.d("Registration","Clicked address")
             val addressIntent = Intent(this,
-                AddAutoActivity::class.java)
+                AddressActivity::class.java)
             startActivityForResult(addressIntent, 12)
         }
 

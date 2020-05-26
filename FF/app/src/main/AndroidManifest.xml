@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.LoginActivity"></activity>
-        <activity android:name=".Activities.AddAutoActivity"></activity>
+        <activity android:name=".Activities.AddressActivity"></activity>
         <activity android:name=".Activities.IndexActivity"></activity>
         <activity android:name=".Activities.CurrentOrdersActivity"></activity>
         <activity android:name=".Activities.PreviousOrdersActivity"></activity>

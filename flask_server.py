@@ -1,12 +1,13 @@
 from flask import Flask, jsonify, request
 import json
+import re
 from pprint import pprint
 import os
 import random
 import string
 from datetime import date
 import time
-
+from pprint import pprint
 #Firebase realtime database
 import firebase_admin
 from firebase_admin import credentials
@@ -16,12 +17,18 @@ cartList = []
 errorCode = 0
 itemDeficiency = ''
 
+
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:/Users/Aniket/Desktop/Aniket/food-grain-app/farmfresh-9c7fd-firebase-adminsdk-dx65j-9533ee02a1.json"
 cred = credentials.Certificate('farmfresh-9c7fd-firebase-adminsdk-dx65j-9533ee02a1.json')
 
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://farmfresh-9c7fd.firebaseio.com/'
 })
+
+combinedItemsRef = db.reference('combined_items')
+combinedItems = combinedItemsRef.get()
+combinedItemsKeys = list(combinedItems.keys())
+
 
 
 app = Flask(__name__)
@@ -144,6 +151,21 @@ def orderreceived():
 
 
 
+@app.route("/search", methods = ['POST','GET'])
+def search():
+    responseDict = {}
+    searchItem = {}
+    pattern = 'bA'
+    matched1 = [x for x in combinedItemsKeys if re.search("^{}".format(pattern.lower()), x.lower())]
+    matched2 = [x for x in combinedItemsKeys if (re.search("{}".format(pattern.lower()), x.lower()) and x not in matched1) ]
+    finalMatched = matched1 + matched2
+    for item in finalMatched:
+        searchItem[item] = combinedItems[item]
+    print(searchItem)
+    responseDict['message'] = "Thank You for your Response"
+    return jsonify(responseDict)
+
+
+
 if __name__ == "__main__":
     app.run(host='192.168.29.242', port=5000, debug = True )
-    # app.run(host='192.168.29.242', port=5000, debug = True )

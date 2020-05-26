@@ -15,7 +15,7 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.farmfresh.Model.SubData
+import com.example.farmfresh.Model.ProductList
 import com.example.farmfresh.Adapters.ProductAdapter
 import com.example.farmfresh.Model.CartItem
 import com.example.farmfresh.Database.CartDatabase
@@ -40,6 +40,8 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         val db = CartDatabase(this)
         cartList= db.readData()
+        Log.d("ProductActivity","${cartList.size}")
+        Log.d("ProductActivity","${cartList}")
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         val name = token.getString("name","")
@@ -87,8 +89,8 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         nav_activity_index.setNavigationItemSelectedListener(this)
 
 
-        val subDataObj = intent.getSerializableExtra("subDataObj") as SubData
-        Log.d("ProductActivity","${subDataObj.itemList}")
+        val productlistObj = intent.getSerializableExtra("productlistObj") as ProductList
+        Log.d("ProductActivity","${productlistObj.itemList}")
 
         val type = intent.getStringExtra("type")
         Log.d("ProductActivity", "$type")
@@ -98,7 +100,7 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val recyclerView:RecyclerView = findViewById(R.id.recycleview)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false) as RecyclerView.LayoutManager?
         val adapter= ProductAdapter(
-            subDataObj.itemList,
+            productlistObj.itemList,
             cartList,
             type
         )
@@ -118,15 +120,9 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
 
         if(cartList.size == 0){
-            itemText = count.findViewById(
-                R.id.item_count
-            )
             itemText.visibility = View.INVISIBLE
         }
         if(cartList.size > 0) {
-            itemText = count.findViewById(
-                R.id.item_count
-            )
             itemText.visibility = View.VISIBLE
             cartCount = cartList.size
             itemText.text = cartCount.toString()
