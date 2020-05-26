@@ -163,6 +163,7 @@ def search():
         tempDict['size'] = combinedItems[item]['Size']
         tempDict['price'] = combinedItems[item]['Price']
         tempDict['availableQuantity'] = combinedItems[item]['Available Quantity']
+        tempDict['type'] = combinedItems[item]['Type']
         searchItemList.append(tempDict)
     responseDict['itemList'] = searchItemList
     return jsonify(responseDict)
