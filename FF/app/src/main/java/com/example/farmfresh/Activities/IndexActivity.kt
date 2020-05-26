@@ -30,7 +30,6 @@ import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
 
 
-var cartCount:Int = 0
 lateinit var itemText:TextView
 var emailHashGlobal: String = ""
 lateinit var indexActivityGlobal: Intent
@@ -38,15 +37,27 @@ lateinit var indexActivityGlobal: Intent
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
     lateinit var featureImageList:List<String>
     lateinit var cartList:MutableList<CartItem>
+    private var flag = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         indexActivityGlobal = this.intent
         setContentView(R.layout.activity_index)
+        Log.d("IndexActivity", cartCount.toString())
 
         val db = CartDatabase(this)
         cartList = db.readData()
         Log.d("ProductActivity","$cartList")
 
+        if(flag){
+            if(cartList.size == 0){
+                itemText.visibility = View.INVISIBLE
+            }
+            if(cartList.size > 0) {
+                itemText.visibility = View.VISIBLE
+                cartCount = cartList.size
+                itemText.text = cartCount.toString()
+            }
+        }
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         emailHashGlobal = token.getString("EMAILHASH", "").toString()
@@ -307,6 +318,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             cartCount = cartList.size
             itemText.text = cartCount.toString()
         }
+        flag = true
         return true
     }
 

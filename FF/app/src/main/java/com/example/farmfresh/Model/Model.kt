@@ -1,5 +1,6 @@
 package com.example.farmfresh.Model
 
+import android.content.Intent
 import java.io.Serializable
 
 data class PlaceOrderResponse(val message:String, val deficiency:String, val errorCode:Int)
@@ -19,3 +20,5 @@ data class OrderItem(val name: String, val amount:String, val count:String, val 
 data class Order(val orderId:String, val orderCreatedDate:String, val orderCompletionDate:String, val orderItems:List<OrderItem>, val total: String): Serializable
 
 data class OrderList(val orderList: List<Order>): Serializable
+
+data class PassIntent(val intentB:String): Serializable

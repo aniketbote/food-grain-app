@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.farmfresh.Model.SubData
 import com.example.farmfresh.Adapters.ProductAdapter
 import com.example.farmfresh.Model.CartItem
@@ -26,6 +27,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
 
@@ -41,6 +43,7 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         val name = token.getString("name","")
+        val photoUrl = token.getString("imageUri","").toString()
 
         val nv: NavigationView = findViewById(R.id.nav_activity_index)
         val navView: View = nv.getHeaderView(0)
@@ -50,6 +53,9 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         val tv: TextView = navView.findViewById(R.id.name_header_nav)
         tv.setText("$name")
+
+        val imageView: CircleImageView = navView.findViewById(R.id.showPhoto_header_nav)
+        Glide.with(this).load("${photoUrl}").into(imageView)
 
         tv.setOnClickListener {
             Log.d("IndexActivity","Pressed Profile Button : ${name}")
@@ -133,8 +139,8 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         {
             R.id.home ->{
                 Log.d("IndexActivity","Pressed Home Button")
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
+                indexActivityGlobal.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(indexActivityGlobal)
             }
             R.id.current_order -> {
                 Log.d("IndexActivity","Pressed Current Orders")
