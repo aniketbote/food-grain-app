@@ -150,9 +150,8 @@ def orderreceived():
 @app.route("/search", methods = ['POST','GET'])
 def search():
     responseDict = {}
-    searchItemDict = {}
     searchItemList = []
-    pattern = 'bA'
+    pattern = request.form['pattern']
     matched1 = [x for x in combinedItemsKeys if re.search("^{}".format(pattern.lower()), x.lower())]
     matched2 = [x for x in combinedItemsKeys if (re.search("{}".format(pattern.lower()), x.lower()) and x not in matched1) ]
     finalMatched = matched1 + matched2
@@ -164,11 +163,7 @@ def search():
         tempDict['size'] = combinedItems[item]['Size']
         tempDict['price'] = combinedItems[item]['Price']
         tempDict['availableQuantity'] = combinedItems[item]['Available Quantity']
-
-        searchItemDict[item] = combinedItems[item]
         searchItemList.append(tempDict)
-    # pprint(searchItemList)
-    # responseDict['itemDict'] = searchItemDict
     responseDict['itemList'] = searchItemList
     return jsonify(responseDict)
 

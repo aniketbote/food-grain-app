@@ -1,6 +1,7 @@
 package com.example.farmfresh.Retrofit
 
 import com.example.farmfresh.Model.PlaceOrderResponse
+import com.example.farmfresh.Model.ProductList
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.http.Field
@@ -21,5 +22,11 @@ interface ApiInterface {
     fun orderreceived(
         @Field("emailHash") emailHash:String
     ):Call<PlaceOrderResponse>
+
+    @FormUrlEncoded
+    @POST("search")
+    fun search(
+        @Field("pattern") pattern:String
+    ):Call<ProductList>
 
 }

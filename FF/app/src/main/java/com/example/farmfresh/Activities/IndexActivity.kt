@@ -19,6 +19,8 @@ import com.example.farmfresh.Database.CartDatabase
 import com.example.farmfresh.Model.AllData
 import com.example.farmfresh.Model.CartItem
 import com.example.farmfresh.Model.OrderList
+import com.example.farmfresh.Model.ProductList
+import com.example.farmfresh.Retrofit.RetrofitClient
 import com.example.farmfresh.Utilities.HelperUtils
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.DataSnapshot
@@ -30,6 +32,11 @@ import com.synnapps.carouselview.ImageListener
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+
 // hello from local branch
 
 lateinit var itemText:TextView
@@ -307,6 +314,22 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     Log.d("IndexActivity", "${newText}")
+                    if (newText != null) {
+                        RetrofitClient.instance.search(newText)
+                            .enqueue(object : Callback<ProductList>{
+                                override fun onFailure(call: Call<ProductList>, t: Throwable) {
+                                    Log.d("IndexActivity", "${t.message}")
+                                }
+
+                                override fun onResponse(
+                                    call: Call<ProductList>,
+                                    response: Response<ProductList>
+                                ) {
+                                    Log.d("IndexActivity", "${response.body()?.itemList}")
+                                }
+
+                            })
+                    }
                     return true
                 }
 
