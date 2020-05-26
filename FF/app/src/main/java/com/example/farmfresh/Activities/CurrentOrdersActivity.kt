@@ -109,16 +109,16 @@ class CurrentOrdersActivity : AppCompatActivity(){
 
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            val indexIntent =
-                indexActivityGlobal
-            indexIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(indexIntent)
-            finish()
-        }
-        return super.onKeyDown(keyCode, event)
-    }
+//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+//        if(keyCode == KeyEvent.KEYCODE_BACK){
+//            val indexIntent =
+//                indexActivityGlobal
+//            indexIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(indexIntent)
+//            finish()
+//        }
+//        return super.onKeyDown(keyCode, event)
+//    }
 
 
 }
