@@ -91,6 +91,17 @@ object HelperUtils {
         }
         return total
     }
+    fun getPosition(data:MutableList<CartItem>, name: String): Int {
+        var pos = -1
+        for(i in 0 until data.size){
+            if (data[i].name == name){
+                pos = i
+                break
+            }
+        }
+        return pos
+
+    }
 }
 
 
