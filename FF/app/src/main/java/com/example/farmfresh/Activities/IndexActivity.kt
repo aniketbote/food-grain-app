@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
 import android.view.*
+import android.widget.AutoCompleteTextView
 import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +30,7 @@ import com.synnapps.carouselview.ImageListener
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
-
+// hello from local branch
 
 lateinit var itemText:TextView
 var emailHashGlobal: String = ""
@@ -295,6 +297,22 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.cart_menu, menu)
         val count:View = menu!!.findItem(R.id.select_cart).actionView
+        val searchView: androidx.appcompat.widget.SearchView= menu!!.findItem(R.id.toolbar_search).actionView as androidx.appcompat.widget.SearchView
+            searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener
+            {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    Log.d("IndexActivity", "${query}")
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    Log.d("IndexActivity", "${newText}")
+                    return true
+                }
+
+            })
+
+
         val icon=count.findViewById<ImageView>(R.id.cart_img)
 
         icon.setOnClickListener{
@@ -451,5 +469,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
 
 }
+
 
 
