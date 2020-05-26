@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-
+var cartCount:Int = 0
 class LoadingActivity : AppCompatActivity() {
 //    private val categoryList:List<String> = listOf<String>("Exotic_Fruits","Exotic_Vegetables","Foodgrains","Fruits","Vegetables")
 //    private val itemSubList:List<String> = listOf<String>("Available Quantity","Description","Image","Price","Size")
