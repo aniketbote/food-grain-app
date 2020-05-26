@@ -97,7 +97,7 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         val recyclerView:RecyclerView = findViewById(R.id.recycleview)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false) as RecyclerView.LayoutManager?
-        val adapter= ProductAdapter(
+        var adapter= ProductAdapter(
             subDataObj.itemList,
             cartList,
             type
