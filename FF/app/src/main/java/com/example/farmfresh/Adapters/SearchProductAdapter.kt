@@ -78,7 +78,7 @@ class SearchProductAdapter(val productList: List<Product>,
                 product.size,
                 product.price,
                 holder.count.number,
-                test,
+                product.type,
                 product.availableQuantity
             )
             val result = db.insertData(cartItemObj)

@@ -19,15 +19,19 @@ for name in cat:
     temp_sing = {}
     final_len_dict[name.split('.')[0]] = len(data)
     for i in range(len(data)):
-        temp_data = {}
+        temp_data_all = {}
+        temp_data_combined = {}
         for col in data_cols:
             if str(type(data[col][i])) == "<class 'str'>":
-                temp_data[col] = data[col][i]
+                temp_data_all[col] = data[col][i]
+                temp_data_combined[col] = data[col][i]
                 continue
-            temp_data[col] = data[col][i].item()
-            temp_data['Type'] = name.split('.')[0]
-        temp_sing[data[name_col][i]] = temp_data
-        combined_dict[data[name_col][i]] = temp_data
+            temp_data_all[col] = data[col][i].item()
+            temp_data_combined[col] = data[col][i].item()
+
+            temp_data_combined['Type'] = name.split('.')[0]
+        temp_sing[data[name_col][i]] = temp_data_all
+        combined_dict[data[name_col][i]] = temp_data_combined
     final_dict[name.split('.')[0]] = temp_sing
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:/Users/Aniket/Desktop/Aniket/food-grain-app/farmfresh-9c7fd-firebase-adminsdk-dx65j-9533ee02a1.json"

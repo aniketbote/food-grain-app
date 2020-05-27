@@ -64,9 +64,10 @@ class SearchActivity: AppCompatActivity() {
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                Log.d("Search Activity", "Clicked Back button")
+                Log.d("SearchActivity", "Clicked Back button")
                 //val backIntent = Intent(this@SearchActivity,IndexActivity::class.java)
                 startActivity(indexActivityGlobal)
+                finish()
                 return true
             }
         })
@@ -75,19 +76,19 @@ class SearchActivity: AppCompatActivity() {
         searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.d("IndexActivity", "${query}")
+                Log.d("SearchActivity", "${query}")
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
 
-                Log.d("IndexActivity", "${newText}")
+                Log.d("SearchActivity", "${newText}")
                 if (newText != null) {
 
                     RetrofitClient.instance.search(newText)
                         .enqueue(object : Callback<ProductList> {
                             override fun onFailure(call: Call<ProductList>, t: Throwable) {
-                                Log.d("IndexActivity", "${t.message}")
+                                Log.d("SearchActivity", "${t.message}")
                             }
 
                             override fun onResponse(
@@ -101,7 +102,7 @@ class SearchActivity: AppCompatActivity() {
                                 val recyclerView: RecyclerView = findViewById(R.id.recycleview_search)
                                 recyclerView.layoutManager = LinearLayoutManager(this@SearchActivity, RecyclerView.VERTICAL, false) as RecyclerView.LayoutManager?
                                 recyclerView.adapter = adapter
-                                Log.d("IndexActivity", "${response.body()?.itemList}")
+                                Log.d("SearchActivity", "${response.body()?.itemList}")
 
                             }
 
