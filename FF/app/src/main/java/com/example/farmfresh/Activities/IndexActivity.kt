@@ -313,6 +313,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
+
                     Log.d("IndexActivity", "${newText}")
                     if (newText != null) {
                         RetrofitClient.instance.search(newText)
@@ -325,7 +326,11 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                                     call: Call<ProductList>,
                                     response: Response<ProductList>
                                 ) {
+                                    val searchIntent = Intent(this@IndexActivity, SearchActivity::class.java)
+                                    searchIntent.putExtra("subDataObj",response.body())
+                                    startActivity(searchIntent)
                                     Log.d("IndexActivity", "${response.body()?.itemList}")
+
                                 }
 
                             })

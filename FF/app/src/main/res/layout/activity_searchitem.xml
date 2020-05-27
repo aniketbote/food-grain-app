@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:layout_marginTop="10sp">
     <ImageView
-        android:id="@+id/product_image"
+        android:id="@+id/searchproduct_image"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginLeft="10sp"
@@ -26,7 +26,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/product_name"
+            android:id="@+id/searchproduct_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -37,7 +37,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/product_weight"
+            android:id="@+id/searchproduct_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -60,7 +60,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/product_price"
+            android:id="@+id/searchproduct_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alegreya_sans_medium"
@@ -72,7 +72,7 @@
             android:textStyle="bold" />
 
         <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-            android:id="@+id/product_count"
+            android:id="@+id/searchproduct_count"
             android:layout_width="83dp"
             android:layout_height="30dp"
             android:layout_marginLeft="23sp"
@@ -82,7 +82,7 @@
             app:textColor="@android:color/black" />
 
         <Button
-            android:id="@+id/product_addtocart"
+            android:id="@+id/searchproduct_addtocart"
             android:layout_width="wrap_content"
             android:layout_height="33sp"
             android:layout_alignParentEnd="true"
@@ -98,7 +98,7 @@
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/product_unavailable"
+            android:id="@+id/searchproduct_unavailable"
             android:layout_width="wrap_content"
             android:layout_height="35sp"
             android:layout_alignParentEnd="true"
