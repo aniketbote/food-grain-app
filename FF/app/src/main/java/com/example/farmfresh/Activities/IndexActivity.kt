@@ -5,22 +5,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
-import android.view.*
-import android.widget.AutoCompleteTextView
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
-import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
-import com.example.farmfresh.*
 import com.example.farmfresh.Database.CartDatabase
 import com.example.farmfresh.Model.AllData
 import com.example.farmfresh.Model.CartItem
 import com.example.farmfresh.Model.OrderList
-import com.example.farmfresh.Model.ProductList
-import com.example.farmfresh.Retrofit.RetrofitClient
+import com.example.farmfresh.R
 import com.example.farmfresh.Utilities.HelperUtils
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.DataSnapshot
@@ -32,10 +30,6 @@ import com.synnapps.carouselview.ImageListener
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 
 // hello from local branch
 
@@ -105,6 +99,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             val profileIntent = Intent(this, ProfileActivity::class.java)
             startActivity(profileIntent)
         }
+
 
 
 
@@ -304,43 +299,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.cart_menu, menu)
         val count:View = menu!!.findItem(R.id.select_cart).actionView
-        val searchView: androidx.appcompat.widget.SearchView= menu!!.findItem(R.id.toolbar_search).actionView as androidx.appcompat.widget.SearchView
-            searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener
-            {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    Log.d("IndexActivity", "${query}")
-                    return true
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-
-                    Log.d("IndexActivity", "${newText}")
-                    if (newText != null) {
-                        RetrofitClient.instance.search(newText)
-                            .enqueue(object : Callback<ProductList>{
-                                override fun onFailure(call: Call<ProductList>, t: Throwable) {
-                                    Log.d("IndexActivity", "${t.message}")
-                                }
-
-                                override fun onResponse(
-                                    call: Call<ProductList>,
-                                    response: Response<ProductList>
-                                ) {
-                                    val searchIntent = Intent(this@IndexActivity, SearchActivity::class.java)
-                                    searchIntent.putExtra("subDataObj",response.body())
-                                    startActivity(searchIntent)
-                                    Log.d("IndexActivity", "${response.body()?.itemList}")
-
-                                }
-
-                            })
-                    }
-                    return true
-                }
-
-            })
-
-
         val icon=count.findViewById<ImageView>(R.id.cart_img)
 
         icon.setOnClickListener{
@@ -349,6 +307,8 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             startActivity(cartIntent)
 
         }
+
+
 
         if(cartList.size == 0){
             itemText = count.findViewById(
@@ -367,7 +327,19 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         flag = true
         return true
     }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.search ->
+            {
+                Log.d("Index Activity", "Clicked Search button")
+                val searchIntent = Intent(this, SearchActivity::class.java)
+                startActivity(searchIntent)
+            }
 
+
+        }
+        return true
+    }
 
     override fun onNavigationItemSelected(MenuItem: MenuItem): Boolean {
         when (MenuItem.itemId)

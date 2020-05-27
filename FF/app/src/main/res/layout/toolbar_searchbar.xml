@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@color/cardview_light_background"
+            app:subtitleTextAppearance="@font/alegreya_sans_medium"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:background="@android:color/transparent"
+            android:id="@+id/toolbar_searchbar"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:textColor="@android:color/holo_green_dark"
+                android:layout_height="40sp"
+                android:gravity="center"
+                android:textSize="17sp"
+                android:text="Search :"
+                />
+
+
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
