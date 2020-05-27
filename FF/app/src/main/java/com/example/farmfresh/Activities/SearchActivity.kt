@@ -7,8 +7,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+<<<<<<< HEAD
 import android.view.MenuItem
 import android.view.MenuItem.OnActionExpandListener
+=======
+import android.view.View
+>>>>>>> 4dab771daff4ca22d8d2c54d63d9430d4634cdd4
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -37,15 +41,6 @@ class SearchActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        //val DataObj = intent.getSerializableExtra("subDataObj") as ProductList
-
-        //val d = Log.d("ProductActivity", "${DataObj.itemList}")
-
-        //var searchdata = DataObj
-
-
-        // val type = intent.getStringExtra("type")
-        // Log.d("ProductActivity", "$type")
         val db = CartDatabase(this)
         cartList = db.readData()
 
@@ -83,8 +78,9 @@ class SearchActivity: AppCompatActivity() {
             }
         })
 
+
         searchView.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d("IndexActivity", "${query}")
                 return true
@@ -98,12 +94,6 @@ class SearchActivity: AppCompatActivity() {
                     RetrofitClient.instance.search(newText)
                         .enqueue(object : Callback<ProductList> {
                             override fun onFailure(call: Call<ProductList>, t: Throwable) {
-
-                                // var adapter = SearchProductAdapter(
-                                //   call.body().itemList,
-                                //   cartList
-                                //  )
-                                //  recyclerView.adapter = adapter
                                 Log.d("IndexActivity", "${t.message}")
                             }
 
