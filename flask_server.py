@@ -155,6 +155,8 @@ def search():
     matched1 = [x for x in combinedItemsKeys if re.search("^{}".format(pattern.lower()), x.lower())]
     matched2 = [x for x in combinedItemsKeys if (re.search("{}".format(pattern.lower()), x.lower()) and x not in matched1) ]
     finalMatched = matched1 + matched2
+    if len(finalMatched)==len(combinedItems):
+        finalMatched = []
     for item in finalMatched:
         tempDict = {}
         tempDict['name'] = item
@@ -171,5 +173,5 @@ def search():
 
 
 if __name__ == "__main__":
-    app.run(host='192.168.0.3', port=5000, debug = True )
-    # app.run(host='192.168.29.242', port=5000, debug = True )
+    # app.run(host='192.168.0.3', port=5000, debug = True )
+    app.run(host='192.168.29.242', port=5000, debug = True )

@@ -333,6 +333,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             {
                 Log.d("Index Activity", "Clicked Search button")
                 val searchIntent = Intent(this, SearchActivity::class.java)
+                searchIntent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
                 startActivity(searchIntent)
             }
 

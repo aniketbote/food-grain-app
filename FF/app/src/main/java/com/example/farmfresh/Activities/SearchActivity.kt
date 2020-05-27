@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -31,15 +32,6 @@ class SearchActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        //val DataObj = intent.getSerializableExtra("subDataObj") as ProductList
-
-        //val d = Log.d("ProductActivity", "${DataObj.itemList}")
-
-        //var searchdata = DataObj
-
-
-        // val type = intent.getStringExtra("type")
-        // Log.d("ProductActivity", "$type")
         val db = CartDatabase(this)
         cartList = db.readData()
 
@@ -55,10 +47,15 @@ class SearchActivity: AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_search, menu)
-        val searchView: androidx.appcompat.widget.SearchView =
+        val searchView: SearchView =
             menu?.findItem(R.id.menu_search)?.actionView as SearchView
+//        searchView.setIconifiedByDefault(true)
+//        searchView.focusable = View.FOCUSABLE
+//        searchView.isIconified = false
+//        searchView.requestFocusFromTouch()
+        searchView.onActionViewExpanded()
         searchView.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d("IndexActivity", "${query}")
                 return true
@@ -72,12 +69,6 @@ class SearchActivity: AppCompatActivity() {
                     RetrofitClient.instance.search(newText)
                         .enqueue(object : Callback<ProductList> {
                             override fun onFailure(call: Call<ProductList>, t: Throwable) {
-
-                                // var adapter = SearchProductAdapter(
-                                //   call.body().itemList,
-                                //   cartList
-                                //  )
-                                //  recyclerView.adapter = adapter
                                 Log.d("IndexActivity", "${t.message}")
                             }
 
