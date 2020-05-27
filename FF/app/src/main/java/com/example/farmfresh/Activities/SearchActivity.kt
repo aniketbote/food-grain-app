@@ -7,12 +7,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-<<<<<<< HEAD
+
 import android.view.MenuItem
 import android.view.MenuItem.OnActionExpandListener
-=======
-import android.view.View
->>>>>>> 4dab771daff4ca22d8d2c54d63d9430d4634cdd4
+
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -72,8 +70,8 @@ class SearchActivity: AppCompatActivity() {
 
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 Log.d("Search Activity", "Clicked Back button")
-                val backIntent = Intent(this@SearchActivity,IndexActivity::class.java)
-                startActivity(backIntent)
+                //val backIntent = Intent(this@SearchActivity,IndexActivity::class.java)
+                startActivity(indexActivityGlobal)
                 return true
             }
         })
