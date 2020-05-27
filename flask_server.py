@@ -171,6 +171,32 @@ def search():
     responseDict['itemList'] = searchItemList
     return jsonify(responseDict)
 
+@app.route("/search", methods = ['POST','GET'])
+def search():
+    responseDict = {}
+    searchItemList = []
+    pattern = request.form['pattern']
+    print(pattern)
+    matched1 = [x for x in combinedItemsKeys if re.search("^{}".format(pattern.lower()), x.lower())]
+    matched2 = [x for x in combinedItemsKeys if (re.search("{}".format(pattern.lower()), x.lower()) and x not in matched1) ]
+    finalMatched = matched1 + matched2
+    if len(finalMatched)==len(combinedItems):
+        finalMatched = []
+    for item in finalMatched:
+        tempDict = {}
+        tempDict['name'] = item
+        tempDict['description'] = combinedItems[item]['Description']
+        tempDict['imageUrl'] = combinedItems[item]['Image']
+        tempDict['size'] = combinedItems[item]['Size']
+        tempDict['price'] = combinedItems[item]['Price']
+        tempDict['availableQuantity'] = combinedItems[item]['Available Quantity']
+        tempDict['type'] = combinedItems[item]['Type']
+        searchItemList.append(tempDict)
+    responseDict['itemList'] = searchItemList
+    return jsonify(responseDict)
+
+
+
 
 
 if __name__ == "__main__":
