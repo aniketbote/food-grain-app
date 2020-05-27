@@ -152,6 +152,7 @@ def search():
     responseDict = {}
     searchItemList = []
     pattern = request.form['pattern']
+    print(pattern)
     matched1 = [x for x in combinedItemsKeys if re.search("^{}".format(pattern.lower()), x.lower())]
     matched2 = [x for x in combinedItemsKeys if (re.search("{}".format(pattern.lower()), x.lower()) and x not in matched1) ]
     finalMatched = matched1 + matched2

@@ -35,11 +35,6 @@ class SearchActivity: AppCompatActivity() {
         val db = CartDatabase(this)
         cartList = db.readData()
 
-
-
-
-
-
         setSupportActionBar(toolbar_searchbar)
 
 
@@ -49,11 +44,7 @@ class SearchActivity: AppCompatActivity() {
         menuInflater.inflate(R.menu.toolbar_search, menu)
         val searchView: SearchView =
             menu?.findItem(R.id.menu_search)?.actionView as SearchView
-//        searchView.setIconifiedByDefault(true)
-//        searchView.focusable = View.FOCUSABLE
-//        searchView.isIconified = false
-//        searchView.requestFocusFromTouch()
-        searchView.onActionViewExpanded()
+        searchView.isIconified = false
         searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
