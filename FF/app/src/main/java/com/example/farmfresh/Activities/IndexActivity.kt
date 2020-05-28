@@ -302,8 +302,8 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
         icon.setOnClickListener{
             Log.d("Index Activity", "Clicked Add to cart button")
-            val cartIntent = Intent(this, CartActivity::class.java)
-            startActivity(cartIntent)
+            val placeOrderIntent = Intent(this, PlaceOrderActivity::class.java)
+            startActivity(placeOrderIntent)
 
         }
 

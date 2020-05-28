@@ -112,8 +112,8 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         icon.setOnClickListener{
             Log.d("Index Activity", "Clicked Add to cart button")
-            val cartIntent = Intent(this, CartActivity::class.java)
-            startActivity(cartIntent)
+            val placeOrderIntent = Intent(this, PlaceOrderActivity::class.java)
+            startActivity(placeOrderIntent)
 
         }
 
