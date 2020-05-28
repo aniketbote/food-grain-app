@@ -10,9 +10,10 @@
         android:layout_height="50dp"
         android:layout_marginLeft="20sp"
         android:layout_centerVertical="true"
-        android:src="@drawable/home"/>
+        android:src="@drawable/loading"/>
 
     <TextView
+        android:fontFamily="@font/alegreya_sans_medium"
         android:id="@+id/product_name_order"
         android:layout_width="100sp"
         android:layout_height="wrap_content"
@@ -23,6 +24,7 @@
 
 
     <TextView
+        android:fontFamily="@font/alegreya_sans_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/product_name_order"
@@ -32,6 +34,7 @@
 
 
     <TextView
+        android:fontFamily="@font/alegreya_sans_medium"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/product_name_order"
@@ -40,6 +43,7 @@
         android:id="@+id/product_count_order"/>
 
     <TextView
+        android:fontFamily="@font/alegreya_sans_medium"
         android:id="@+id/product_amount_cart"
         android:layout_width="55sp"
         android:layout_height="wrap_content"

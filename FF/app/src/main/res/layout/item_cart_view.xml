@@ -13,6 +13,7 @@
         android:src="@drawable/loading"/>
 
     <TextView
+        android:fontFamily="@font/alegreya_sans_medium"
         android:id="@+id/product_name_cart"
         android:layout_width="100sp"
         android:layout_height="wrap_content"
@@ -33,6 +34,7 @@
         app:textColor="@android:color/darker_gray" />
 
     <TextView
+        android:fontFamily="@font/alegreya_sans_medium"
         android:id="@+id/product_amount_cart"
         android:layout_width="55sp"
         android:layout_height="wrap_content"

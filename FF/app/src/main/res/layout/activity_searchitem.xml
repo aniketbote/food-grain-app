@@ -34,7 +34,7 @@
             android:fontFamily="@font/alegreya_sans_medium"
             android:text="Product Name"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="normal" />
 
         <TextView
             android:id="@+id/searchproduct_weight"
@@ -46,7 +46,7 @@
             android:gravity="center"
             android:text="Size"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="normal" />
 
     </LinearLayout>
 
@@ -69,7 +69,7 @@
             android:layout_marginTop="15sp"
             android:text="Product Price"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="normal" />
 
         <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
             android:id="@+id/searchproduct_count"
@@ -82,12 +82,13 @@
             app:textColor="@android:color/black" />
 
         <Button
+            android:fontFamily="@font/alegreya_sans_medium"
             android:id="@+id/searchproduct_addtocart"
             android:layout_width="wrap_content"
             android:layout_height="33sp"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
-            android:layout_marginRight="10sp"
+            android:layout_marginRight="15sp"
             android:layout_marginTop="45sp"
             android:background="@drawable/btn_add_to_cart"
             android:drawableLeft="@drawable/shopping2"
@@ -110,7 +111,7 @@
             android:text="Unavailable"
             android:textSize="14sp"
             android:textColor="@color/quantum_googred200"
-            android:textStyle="bold" />
+            android:textStyle="italic" />
 
 
     </RelativeLayout>
