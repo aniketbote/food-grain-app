@@ -36,7 +36,7 @@ def generateOrderId():
     chars = string.ascii_uppercase + string.digits
     return ''.join(random.choice(chars) for _ in range(5))
 
-def updateData(current_value, cart_list, email_hash):
+def updateData(current_value, cart_list, email_hash, orderAddress):
     orderDict = {}
     itemDict = {}
     tempalldict = {}
@@ -68,6 +68,7 @@ def updateData(current_value, cart_list, email_hash):
     itemDict['Date of Order'] = date.today().strftime('%Y-%m-%d')
     itemDict['Date of Completion'] = "PENDING"
     itemDict['Total'] = totalAmount
+    itemDict['Address'] = orderAddress
     orderDict[orderId] = itemDict
 
     try:
@@ -81,7 +82,7 @@ def updateData(current_value, cart_list, email_hash):
     return current_value
 
 def transactionOp(current_value):
-    new_value = updateData(current_value, cartList, emhash_global)
+    new_value = updateData(current_value, cartList, emhash_global, address)
     return current_value
 
 
@@ -95,9 +96,11 @@ def transactionOp(current_value):
 def placeorder():
     global cartList
     global emhash_global
+    global address
     tdict = {}
     jsonString = request.form['cartList']
     emailHash = request.form['emailHash']
+    address = request.form['address']
     print(emailHash)
     print('\n')
     try:

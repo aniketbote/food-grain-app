@@ -139,7 +139,7 @@ class PlaceOrderActivity:AppCompatActivity() {
                     }
 
                     override fun onResponse(call: Call<PlaceOrderResponse>, response: Response<PlaceOrderResponse>) {
-                        Log.d("PlaceOrderActivity","Successfull : ${response.body()?.message}")
+                        Log.d("PlaceOrderActivity","Successful : ${response.body()?.message}")
                         if(response.body() == null){
                             dialog.dismiss()
                             Toast.makeText(this@PlaceOrderActivity, "Some Error Occurred", Toast.LENGTH_SHORT).show()
