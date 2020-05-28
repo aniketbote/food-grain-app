@@ -76,6 +76,12 @@ class CartActivity : AppCompatActivity(){
                 Toast.makeText(this,"You have a pending order",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            else
+            {
+                val placeOrderIntent = Intent(this@CartActivity, PlaceOrderActivity::class.java)
+                startActivity(placeOrderIntent)
+
+            }
 
 //            val paymentIntent = Intent(this, PaymentActivity::class.java)
 //            startActivityForResult(paymentIntent, 739)

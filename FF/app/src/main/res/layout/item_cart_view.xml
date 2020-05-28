@@ -10,7 +10,7 @@
         android:layout_height="55dp"
         android:layout_marginLeft="20sp"
         android:layout_centerVertical="true"
-        android:src="@drawable/home"/>
+        android:src="@drawable/loading"/>
 
     <TextView
         android:id="@+id/product_name_cart"
