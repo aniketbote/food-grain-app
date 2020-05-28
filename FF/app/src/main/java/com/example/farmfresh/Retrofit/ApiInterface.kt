@@ -15,7 +15,7 @@ interface ApiInterface {
     fun placeorder(
         @Field("cartList") cartList:JsonObject,
         @Field("emailHash") emailHash:String,
-        @Field("emailHash") address:String
+        @Field("address") address:String
     ):Call<PlaceOrderResponse>
 
     @FormUrlEncoded
