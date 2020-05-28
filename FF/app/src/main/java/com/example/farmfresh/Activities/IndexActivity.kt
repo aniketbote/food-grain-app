@@ -28,7 +28,7 @@ import com.synnapps.carouselview.ImageListener
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
-# hello from local branch
+
 
 lateinit var itemText:TextView
 var emailHashGlobal: String = ""
