@@ -149,7 +149,7 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         Log.d("IndexActivity", "${p0}")
                         if(p0.value == null){
                             val pref = this@ProductActivity.getSharedPreferences(
-                                "UserSharedPreferences",
+                                "$emailHashGlobal",
                                 Context.MODE_PRIVATE
                             )
                             val editor = pref.edit()

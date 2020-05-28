@@ -32,11 +32,12 @@ lateinit var cartTotalPlaceorder: TextView
 lateinit var orderTotalPlaceorder: TextView
 lateinit var deliverChargePlaceorder: TextView
 class PlaceOrderActivity:AppCompatActivity() {
+    var emailHash: String = ""
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 137 && resultCode == Activity.RESULT_OK && data != null){
-            val pref = this@PlaceOrderActivity.getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
+            val pref = this@PlaceOrderActivity.getSharedPreferences("$emailHash", Context.MODE_PRIVATE)
             Log.d("PlaceOrderActivity","Address received Successsfully")
             val addressHolder = data.getSerializableExtra("address")
             val address_reg: TextView= findViewById(R.id.previous_address)
@@ -57,10 +58,11 @@ class PlaceOrderActivity:AppCompatActivity() {
         deliverChargePlaceorder = findViewById(R.id.delivery_placeorder)
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
-        val emailHash = token.getString("EMAILHASH", "")
+        emailHash = token.getString("EMAILHASH", "").toString()
         val address = token.getString("address","")
-        val pendingOrder = token.getString("pendingOrder", "")
-        val previousOrderAddress = token.getString("previousOrderAddress", "")
+        val tokenPrivate = getSharedPreferences("$emailHash", Context.MODE_PRIVATE)
+        val pendingOrder = tokenPrivate.getString("pendingOrder", "")
+        val previousOrderAddress = tokenPrivate.getString("previousOrderAddress", "")
         Log.d("CartActivity","$pendingOrder")
 
         val db = CartDatabase(this)
@@ -146,7 +148,7 @@ class PlaceOrderActivity:AppCompatActivity() {
                         }
                         if(response.body()?.errorCode == 0){
                             Log.d("PlaceOrderActivity","Setting shared preferences")
-                            val pref = this@PlaceOrderActivity.getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
+                            val pref = this@PlaceOrderActivity.getSharedPreferences("$emailHash", Context.MODE_PRIVATE)
                             val editor = pref.edit()
                             editor.putString("pendingOrder", true.toString())
                             editor.putString("previousOrderAddress",orderAddress)

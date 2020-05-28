@@ -12,6 +12,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.util.*
+import kotlin.collections.HashMap
 
 var cartCount:Int = 0
 class LoadingActivity : AppCompatActivity() {
@@ -24,6 +26,30 @@ class LoadingActivity : AppCompatActivity() {
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         val emailHash = token.getString("EMAILHASH", "")
+        val refFeatured = FirebaseDatabase.getInstance().getReference("/all_orders/${emailHash}/current")
+        refFeatured.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d("LoadingActivity", "Error in Fetching all items data : ${p0.message}")
+                return
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                Log.d("LoadingActivity", "Successfully fetched current_orders : ${p0.value}")
+                val pref = getSharedPreferences("$emailHash", Context.MODE_PRIVATE)
+                val editor = pref.edit()
+                if(p0.value != null){
+                    Log.d("LoadingActivity", "current_orders : ${p0.value}")
+                    editor.putString("pendingOrder",true.toString())
+                    editor.commit()
+                }
+                else{
+                    Log.d("LoadingActivity", "current_orders : ${p0.value}")
+                    editor.putString("pendingOrder",false.toString())
+                    editor.commit()
+                }
+            }
+
+        })
 
         if (emailHash == "") {
             Log.d("LoadingActivity", "Starting LoginActivity")
