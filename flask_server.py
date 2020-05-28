@@ -24,9 +24,23 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://farmfresh-9c7fd.firebaseio.com/'
 })
 
-combinedItemsRef = db.reference('combined_items')
-combinedItems = combinedItemsRef.get()
-combinedItemsKeys = list(combinedItems.keys())
+def get_combinedItems():
+    tempref = db.reference('all_items')
+    combined_data = {}
+    data = tempref.get()
+    for category in data:
+        combined_data.update(data[category])
+    combined_keys = combined_data.keys()
+    print(len(combined_data))
+    return combined_data, combined_keys
+
+
+
+
+# allItemsRef = db.reference('all_items')
+combinedItems, combinedItemsKeys = get_combinedItems()
+# pprint(combinedItems)
+
 
 
 app = Flask(__name__)
@@ -36,7 +50,7 @@ def generateOrderId():
     chars = string.ascii_uppercase + string.digits
     return ''.join(random.choice(chars) for _ in range(5))
 
-def updateData(current_value, cart_list, email_hash):
+def updateData(current_value, cart_list, email_hash, orderAddress):
     orderDict = {}
     itemDict = {}
     tempalldict = {}
@@ -68,6 +82,7 @@ def updateData(current_value, cart_list, email_hash):
     itemDict['Date of Order'] = date.today().strftime('%Y-%m-%d')
     itemDict['Date of Completion'] = "PENDING"
     itemDict['Total'] = totalAmount
+    itemDict['Address'] = orderAddress
     orderDict[orderId] = itemDict
 
     try:
@@ -81,8 +96,8 @@ def updateData(current_value, cart_list, email_hash):
     return current_value
 
 def transactionOp(current_value):
-    new_value = updateData(current_value, cartList, emhash_global)
-    return current_value
+    new_value = updateData(current_value, cartList, emhash_global, address)
+    return new_value
 
 
 
@@ -95,9 +110,13 @@ def transactionOp(current_value):
 def placeorder():
     global cartList
     global emhash_global
+    global address
+    global combinedItems
+    global combinedItemsKeys
     tdict = {}
     jsonString = request.form['cartList']
     emailHash = request.form['emailHash']
+    address = request.form['address']
     print(emailHash)
     print('\n')
     try:
@@ -105,6 +124,7 @@ def placeorder():
         cartList = list(json.loads(jsonString).values())
         emhash_global = emailHash
         new_transRef = tranRef.transaction(transactionOp)
+        combinedItems, combinedItemsKeys = get_combinedItems()
         print("Transaction Completed")
         tdict['message'] = "Ordered Successfully"
         tdict['deficiency'] = ''

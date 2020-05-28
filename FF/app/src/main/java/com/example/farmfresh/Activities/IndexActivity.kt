@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -301,9 +302,15 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         val icon=count.findViewById<ImageView>(R.id.cart_img)
 
         icon.setOnClickListener{
+            val db = CartDatabase(this)
+            cartList = db.readData()
+            if(cartList.size == 0){
+                Toast.makeText(this,"Nothing in the basket", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Log.d("Index Activity", "Clicked Add to cart button")
-            val cartIntent = Intent(this, CartActivity::class.java)
-            startActivity(cartIntent)
+            val placeOrderIntent = Intent(this, PlaceOrderActivity::class.java)
+            startActivity(placeOrderIntent)
 
         }
 

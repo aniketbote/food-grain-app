@@ -108,27 +108,31 @@
             android:layout_marginLeft="10sp">
 
             <TextView
+
                 android:fontFamily="@font/alegreya_sans_medium"
-                android:gravity="center"
+                android:id="@+id/ordertotal_placeorder"
                 android:layout_width="150sp"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Amount"
-                android:textSize="18sp"
-                />
+                android:textSize="18sp" />
 
             <TextView
+
                 android:fontFamily="@font/alegreya_sans_medium"
                 android:gravity="center"
+                android:id="@+id/delivery_placeorder"
                 android:layout_width="150sp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1sp"
                 android:text="Amount"
-                android:textSize="18sp"
-                />
+                android:textSize="18sp" />
 
             <TextView
+
                 android:fontFamily="@font/alegreya_sans_medium"
                 android:gravity="center"
+                android:id="@+id/total_placeorder"
                 android:layout_width="150sp"
                 android:layout_height="wrap_content"
                 android:text="Amount"
