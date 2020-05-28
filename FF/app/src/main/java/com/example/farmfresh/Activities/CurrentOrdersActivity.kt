@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -31,6 +32,13 @@ class CurrentOrdersActivity : AppCompatActivity(){
         val emailHash = token.getString("EMAILHASH", "")
         val pendingOrder = token.getString("pendingOrder", "")
 
+        if(pendingOrder == false.toString()){
+            receivedOrder_current.visibility = View.GONE
+        }
+        if(pendingOrder == true.toString()){
+            receivedOrder_current.visibility = View.VISIBLE
+        }
+
 
         val orderListObj = intent.getSerializableExtra("orderListObj") as OrderList
         Log.d("CurrentActivity","${orderListObj.orderList}")
@@ -41,6 +49,8 @@ class CurrentOrdersActivity : AppCompatActivity(){
             orderListObj.orderList as MutableList<Order>
         )
         recycleView.adapter = adapter
+
+
 
 
 

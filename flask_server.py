@@ -1,12 +1,13 @@
 from flask import Flask, jsonify, request
 import json
+import re
 from pprint import pprint
 import os
 import random
 import string
 from datetime import date
 import time
-
+from pprint import pprint
 #Firebase realtime database
 import firebase_admin
 from firebase_admin import credentials
@@ -22,6 +23,10 @@ cred = credentials.Certificate('farmfresh-9c7fd-firebase-adminsdk-dx65j-9533ee02
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://farmfresh-9c7fd.firebaseio.com/'
 })
+
+combinedItemsRef = db.reference('combined_items')
+combinedItems = combinedItemsRef.get()
+combinedItemsKeys = list(combinedItems.keys())
 
 
 app = Flask(__name__)
@@ -142,8 +147,31 @@ def orderreceived():
         responseDict['errorCode'] = 2
     return jsonify(responseDict)
 
+@app.route("/search", methods = ['POST','GET'])
+def search():
+    responseDict = {}
+    searchItemList = []
+    pattern = request.form['pattern']
+    print(pattern)
+    matched1 = [x for x in combinedItemsKeys if re.search("^{}".format(pattern.lower()), x.lower())]
+    matched2 = [x for x in combinedItemsKeys if (re.search("{}".format(pattern.lower()), x.lower()) and x not in matched1) ]
+    finalMatched = matched1 + matched2
+    if len(finalMatched)==len(combinedItems):
+        finalMatched = []
+    for item in finalMatched:
+        tempDict = {}
+        tempDict['name'] = item
+        tempDict['description'] = combinedItems[item]['Description']
+        tempDict['imageUrl'] = combinedItems[item]['Image']
+        tempDict['size'] = combinedItems[item]['Size']
+        tempDict['price'] = combinedItems[item]['Price']
+        tempDict['availableQuantity'] = combinedItems[item]['Available Quantity']
+        tempDict['type'] = combinedItems[item]['Type']
+        searchItemList.append(tempDict)
+    responseDict['itemList'] = searchItemList
+    return jsonify(responseDict)
 
 
 if __name__ == "__main__":
+    # app.run(host='192.168.0.3', port=5000, debug = True )
     app.run(host='192.168.29.242', port=5000, debug = True )
-    # app.run(host='192.168.29.242', port=5000, debug = True )

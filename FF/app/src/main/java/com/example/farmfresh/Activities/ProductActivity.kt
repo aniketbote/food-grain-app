@@ -97,7 +97,7 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         val recyclerView:RecyclerView = findViewById(R.id.recycleview)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false) as RecyclerView.LayoutManager?
-        val adapter= ProductAdapter(
+        var adapter= ProductAdapter(
             subDataObj.itemList,
             cartList,
             type
@@ -118,15 +118,9 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
 
         if(cartList.size == 0){
-            itemText = count.findViewById(
-                R.id.item_count
-            )
             itemText.visibility = View.INVISIBLE
         }
         if(cartList.size > 0) {
-            itemText = count.findViewById(
-                R.id.item_count
-            )
             itemText.visibility = View.VISIBLE
             cartCount = cartList.size
             itemText.text = cartCount.toString()

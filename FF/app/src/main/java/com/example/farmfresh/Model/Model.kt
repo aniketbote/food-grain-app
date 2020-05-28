@@ -10,7 +10,7 @@ data class SubData(val itemList:List<Product>, val totalCount:Int): Serializable
 data class AllData(val itemList:List<Product>, val totalHashMap: HashMap<String, String>, val featureList: List<String>):
     Serializable
 
-data class Product(val name:String, val description: String, val imageUrl:String, val size: String, val price:String, val availableQuantity:String):
+data class Product(val name:String, val description: String, val imageUrl:String, val size: String, val price:String, val availableQuantity:String, val type:String = ""):
     Serializable
 
 data class CartItem(val name:String, val imageUrl:String, val size: String, val price:String, val count:String, val type:String, val available:String)
@@ -21,4 +21,5 @@ data class Order(val orderId:String, val orderCreatedDate:String, val orderCompl
 
 data class OrderList(val orderList: List<Order>): Serializable
 
-data class PassIntent(val intentB:String): Serializable
+data class ProductList(val itemList:List<Product>): Serializable
+
