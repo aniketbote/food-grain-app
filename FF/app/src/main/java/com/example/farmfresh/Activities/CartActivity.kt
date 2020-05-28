@@ -77,8 +77,8 @@ class CartActivity : AppCompatActivity(){
                 return@setOnClickListener
             }
 
-//            val paymentIntent = Intent(this, PaymentActivity::class.java)
-//            startActivityForResult(paymentIntent, 739)
+            val paymentIntent = Intent(this, PaymentActivity::class.java)
+            startActivityForResult(paymentIntent, 739)
             //progress bar
             val builder = AlertDialog.Builder(this)
             val dialogView = layoutInflater.inflate(R.layout.progress_bar,null)
