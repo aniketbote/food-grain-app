@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-import com.example.farmfresh.Activities.cartCount
-import com.example.farmfresh.Activities.cartTotal
-import com.example.farmfresh.Activities.itemText
+import com.example.farmfresh.Activities.*
 import com.example.farmfresh.Database.CartDatabase
 import com.example.farmfresh.Model.CartItem
 import com.example.farmfresh.R
@@ -71,7 +69,15 @@ class CartAdapter(private val context: Context, private val data:MutableList<Car
                     itemText.visibility = View.VISIBLE
                     itemText.text = cartCount.toString()
                 }
-                cartTotal.text = (cartTotal.text.toString().toInt() - item.price.toInt()).toString()
+                orderTotalPlaceorder.text = (orderTotalPlaceorder.text.toString().toInt() - item.price.toInt()).toString()
+                val deliveryCharge = (orderTotalPlaceorder.text.toString().toInt()*0.05).toInt()
+                if( deliveryCharge > 50){
+                    deliverChargePlaceorder.text = deliveryCharge.toString()
+                }
+                else{
+                    deliverChargePlaceorder.text = (50).toString()
+                }
+                cartTotalPlaceorder.text = (orderTotalPlaceorder.text.toString().toInt() + deliverChargePlaceorder.text.toString().toInt()).toString()
                 val remPosition = getPosition(data, item.name)
                 data.removeAt(remPosition)
                 notifyItemRemoved(remPosition)
@@ -84,7 +90,15 @@ class CartAdapter(private val context: Context, private val data:MutableList<Car
                 }
                 else {
                     holder.cost.text = (item.price.toInt() * newValue).toString()
-                    cartTotal.text = (cartTotal.text.toString().toInt() + (newValue - oldValue) * item.price.toInt()).toString()
+                    orderTotalPlaceorder.text = (orderTotalPlaceorder.text.toString().toInt() + (newValue - oldValue) * item.price.toInt()).toString()
+                    val deliveryCharge = (orderTotalPlaceorder.text.toString().toInt()*0.05).toInt()
+                    if( deliveryCharge > 50){
+                        deliverChargePlaceorder.text = deliveryCharge.toString()
+                    }
+                    else{
+                        deliverChargePlaceorder.text = (50).toString()
+                    }
+                    cartTotalPlaceorder.text = (orderTotalPlaceorder.text.toString().toInt() + deliverChargePlaceorder.text.toString().toInt()).toString()
                     db.updateData(item.name, newValue.toString())
                 }
             }

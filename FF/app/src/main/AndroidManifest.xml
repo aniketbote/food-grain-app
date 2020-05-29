@@ -22,16 +22,16 @@
         <activity android:name=".Activities.LoginActivity"></activity>
         <activity android:name=".Activities.AddAutoActivity"></activity>
         <activity android:name=".Activities.IndexActivity"></activity>
-        <activity android:name=".Activities.CurrentOrdersActivity"></activity>
+        <activity android:name=".Activities.CurrentOrdersActivity" android:launchMode="singleTask"></activity>
         <activity android:name=".Activities.PreviousOrdersActivity"></activity>
         <activity android:name=".Activities.ProfileActivity"></activity>
         <activity android:name=".Activities.SupportActivity"></activity>
         <activity android:name=".Activities.RegisterActivity"></activity>
         <activity android:name=".Activities.ProductActivity"></activity>
-        <activity android:name=".Activities.CartActivity"></activity>
         <activity android:name=".Activities.OrderDetailActivity"></activity>
         <activity android:name=".Activities.PaymentActivity"></activity>
         <activity android:name=".Activities.SearchActivity"></activity>
+        <activity android:name=".Activities.PlaceOrderActivity" android:launchMode="singleTask"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

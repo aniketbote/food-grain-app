@@ -30,7 +30,8 @@ class CurrentOrdersActivity : AppCompatActivity(){
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         val emailHash = token.getString("EMAILHASH", "")
-        val pendingOrder = token.getString("pendingOrder", "")
+        val tokenPrivate = getSharedPreferences("${emailHash}", Context.MODE_PRIVATE)
+        val pendingOrder = tokenPrivate.getString("pendingOrder", "")
 
         if(pendingOrder == false.toString()){
             receivedOrder_current.visibility = View.GONE
@@ -90,7 +91,7 @@ class CurrentOrdersActivity : AppCompatActivity(){
                         }
                         if(response.body()?.errorCode == 0) {
                             val pref = getSharedPreferences(
-                                "UserSharedPreferences",
+                                "${emailHash}",
                                 Context.MODE_PRIVATE
                             )
                             val editor = pref.edit()
@@ -118,17 +119,4 @@ class CurrentOrdersActivity : AppCompatActivity(){
         }
 
     }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            val indexIntent =
-                indexActivityGlobal
-            indexIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(indexIntent)
-            finish()
-        }
-        return super.onKeyDown(keyCode, event)
-    }
-
-
 }

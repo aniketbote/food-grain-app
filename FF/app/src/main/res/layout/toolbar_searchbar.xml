@@ -8,18 +8,21 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55sp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
 
         <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="3sp"
+            android:layout_width="380sp"
+            android:layout_height="45sp"
+            android:layout_gravity="center"
             app:titleTextColor="@color/cardview_light_background"
             app:subtitleTextAppearance="@font/alegreya_sans_medium"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:background="@android:color/transparent"
+            android:background="@drawable/serachbar"
             android:id="@+id/toolbar_searchbar"
+            app:collapseIcon="@drawable/ic_arrow_back_white_24dp"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
 

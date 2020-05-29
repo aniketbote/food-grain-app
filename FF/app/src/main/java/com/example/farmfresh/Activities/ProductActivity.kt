@@ -112,8 +112,8 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         icon.setOnClickListener{
             Log.d("Index Activity", "Clicked Add to cart button")
-            val cartIntent = Intent(this, CartActivity::class.java)
-            startActivity(cartIntent)
+            val placeOrderIntent = Intent(this, PlaceOrderActivity::class.java)
+            startActivity(placeOrderIntent)
 
         }
 
@@ -149,7 +149,7 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         Log.d("IndexActivity", "${p0}")
                         if(p0.value == null){
                             val pref = this@ProductActivity.getSharedPreferences(
-                                "UserSharedPreferences",
+                                "$emailHashGlobal",
                                 Context.MODE_PRIVATE
                             )
                             val editor = pref.edit()

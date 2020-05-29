@@ -11,60 +11,67 @@
 
     <TextView
         android:textSize="16sp"
-        android:layout_marginTop="56sp"
+        android:layout_marginTop="60sp"
         android:layout_marginLeft="10sp"
         android:layout_width="wrap_content"
+        android:fontFamily="@font/alegreya_sans_medium"
         android:layout_height="wrap_content"
         android:text="Select Delivery Address -"/>
     <TextView
-        android:layout_width="400sp"
+        android:fontFamily="@font/alegreya_sans_medium"
+        android:background="@drawable/address_field"
+        android:layout_width="390sp"
         android:layout_height="50sp"
-        android:layout_marginTop="80sp"
+        android:layout_marginTop="90sp"
         android:layout_marginLeft="10sp"
         android:id="@+id/previous_address"
         android:text="Previous Address Here"
+        android:padding="10sp"
         />
     <Button
-        android:layout_width="200sp"
+        android:layout_width="150sp"
+        android:fontFamily="@font/alegreya_sans_medium"
         android:textSize="14sp"
         android:id="@+id/select_address"
         android:textColor="@color/quantum_white_100"
         android:background="@drawable/place_order"
         android:layout_height="35sp"
-        android:layout_marginTop="135sp"
+        android:layout_marginTop="150sp"
         android:layout_centerHorizontal="true"
         android:text="Select New Address"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="175sp"
+        android:layout_marginTop="190sp"
         android:id="@+id/order_list"
         android:layout_width="match_parent"
-        android:layout_height="400sp"
+        android:layout_height="330sp"
         android:scrollbars="vertical"
         tools:listitem="@layout/item_cart_view"/>
 
     <LinearLayout
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="540sp"
         android:layout_width="700sp"
-        android:layout_height="250sp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/order_box">
 
   <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="120sp"
+      android:layout_height="wrap_content"
       android:orientation="horizontal"
       android:background="@drawable/order_box">
 
       <LinearLayout
           android:layout_width="200sp"
-          android:layout_height="100sp"
+          android:layout_height="wrap_content"
           android:orientation="vertical"
           android:layout_marginLeft="25sp"
           android:layout_marginTop="15sp">
 
       <TextView
+          android:fontFamily="@font/alegreya_sans_medium"
           android:layout_width="150sp"
           android:layout_height="wrap_content"
           android:text="Order Amount:"
@@ -72,19 +79,21 @@
          />
 
           <TextView
+              android:fontFamily="@font/alegreya_sans_medium"
               android:layout_width="150sp"
               android:layout_height="wrap_content"
-              android:layout_marginTop="10sp"
+              android:layout_marginTop="1sp"
               android:text="Delivery Charge:"
               android:textSize="18sp"
               />
 
           <TextView
+              android:fontFamily="@font/alegreya_sans_medium"
               android:layout_width="150sp"
               android:layout_height="wrap_content"
               android:text="Total Amount:"
-              android:textSize="18sp"
-              android:layout_marginTop="10sp"
+              android:textSize="20sp"
+              android:layout_marginTop="8sp"
               />
 
 
@@ -93,35 +102,42 @@
 
         <LinearLayout
             android:layout_width="150sp"
-            android:layout_height="100sp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="15sp"
             android:layout_marginLeft="10sp">
 
             <TextView
-                android:gravity="center"
+
+                android:fontFamily="@font/alegreya_sans_medium"
+                android:id="@+id/ordertotal_placeorder"
                 android:layout_width="150sp"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Amount"
-                android:textSize="18sp"
-                />
+                android:textSize="18sp" />
 
             <TextView
+
+                android:fontFamily="@font/alegreya_sans_medium"
                 android:gravity="center"
+                android:id="@+id/delivery_placeorder"
                 android:layout_width="150sp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
+                android:layout_marginTop="1sp"
                 android:text="Amount"
-                android:textSize="18sp"
-                />
+                android:textSize="18sp" />
 
             <TextView
+
+                android:fontFamily="@font/alegreya_sans_medium"
                 android:gravity="center"
+                android:id="@+id/total_placeorder"
                 android:layout_width="150sp"
                 android:layout_height="wrap_content"
                 android:text="Amount"
-                android:textSize="18sp"
-                android:layout_marginTop="10sp"
+                android:textSize="20sp"
+                android:layout_marginTop="8sp"
                 />
 
 
@@ -132,13 +148,16 @@
     </LinearLayout>
 
         <Button
-            android:text="PLACE ORDER"
+            android:layout_gravity="bottom"
+            android:fontFamily="@font/alegreya_sans_medium"
+            android:layout_alignParentBottom="true"
+            android:text="PLACE  ORDER"
             android:id="@+id/place_order"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textColor="@color/quantum_white_100"
             android:layout_width="match_parent"
-            android:layout_height="70sp"
-            android:background="@color/quantum_lightgreen500"/>
+            android:layout_height="wrap_content"
+            android:background="@color/quantum_lightgreen400"/>
 
     </LinearLayout>
 

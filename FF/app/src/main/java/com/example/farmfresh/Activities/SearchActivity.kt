@@ -10,6 +10,7 @@ import android.view.Menu
 
 import android.view.MenuItem
 import android.view.MenuItem.OnActionExpandListener
+import android.view.View
 
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -45,6 +46,10 @@ class SearchActivity: AppCompatActivity() {
         setSupportActionBar(toolbar_searchbar)
         getSupportActionBar()?.setDisplayShowTitleEnabled(false)
 
+        //getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        //getSupportActionBar()?.setDisplayShowHomeEnabled(true)
+        //getSupportActionBar()?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp)
+
 
     }
 
@@ -55,6 +60,8 @@ class SearchActivity: AppCompatActivity() {
         val searchView: androidx.appcompat.widget.SearchView =
             menu?.findItem(R.id.menu_search)?.actionView as SearchView
         searchView.requestFocus()
+
+
 
 
 
