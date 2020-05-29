@@ -4,6 +4,8 @@ import android.app.ActionBar
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -28,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_placeorder.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
+import kotlinx.coroutines.Delay
+import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,6 +40,38 @@ lateinit var orderTotalPlaceorder: TextView
 lateinit var deliverChargePlaceorder: TextView
 class PlaceOrderActivity:AppCompatActivity() {
     var emailHash: String = ""
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    private fun checkConnection(context: Context) {
+        val isConnected = isOnline(context)
+        Log.d("LoadingActivity", "$isConnected")
+
+        if(!isConnected){
+            Log.d("LoadingActivity", "No connection : Starting No Connection Activity")
+            val noConnectionIntent = Intent(context, NoConnectionActivity::class.java)
+            startActivityForResult(noConnectionIntent,999)
+        }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -55,6 +91,7 @@ class PlaceOrderActivity:AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_placeorder)
+        checkConnection(this)
 
         orderTotalPlaceorder = findViewById(R.id.ordertotal_placeorder)
         cartTotalPlaceorder = findViewById(R.id.total_placeorder)
@@ -164,6 +201,7 @@ class PlaceOrderActivity:AppCompatActivity() {
                             editor.putString("pendingOrder", true.toString())
                             editor.putString("previousOrderAddress",orderAddress)
                             editor.commit()
+
                             for(i in 0 until cartList.size){
                                 db.deleteData(cartList[i].name)
                             }
@@ -182,10 +220,7 @@ class PlaceOrderActivity:AppCompatActivity() {
                                         HelperUtils.getOrderList(
                                             p0
                                         )
-                                    val orderListObj =
-                                        OrderList(
-                                            orderList
-                                        )
+                                    val orderListObj = OrderList(orderList)
                                     Log.d("PlaceOrderActivity","${orderList}")
                                     val currentOrdersIntent = Intent(this@PlaceOrderActivity, CurrentOrdersActivity::class.java)
                                     currentOrdersIntent.putExtra("orderListObj",orderListObj)

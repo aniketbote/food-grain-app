@@ -44,6 +44,12 @@ combinedItems, combinedItemsKeys = get_combinedItems()
 
 
 app = Flask(__name__)
+def checkForCurrentOrder(emHash):
+    ref = db.reference('all_orders/{}/current'.format(emHash))
+    if ref.get() == None:
+        return True,"No Pending"
+    else:
+        return False,"Pending "
 
 
 def generateOrderId():
@@ -117,6 +123,13 @@ def placeorder():
     jsonString = request.form['cartList']
     emailHash = request.form['emailHash']
     address = request.form['address']
+    currentStatus, pendingMsg = checkForCurrentOrder(emailHash)
+    if not currentStatus:
+        tdict['message'] = pendingMsg
+        tdict['deficiency'] = ''
+        tdict['errorCode'] = 4
+        return jsonify(tdict)
+
     print(emailHash)
     print('\n')
     try:

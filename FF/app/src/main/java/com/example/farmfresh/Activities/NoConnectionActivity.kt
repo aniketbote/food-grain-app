@@ -1,15 +1,31 @@
 package com.example.farmfresh.Activities
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.farmfresh.R
+import kotlinx.android.synthetic.main.activity_connection_error.*
 
-class SupportActivity : AppCompatActivity(){
+class NoConnectionActivity:AppCompatActivity(){
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_connection_error)
+        Log.d("NoconnectionACtivity", "Started")
+        checkConnection(this)
+        refresh_no_connection.setOnClickListener {
+            this.recreate()
+        }
+    }
+
+    override fun onBackPressed() {
+
+    }
     fun isOnline(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -34,17 +50,13 @@ class SupportActivity : AppCompatActivity(){
 
     private fun checkConnection(context: Context) {
         val isConnected = isOnline(context)
-        Log.d("LoadingActivity", "$isConnected")
-
-        if(!isConnected){
-            Log.d("LoadingActivity", "No connection : Starting No Connection Activity")
-            val noConnectionIntent = Intent(context, NoConnectionActivity::class.java)
-            startActivityForResult(noConnectionIntent,999)
+        if(isConnected){
+            val returnIntent:Intent = Intent()
+            setResult(Activity.RESULT_OK, returnIntent)
+            finish()
         }
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_support)
-        checkConnection(this)
+        else if(!isConnected){
+            return
+        }
     }
 }

@@ -22,6 +22,15 @@
             android:layout_marginTop="5sp"
             android:text="Something seems to have gone wrong"
         />
+
+        <Button
+            android:id="@+id/refresh_no_connection"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5sp"
+            android:text="Refresh"
+            android:textAlignment="center" />
+
     </LinearLayout>
 
 </RelativeLayout>
