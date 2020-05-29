@@ -1,10 +1,12 @@
 package com.example.farmfresh.Activities
 
+import android.app.ActionBar
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -25,6 +27,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_placeorder.*
+import kotlinx.android.synthetic.main.activity_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -90,6 +93,14 @@ class PlaceOrderActivity:AppCompatActivity() {
         deliverChargePlaceorder.text = deliveryCharge.toString()
         cartTotalPlaceorder.text = cartTotal.toString()
         orderTotalPlaceorder.text = orderTotal.toString()
+
+
+        setSupportActionBar(toolbar)
+
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
+
+        getSupportActionBar()?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp)
 
 
         val recycleView: RecyclerView = findViewById(R.id.order_list)
@@ -213,5 +224,14 @@ class PlaceOrderActivity:AppCompatActivity() {
                 })
             }
         }
+
+    override fun onOptionsItemSelected(item:MenuItem) : Boolean{
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+           startActivity(indexActivityGlobal)
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     }
