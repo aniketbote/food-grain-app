@@ -30,8 +30,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_placeorder.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
-import kotlinx.coroutines.Delay
-import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -166,7 +164,7 @@ class PlaceOrderActivity:AppCompatActivity() {
             }
             val paymentIntent = Intent(this, PaymentActivity::class.java)
             paymentIntent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
-            startActivityForResult(paymentIntent, 1029)
+            startActivity(paymentIntent)
             //progress bar
             val builder = AlertDialog.Builder(this)
             val dialogView = layoutInflater.inflate(R.layout.progress_bar,null)

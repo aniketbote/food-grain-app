@@ -10,5 +10,6 @@
     </string-array>
 
     <string name="api_key">AIzaSyC0XPX1U7dVU2A_rYgTVeyvbSaNtT8o7ps</string>
+    <string name="payments_show_name" translatable="false">Successfully received payment data for %s!</string>
 
 </resources>
