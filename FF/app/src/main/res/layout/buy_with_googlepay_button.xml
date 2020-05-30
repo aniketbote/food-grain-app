@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:textColor="@color/quantum_black_100"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Choose a payment option :"
@@ -23,16 +24,16 @@
     android:layout_gravity="center"
     android:layout_height="55sp"
     android:background="@drawable/address_field">
+
 <LinearLayout
     android:layout_marginLeft="75sp"
     android:layout_gravity="center"
     android:clickable="true"
     android:focusable="true"
-    android:layout_width="155sp"
+    android:layout_width="175sp"
     android:layout_height="45sp"
     android:background="@drawable/googlepay_button_no_shadow_background"
     android:padding="2sp"
-    android:contentDescription="@string/buy_with_googlepay_button_content_description"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -41,21 +42,25 @@
         android:layout_height="match_parent"
         android:weightSum="2"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="horizontal">
         <ImageView
+            android:layout_marginLeft="8sp"
             android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="45sp"
+            android:layout_height="wrap_content"
             android:scaleType="fitCenter"
             android:duplicateParentState="true"
-            android:src="@drawable/buy_with_googlepay_button_content"/>
+            android:src="@drawable/googlepay_button_content"/>
+
+        <TextView
+            android:textSize="16sp"
+            android:textColor="@color/quantum_grey800"
+            android:fontFamily="@font/alegreya_sans_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Google Pay"/>
     </LinearLayout>
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:duplicateParentState="true"
-        android:src="@drawable/googlepay_button_overlay"/>
+
 
 </LinearLayout>
 </LinearLayout>
@@ -67,12 +72,14 @@
         android:layout_height="55sp"
         android:background="@drawable/address_field">
         <Button
+            android:textAlignment="center"
+            android:fontFamily="@font/alegreya_sans_medium"
             android:drawableLeft="@drawable/cash_icon"
             android:paddingLeft="10sp"
             android:id="@+id/btn_cash"
-            android:layout_width="155sp"
+            android:layout_width="175sp"
             android:layout_height="45sp"
-            android:background="@drawable/btn_cod"
+            android:background="@drawable/googlepay_button_no_shadow_background"
             android:layout_marginLeft="75sp"
             android:textAllCaps="false"
             android:text="Cash on Delivery"
@@ -87,13 +94,14 @@
         android:layout_height="55sp"
         android:background="@drawable/address_field">
         <Button
+            android:fontFamily="@font/alegreya_sans_medium"
             android:id="@+id/btn_cardpay"
             android:drawableLeft="@drawable/card"
             android:paddingLeft="10sp"
             android:textAllCaps="false"
-            android:layout_width="155sp"
+            android:layout_width="175sp"
             android:layout_height="45sp"
-            android:background="@drawable/btn_cod"
+            android:background="@drawable/googlepay_button_no_shadow_background"
             android:layout_marginLeft="75sp"
             android:text="Online Payment"
             android:layout_gravity="center"/>
