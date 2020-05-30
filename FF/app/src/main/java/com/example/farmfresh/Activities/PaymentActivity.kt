@@ -9,15 +9,28 @@ import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.farmfresh.Database.CartDatabase
+import com.example.farmfresh.Model.OrderList
+import com.example.farmfresh.Model.PlaceOrderResponse
 import com.example.farmfresh.R
 import com.example.farmfresh.Payment.PaymentsUtil
+import com.example.farmfresh.Retrofit.RetrofitClient
+import com.example.farmfresh.Utilities.HelperUtils
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_payment.*
 import org.json.JSONException
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import kotlin.math.roundToLong
 
 class PaymentActivity :AppCompatActivity(){
@@ -56,12 +69,20 @@ class PaymentActivity :AppCompatActivity(){
 
     private lateinit var paymentsClient: PaymentsClient
     private val LOAD_PAYMENT_DATA_REQUEST_CODE = 991
+    private var address:String = ""
+    private var price:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
         checkConnection(this)
         Log.d("PaymentActivity", "Payment Activity Started")
+        address = intent.getStringExtra("address") as String
+        price = intent.getStringExtra("price") as String
+
+        Log.d("PaymentActivity", "${address}  ${price}")
+
+
 
         paymentsClient = PaymentsUtil.createPaymentsClient(this)
         possiblyShowGooglePayButton()
@@ -161,20 +182,6 @@ class PaymentActivity :AppCompatActivity(){
 
             // If the gateway is set to "example", no payment information is returned - instead, the
             // token will only consist of "examplePaymentMethodToken".
-            if (paymentMethodData
-                    .getJSONObject("tokenizationData")
-                    .getString("type") == "PAYMENT_GATEWAY" && paymentMethodData
-                    .getJSONObject("tokenizationData")
-                    .getString("token") == "examplePaymentMethodToken") {
-
-                AlertDialog.Builder(this)
-                    .setTitle("Warning")
-                    .setMessage("Gateway name set to \"example\" - please modify " +
-                            "Constants.java and replace it with your own gateway.")
-                    .setPositiveButton("OK", null)
-                    .create()
-                    .show()
-            }
 
             val billingName = paymentMethodData.getJSONObject("info")
                 .getJSONObject("billingAddress").getString("name")
@@ -184,11 +191,111 @@ class PaymentActivity :AppCompatActivity(){
 
             // Logging token string.
             Log.d("PaymentActivity", "GooglePaymentToken : ${paymentMethodData.getJSONObject("tokenizationData").getString("token")}")
+            createOrder()
 
         } catch (e: JSONException) {
             Log.d("PaymentActivity", "handlePaymentSuccess : Error: " + e.toString())
         }
 
     }
+    fun createOrder(){
+        //progress bar
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.progress_bar,null)
+        builder.setView(dialogView)
+        builder.setCancelable(false)
+        val message = dialogView.findViewById<TextView>(R.id.text_progressBar)
+        message.text = "Please Wait while we place your order"
+        val dialog = builder.create()
+        dialog.show()
 
+        val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
+        val emailHash = token.getString("EMAILHASH", "").toString()
+
+        val db = CartDatabase(this)
+        val cartJsonObj = db.readDataJson()
+        val cartList = db.readData()
+        Log.d("PaymentActivity","$cartJsonObj")
+
+        RetrofitClient.instance.placeorder(cartJsonObj, emailHash,address)
+            .enqueue(object : Callback<PlaceOrderResponse> {
+                override fun onFailure(call: Call<PlaceOrderResponse>, t: Throwable) {
+                    dialog.dismiss()
+                    Toast.makeText(
+                        this@PaymentActivity,
+                        "Failed : ${t.localizedMessage}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.d("PlaceOrderActivity", "Failed : ${t.message}")
+                }
+
+                override fun onResponse(
+                    call: Call<PlaceOrderResponse>,
+                    response: Response<PlaceOrderResponse>
+                ) {
+                    Log.d("PlaceOrderActivity", "Successful : ${response.body()?.message}")
+                    if (response.body() == null) {
+                        dialog.dismiss()
+                        Toast.makeText(
+                            this@PaymentActivity,
+                            "Some Error Occurred",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    if (response.body()?.errorCode == 0) {
+                        Log.d("PlaceOrderActivity", "Setting shared preferences")
+                        val pref = this@PaymentActivity.getSharedPreferences(
+                            "$emailHash",
+                            Context.MODE_PRIVATE
+                        )
+                        val editor = pref.edit()
+                        editor.putString("pendingOrder", true.toString())
+                        editor.putString("previousOrderAddress", address)
+                        editor.commit()
+
+                        for (i in 0 until cartList.size) {
+                            db.deleteData(cartList[i].name)
+                        }
+                        cartCount = 0
+                        itemText.visibility = View.INVISIBLE
+
+                        val currentRef = FirebaseDatabase.getInstance()
+                            .getReference("all_orders/$emailHashGlobal/current")
+                        currentRef.addValueEventListener(object : ValueEventListener {
+                            override fun onCancelled(p0: DatabaseError) {
+                                Log.d("PlaceOrderActivity", "Error occured: ${p0}")
+                                return
+                            }
+
+                            override fun onDataChange(p0: DataSnapshot) {
+                                val orderList =
+                                    HelperUtils.getOrderList(
+                                        p0
+                                    )
+                                val orderListObj = OrderList(orderList)
+                                Log.d("PlaceOrderActivity", "${orderList}")
+                                val currentOrdersIntent =
+                                    Intent(this@PaymentActivity, CurrentOrdersActivity::class.java)
+                                currentOrdersIntent.putExtra("orderListObj", orderListObj)
+                                currentOrdersIntent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
+                                Toast.makeText(
+                                    this@PaymentActivity, "${response.body()?.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                startActivity(currentOrdersIntent)
+                                dialog.dismiss()
+                                finish()
+                            }
+                        })
+
+                    }
+
+                }
+            })
+    }
+
+    override fun onBackPressed() {
+        val placeOrderIntent = Intent(this, PlaceOrderActivity::class.java)
+        startActivity(placeOrderIntent)
+    }
 }
