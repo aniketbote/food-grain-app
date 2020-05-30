@@ -4,6 +4,8 @@ import android.app.ActionBar
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -36,6 +38,38 @@ lateinit var orderTotalPlaceorder: TextView
 lateinit var deliverChargePlaceorder: TextView
 class PlaceOrderActivity:AppCompatActivity() {
     var emailHash: String = ""
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    private fun checkConnection(context: Context) {
+        val isConnected = isOnline(context)
+        Log.d("LoadingActivity", "$isConnected")
+
+        if(!isConnected){
+            Log.d("LoadingActivity", "No connection : Starting No Connection Activity")
+            val noConnectionIntent = Intent(context, NoConnectionActivity::class.java)
+            startActivityForResult(noConnectionIntent,999)
+        }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -55,6 +89,7 @@ class PlaceOrderActivity:AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_placeorder)
+        checkConnection(this)
 
         orderTotalPlaceorder = findViewById(R.id.ordertotal_placeorder)
         cartTotalPlaceorder = findViewById(R.id.total_placeorder)
@@ -127,101 +162,12 @@ class PlaceOrderActivity:AppCompatActivity() {
                 Toast.makeText(this,"You have a pending order",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            //progress bar
-            val builder = AlertDialog.Builder(this)
-            val dialogView = layoutInflater.inflate(R.layout.progress_bar,null)
-            builder.setView(dialogView)
-            builder.setCancelable(false)
-            val message = dialogView.findViewById<TextView>(R.id.text_progressBar)
-            message.text = "Please Wait while we place your order"
-            val dialog = builder.create()
-            dialog.show()
-
-            val db = CartDatabase(this)
-            val cartJsonObj = db.readDataJson()
-            Log.d("PlaceOrderActivity","$cartJsonObj")
-            Log.d("PlaceOrderActivity","Pressed Place Order Button")
-            val orderAddress = previous_address.text.toString()
-            Log.d("PlaceOrderActivity","$orderAddress")
-            RetrofitClient.instance.placeorder(cartJsonObj, emailHash.toString(),orderAddress)
-                .enqueue(object : Callback<PlaceOrderResponse> {
-                    override fun onFailure(call: Call<PlaceOrderResponse>, t: Throwable) {
-                        dialog.dismiss()
-                        Toast.makeText(this@PlaceOrderActivity,"Failed : ${t.localizedMessage}", Toast.LENGTH_SHORT).show()
-                        Log.d("PlaceOrderActivity","Failed : ${t.message}")
-                    }
-
-                    override fun onResponse(call: Call<PlaceOrderResponse>, response: Response<PlaceOrderResponse>) {
-                        Log.d("PlaceOrderActivity","Successful : ${response.body()?.message}")
-                        if(response.body() == null){
-                            dialog.dismiss()
-                            Toast.makeText(this@PlaceOrderActivity, "Some Error Occurred", Toast.LENGTH_SHORT).show()
-                        }
-                        if(response.body()?.errorCode == 0){
-                            Log.d("PlaceOrderActivity","Setting shared preferences")
-                            val pref = this@PlaceOrderActivity.getSharedPreferences("$emailHash", Context.MODE_PRIVATE)
-                            val editor = pref.edit()
-                            editor.putString("pendingOrder", true.toString())
-                            editor.putString("previousOrderAddress",orderAddress)
-                            editor.commit()
-                            for(i in 0 until cartList.size){
-                                db.deleteData(cartList[i].name)
-                            }
-                            cartCount = 0
-                            itemText.visibility = View.INVISIBLE
-
-                            val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHashGlobal/current")
-                            currentRef.addValueEventListener(object : ValueEventListener {
-                                override fun onCancelled(p0: DatabaseError) {
-                                    Log.d("PlaceOrderActivity","Error occured: ${p0}")
-                                    return
-                                }
-
-                                override fun onDataChange(p0: DataSnapshot) {
-                                    val orderList =
-                                        HelperUtils.getOrderList(
-                                            p0
-                                        )
-                                    val orderListObj =
-                                        OrderList(
-                                            orderList
-                                        )
-                                    Log.d("PlaceOrderActivity","${orderList}")
-                                    val currentOrdersIntent = Intent(this@PlaceOrderActivity, CurrentOrdersActivity::class.java)
-                                    currentOrdersIntent.putExtra("orderListObj",orderListObj)
-                                    currentOrdersIntent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
-                                    Toast.makeText(this@PlaceOrderActivity,"${response.body()?.message}",
-                                        Toast.LENGTH_SHORT).show()
-                                    startActivity(currentOrdersIntent)
-                                    dialog.dismiss()
-                                    finish()
-                                }
-                            })
-                        }
-
-                        if(response.body()?.errorCode == 1){
-                            val deficientItems = response.body()!!.deficiency.split(',')
-                            Log.d("PlaceOrderActivity","${deficientItems}")
-                            for( i in 0 until deficientItems.size-1){
-                                db.deleteData(deficientItems[i])
-                            }
-                            dialog.dismiss()
-                            Toast.makeText(this@PlaceOrderActivity,"${response.body()?.message}", Toast.LENGTH_SHORT).show()
-                            intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
-                            startActivity(intent)
-                            finish()
-                        }
-                        if(response.body()?.errorCode == 2){
-                            Log.d("PlaceOrderActivity","Error code 2")
-                            dialog.dismiss()
-                            Toast.makeText(this@PlaceOrderActivity,"${response.body()?.message}", Toast.LENGTH_SHORT).show()
-                            intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
-                            startActivity(intent)
-                            finish()
-                        }
-
-                    }
-                })
+            val paymentIntent = Intent(this, PaymentActivity::class.java)
+            paymentIntent.putExtra("address","${previous_address.text}")
+            paymentIntent.putExtra("price","${cartTotalPlaceorder.text}")
+            paymentIntent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
+            startActivity(paymentIntent)
+            finish()
             }
         }
 
@@ -234,4 +180,9 @@ class PlaceOrderActivity:AppCompatActivity() {
         return super.onOptionsItemSelected(item);
     }
 
+    override fun onBackPressed() {
+        indexActivityGlobal.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(indexActivityGlobal)
     }
+
+}

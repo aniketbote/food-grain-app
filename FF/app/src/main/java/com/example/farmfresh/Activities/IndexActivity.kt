@@ -2,6 +2,8 @@ package com.example.farmfresh.Activities
 
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
@@ -41,10 +43,43 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     lateinit var featureImageList:List<String>
     lateinit var cartList:MutableList<CartItem>
     private var flag = false
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    private fun checkConnection(context: Context) {
+        val isConnected = isOnline(context)
+        Log.d("LoadingActivity", "$isConnected")
+
+        if(!isConnected){
+            Log.d("LoadingActivity", "No connection : Starting No Connection Activity")
+            val noConnectionIntent = Intent(context, NoConnectionActivity::class.java)
+            startActivityForResult(noConnectionIntent,999)
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         indexActivityGlobal = this.intent
         setContentView(R.layout.activity_index)
+        checkConnection(this)
         Log.d("IndexActivity", cartCount.toString())
 
         val db = CartDatabase(this)
@@ -134,6 +169,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
 
             fruit_index.setSafeOnClickListener {
+                    checkConnection(this)
                     Log.d("IndexActivity", "Clicked Fruits")
                     val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
                     Ref
@@ -167,6 +203,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
 
         exoticfruits_index.setSafeOnClickListener {
+            checkConnection(this)
             Log.d("Index Activity", "Clicked Exotic Fruits")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Fruits")
             Ref
@@ -197,6 +234,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
         }
         vegetables_index.setSafeOnClickListener {
+            checkConnection(this)
             Log.d("Index Activity", "Clicked Vegetables")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Vegetables")
             Ref
@@ -225,6 +263,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                 })
         }
         exoticveg_index.setSafeOnClickListener {
+            checkConnection(this)
             Log.d("Index Activity", "Clicked Exotic Vegetables")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Vegetables")
             Ref
@@ -253,6 +292,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                 })
         }
         grain_index.setSafeOnClickListener {
+            checkConnection(this)
             Log.d("Index Activity", "Clicked Food Grains")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Foodgrains")
             Ref

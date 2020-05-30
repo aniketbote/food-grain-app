@@ -4,7 +4,7 @@
     android:background="@android:color/transparent">
 
     <LinearLayout
-        android:layout_width="100sp"
+        android:layout_width="140sp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -23,6 +23,16 @@
             android:layout_marginTop="5sp"
             android:text="Something seems to have gone wrong"
         />
+
+        <Button
+            android:layout_gravity="center"
+            android:id="@+id/refresh_no_connection"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15sp"
+            android:text="Refresh"
+            android:textAlignment="center" />
+
     </LinearLayout>
 
 </RelativeLayout>

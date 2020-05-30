@@ -32,10 +32,11 @@
         <activity android:name=".Activities.PaymentActivity"></activity>
         <activity android:name=".Activities.SearchActivity"></activity>
         <activity android:name=".Activities.PlaceOrderActivity" android:launchMode="singleTask"></activity>
+        <activity android:name=".Activities.NoConnectionActivity"></activity>
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+<!--        <meta-data-->
+<!--            android:name="preloaded_fonts"-->
+<!--            android:resource="@array/preloaded_fonts" />-->
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
             android:value="true"/>
