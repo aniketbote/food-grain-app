@@ -14,10 +14,15 @@
         android:layout_height="match_parent"
         layout="@layout/activity_toolbar"/>
 
+
+    <ScrollView
+        android:layout_marginTop="55sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="55sp"
         android:elevation="2sp"
         android:orientation="vertical">
 
@@ -55,6 +60,7 @@
             android:text="Shop By Category :" />
 
         <LinearLayout
+            android:id="@+id/category"
             android:layout_marginTop="310sp"
             android:layout_width="match_parent"
             android:layout_height="200sp"
@@ -80,6 +86,8 @@
                         android:src="@drawable/fruitsnormal" />
 
                     <TextView
+                        android:background="@drawable/gridtext"
+                        android:padding="4sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Fruits"
@@ -104,6 +112,8 @@
                             android:src="@drawable/vegg" />
 
                         <TextView
+                            android:background="@drawable/gridtext"
+                            android:padding="4sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Vegetables"
@@ -135,6 +145,8 @@
                         android:src="@drawable/exfruits" />
 
                     <TextView
+                        android:background="@drawable/gridtext"
+                        android:padding="4sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Exotic Fruits"
@@ -159,6 +171,8 @@
                         android:src="@drawable/exveg" />
 
                     <TextView
+                        android:background="@drawable/gridtext"
+                        android:padding="4sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Exotic Vegetables"
@@ -188,6 +202,8 @@
                     android:scaleType="centerCrop"/>
 
                 <TextView
+                    android:background="@drawable/gridtext"
+                    android:padding="3sp"
                     android:layout_width="95sp"
                     android:layout_height="40sp"
                     android:layout_gravity="center"
@@ -204,12 +220,23 @@
         </LinearLayout>
 
 
-
-
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recylerview_index"
+            android:scrollbars="horizontal"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/popularitem_layout"
+            android:layout_marginTop="550sp"/>
 
 
     </RelativeLayout>
+
+
+
+
+
+    </ScrollView>
 
 
 

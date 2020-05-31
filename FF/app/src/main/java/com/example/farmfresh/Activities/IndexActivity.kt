@@ -16,7 +16,11 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.farmfresh.Adapters.PopularItemsAdapter
+import com.example.farmfresh.Adapters.ProductAdapter
 import com.example.farmfresh.Database.CartDatabase
 import com.example.farmfresh.Model.AllData
 import com.example.farmfresh.Model.CartItem
@@ -322,9 +326,18 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
 
 
+        initrecylerview()
 
+    }
 
-
+    private fun initrecylerview() {
+        val recyclerView: RecyclerView = findViewById(R.id.recylerview_index)
+        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false) as RecyclerView.LayoutManager?
+        var adapter= PopularItemsAdapter(
+            subDataObj.itemList,
+            cartList
+        )
+        recyclerView.adapter = adapter
     }
 
     var imageListener: ImageListener = object : ImageListener
