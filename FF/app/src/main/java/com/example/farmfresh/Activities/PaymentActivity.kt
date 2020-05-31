@@ -89,6 +89,23 @@ class PaymentActivity :AppCompatActivity(){
 
         googlePayButton.setOnClickListener { requestPayment() }
 
+        cardPay_paymet.setOnClickListener {
+            Log.d("PaymentActivity", "Clicked card pay")
+            RetrofitClient.instance.client_token()
+                .enqueue(object : Callback<String>{
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        Log.d("PaymentActivity", "${t.message}")
+                    }
+
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        Log.d("PaymentActivity", response.body().toString())
+                    }
+
+                })
+
+
+        }
+
     }
 
     private fun possiblyShowGooglePayButton() {

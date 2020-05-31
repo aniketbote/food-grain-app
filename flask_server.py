@@ -13,6 +13,22 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
+#Braintree
+import braintree
+
+gateway = braintree.BraintreeGateway(
+    braintree.Configuration(
+        braintree.Environment.Sandbox,
+        merchant_id="c9zswznhcgy499sv",
+        public_key="h32bbxg6wckmx83w",
+        private_key="ca34384614ba3f669b861e9d5c2d1dc4"
+    )
+)
+
+# client_token = gateway.client_token.generate({
+#     "customer_id": a_customer_id
+# })
+
 cartList = []
 errorCode = 0
 itemDeficiency = ''
@@ -109,6 +125,19 @@ def transactionOp(current_value):
 
 
 
+@app.route("/client_token", methods=["GET"])
+def client_token():
+  return jsonify(gateway.client_token.generate())
+
+@app.route("/checkout", methods=["POST"])
+def create_purchase():
+  nonce_from_the_client = request.form["payment_method_nonce"]
+  result = gateway.transaction.sale({
+    "amount": "10.00",
+    "payment_method_nonce": nonce_from_the_client,
+    "options": {
+      "submit_for_settlement": True}
+      })
 
 
 

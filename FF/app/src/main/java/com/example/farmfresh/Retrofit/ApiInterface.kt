@@ -6,6 +6,7 @@ import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiInterface {
@@ -29,5 +30,8 @@ interface ApiInterface {
     fun search(
         @Field("pattern") pattern:String
     ):Call<ProductList>
+
+    @GET("client_token")
+    fun client_token():Call<String>
 
 }
