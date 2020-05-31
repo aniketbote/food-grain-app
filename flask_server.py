@@ -82,8 +82,10 @@ def updateData(current_value, cart_list, email_hash, orderAddress):
         tempalldict[item['name']] = tdict
 
         tempAQ = current_value[item['type']][item['name']]['Available Quantity']
+        tempOC = current_value[item['type']][item['name']]['OrderCount']
         if (int(tempAQ) - int(item['count'])) >= 0:
             current_value[item['type']][item['name']]['Available Quantity'] = str(int(tempAQ) - int(item['count']))
+            current_value[item['type']][item['name']]['OrderCount'] = str(int(tempOC) - int(item['count']))
         else:
             errorCode = 1
             itemDeficiency = itemDeficiency + item['name'] + ','
