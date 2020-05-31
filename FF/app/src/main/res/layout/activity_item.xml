@@ -6,6 +6,7 @@
     android:layout_height="120sp"
     android:orientation="horizontal"
     android:layout_marginTop="10sp">
+
     <ImageView
         android:id="@+id/product_image"
         android:layout_width="90dp"
