@@ -21,7 +21,7 @@
         </activity>
         <activity android:name=".Activities.LoginActivity"></activity>
         <activity android:name=".Activities.AddAutoActivity"></activity>
-        <activity android:name=".Activities.IndexActivity"></activity>
+        <activity android:name=".Activities.IndexActivity" android:launchMode="singleTask"></activity>
         <activity android:name=".Activities.CurrentOrdersActivity" android:launchMode="singleTask"></activity>
         <activity android:name=".Activities.PreviousOrdersActivity"></activity>
         <activity android:name=".Activities.ProfileActivity"></activity>

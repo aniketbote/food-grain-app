@@ -2,7 +2,6 @@ package com.example.farmfresh.Retrofit
 
 import com.example.farmfresh.Model.BraintreeResponse
 import com.example.farmfresh.Model.PlaceOrderResponse
-import com.example.farmfresh.Model.PopularItem
 import com.example.farmfresh.Model.ProductList
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -39,9 +38,6 @@ interface ApiInterface {
         @Field("amount") amount:String,
         @Field("nonce") nonce:String
     ):Call<BraintreeResponse>
-
-    @POST("popular")
-    fun popular():Call<PopularItem>
 
     @GET("client_token")
     fun client_token():Call<String>

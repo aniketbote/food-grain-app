@@ -36,7 +36,7 @@ def popularItems():
         refData = ref.get()
         responseDict[category] = get_reponse(refData)
 
-ref = db.reference('all_items/Fruits')
+ref = db.reference('all_items/Exotic_Fruits')
 snapshot = ref.order_by_child("OrderCount")
 refData = snapshot.get()
 # pprint(ref.get())
