@@ -25,7 +25,7 @@ for name in cat:
             if str(type(data[col][i])) == "<class 'str'>":
                 temp_data_all[col] = data[col][i]
                 temp_data_combined[col] = data[col][i]
-                continue        
+                continue
             temp_data_all[col] = data[col][i].item()
             temp_data_combined[col] = data[col][i].item()
             temp_data_all['Type'] = name.split('.')[0]
@@ -45,10 +45,10 @@ featured = pd.read_csv('data/featured.csv')
 featured_list = list(featured['featured'])
 
 
-pprint(combined_dict)
+# pprint(combined_dict)
 
-ref = db.reference('combined_items')
-ref.set(combined_dict)
+# ref = db.reference('combined_items')
+# ref.set(combined_dict)
 
 ref = db.reference('all_items')
 ref.set(final_dict)

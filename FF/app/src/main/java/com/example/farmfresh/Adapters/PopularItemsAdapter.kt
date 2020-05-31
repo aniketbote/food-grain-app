@@ -1,7 +1,5 @@
 package com.example.farmfresh.Adapters
 
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,7 +33,7 @@ class PopularItemsAdapter(val productList: List<Product>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.popularitem_layout, parent, false)
-        return PopularItemsAdapter.ViewHolder(view)
+        return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {

@@ -6,7 +6,7 @@ data class PlaceOrderResponse(val message:String, val deficiency:String, val err
 
 data class SubData(val itemList:List<Product>, val totalCount:Int): Serializable
 
-data class AllData(val popularHashMap: HashMap<String, MutableList<Product>>, val totalHashMap: HashMap<String, String>, val featureList: List<String>):
+data class AllData(val totalHashMap: HashMap<String, String>, val featureList: List<String>):
     Serializable
 
 data class Product(val name:String, val description: String, val imageUrl:String, val size: String, val price:String, val availableQuantity:String, val type:String = ""):

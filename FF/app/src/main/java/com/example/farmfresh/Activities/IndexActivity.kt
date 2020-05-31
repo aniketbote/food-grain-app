@@ -43,6 +43,7 @@ lateinit var itemText:TextView
 var emailHashGlobal: String = ""
 lateinit var indexActivityGlobal: Intent
 
+
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
     lateinit var featureImageList:List<String>
     lateinit var cartList:MutableList<CartItem>
@@ -126,10 +127,8 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
         val allDataObj = intent.getSerializableExtra("dataObj") as AllData
         featureImageList = allDataObj.featureList
-        val exoticVegetable = allDataObj.popularHashMap["Exotic_Vegetables"]
         val count = allDataObj.totalHashMap.getValue("Exotic_Vegetables")
         Log.d("IndexActivity","${featureImageList[0]}")
-        Log.d("IndexActivity","${exoticVegetable}")
         Log.d("IndexActivity","${count}")
 
 
@@ -171,6 +170,106 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             Log.d("IndexActivity","Image: ${it} Clicked")
         }
 
+        val refExotic_Fruits = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Fruits")
+        refExotic_Fruits
+            .orderByChild("OrderCount")
+            .limitToFirst(5)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
+                    return
+                }
+                override fun onDataChange(p0: DataSnapshot) {
+                    Log.d("LoadingActivity", "${p0}")
+                    val finalList =
+                        HelperUtils.getAllItemsList(p0)
+
+                    val recyclerView: RecyclerView = findViewById(R.id.recycler_index_test)
+                    recyclerView.layoutManager = LinearLayoutManager(
+                        this@IndexActivity,
+                        RecyclerView.HORIZONTAL,
+                        false
+                    ) as RecyclerView.LayoutManager?
+                    val padapter = PopularItemsAdapter(
+                        finalList!!, // idhar kuch aur daal ke dekh
+                        cartList
+                    )
+                    recyclerView.adapter = padapter
+                }
+            })
+        val refExotic_Vegetables = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Vegetables")
+        refExotic_Vegetables
+            .orderByChild("OrderCount")
+            .limitToFirst(5)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
+                    return
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    Log.d("LoadingActivity", "${p0}")
+                    val finalList =
+                        HelperUtils.getAllItemsList(p0)
+                }
+            })
+
+        val refVegetables = FirebaseDatabase.getInstance().getReference("/all_items/Vegetables")
+        refVegetables
+            .orderByChild("OrderCount")
+            .limitToFirst(5)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
+                    return
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    Log.d("LoadingActivity", "${p0}")
+                    val finalList =
+                        HelperUtils.getAllItemsList(p0)
+                }
+            })
+
+        val refFruits = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
+        refFruits
+            .orderByChild("OrderCount")
+            .limitToFirst(5)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
+                    return
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    Log.d("LoadingActivity", "${p0}")
+                    val finalList =
+                        HelperUtils.getAllItemsList(p0)
+                }
+            })
+
+        val refFoodgrains = FirebaseDatabase.getInstance().getReference("/all_items/Foodgrains")
+        refFoodgrains
+            .orderByChild("OrderCount")
+            .limitToFirst(5)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
+                    return
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    Log.d("LoadingActivity", "${p0}")
+                    val finalList =
+                        HelperUtils.getAllItemsList(p0)
+                }
+            })
+
+
+
+// problem kya hai ? I don't know???????????????????????????????????????????hi?????????????????????????????????????????????????????????
+
+
 
             fruit_index.setSafeOnClickListener {
                     checkConnection(this)
@@ -209,7 +308,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         exoticfruits_index.setSafeOnClickListener {
             checkConnection(this)
             Log.d("Index Activity", "Clicked Exotic Fruits")
-            val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Fruits")
+            val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Fruits") // aisa
             Ref
                 .orderByKey()
                 .limitToFirst(5)
@@ -331,13 +430,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     }
 
    // private fun initrecylerview() {
-   //         val recyclerView: RecyclerView = findViewById(R.id.recylerview_index)
-   //     recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false) as RecyclerView.LayoutManager?
-   //     var adapter= PopularItemsAdapter(
-   //         subDataObj.itemList,
-   //         cartList
-    //    )
-    //    recyclerView.adapter = adapter
    // }
 
     var imageListener: ImageListener = object : ImageListener

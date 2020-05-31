@@ -45,10 +45,10 @@ class LoadingActivity : AppCompatActivity() {
         val isConnected = isOnline(context)
         Log.d("LoadingActivity", "$isConnected")
 
-        if(!isConnected){
+        if (!isConnected) {
             Log.d("LoadingActivity", "No connection : Starting No Connection Activity")
             val noConnectionIntent = Intent(context, NoConnectionActivity::class.java)
-            startActivityForResult(noConnectionIntent,999)
+            startActivityForResult(noConnectionIntent, 999)
         }
     }
 
@@ -56,12 +56,13 @@ class LoadingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.loading_page)
         checkConnection(this)
-        val popularHashMap = HashMap<String,MutableList<Product>>()
+        val popularHashMap = HashMap<String, MutableList<Product>>()
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         val emailHash = token.getString("EMAILHASH", "")
-        val refFeatured = FirebaseDatabase.getInstance().getReference("/all_orders/${emailHash}/current")
-        refFeatured.addListenerForSingleValueEvent(object : ValueEventListener{
+        val refFeatured =
+            FirebaseDatabase.getInstance().getReference("/all_orders/${emailHash}/current")
+        refFeatured.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 Log.d("LoadingActivity", "Error in Fetching all items data : ${p0.message}")
                 return
@@ -71,14 +72,13 @@ class LoadingActivity : AppCompatActivity() {
                 Log.d("LoadingActivity", "Successfully fetched current_orders : ${p0.value}")
                 val pref = getSharedPreferences("$emailHash", Context.MODE_PRIVATE)
                 val editor = pref.edit()
-                if(p0.value != null){
+                if (p0.value != null) {
                     Log.d("LoadingActivity", "current_orders : ${p0.value}")
-                    editor.putString("pendingOrder",true.toString())
+                    editor.putString("pendingOrder", true.toString())
                     editor.commit()
-                }
-                else{
+                } else {
                     Log.d("LoadingActivity", "current_orders : ${p0.value}")
-                    editor.putString("pendingOrder",false.toString())
+                    editor.putString("pendingOrder", false.toString())
                     editor.commit()
                 }
             }
@@ -94,159 +94,55 @@ class LoadingActivity : AppCompatActivity() {
 
         if (emailHash != "") {
             Log.d("LoadingActivity", "Fetching data from database")
-            val refFeatured = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Fruits")
-            refFeatured
-                .orderByChild("OrderCount")
-                .limitToFirst(5)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onCancelled(p0: DatabaseError) {
-                        Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                        return
+            val featureRef = FirebaseDatabase.getInstance().getReference("/featured")
+            featureRef.addValueEventListener(object : ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d("LoadingActivity","Failed to retrieve feature list")
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    Log.d("LoadingActivity", "Successfully Fetched featured data")
+
+                    val featureList = mutableListOf<String>()
+                    for (name in p0.children) {
+                        Log.d("LoadingActivity", "Image Location : ${name.value.toString()}")
+                        featureList.add(name.value.toString())
                     }
-                    override fun onDataChange(p0: DataSnapshot) {
-                        Log.d("LoadingActivity", "${p0}")
-                        val finalList =
-                            HelperUtils.getAllItemsList(p0)
-                        popularHashMap["Exotic_Fruits"] = finalList
-                        Log.d("LoadingActivity","finalList Created: ${finalList}")
-
-                        val refFeatured = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Vegetables")
-                        refFeatured
-                            .orderByChild("OrderCount")
-                            .limitToFirst(5)
-                            .addListenerForSingleValueEvent(object : ValueEventListener {
-                                override fun onCancelled(p0: DatabaseError) {
-                                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                                    return
-                                }
-
-                                override fun onDataChange(p0: DataSnapshot) {
-                                    Log.d("LoadingActivity", "${p0}")
-                                    val finalList =
-                                        HelperUtils.getAllItemsList(p0)
-                                    popularHashMap["Exotic_Vegetables"] = finalList
-                                    Log.d("LoadingActivity", "finalList Created: ${finalList}")
-
-                                    val refFeatured = FirebaseDatabase.getInstance().getReference("/all_items/Vegetables")
-                                    refFeatured
-                                        .orderByChild("OrderCount")
-                                        .limitToFirst(5)
-                                        .addListenerForSingleValueEvent(object : ValueEventListener {
-                                            override fun onCancelled(p0: DatabaseError) {
-                                                Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                                                return
-                                            }
-
-                                            override fun onDataChange(p0: DataSnapshot) {
-                                                Log.d("LoadingActivity", "${p0}")
-                                                val finalList =
-                                                    HelperUtils.getAllItemsList(p0)
-                                                popularHashMap["Vegetables"] = finalList
-                                                Log.d("LoadingActivity", "finalList Created: ${finalList}")
-
-                                                val refFeatured = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
-                                                refFeatured
-                                                    .orderByChild("OrderCount")
-                                                    .limitToFirst(5)
-                                                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                                                        override fun onCancelled(p0: DatabaseError) {
-                                                            Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                                                            return
-                                                        }
-
-                                                        override fun onDataChange(p0: DataSnapshot) {
-                                                            Log.d("LoadingActivity", "${p0}")
-                                                            val finalList =
-                                                                HelperUtils.getAllItemsList(p0)
-                                                            popularHashMap["Fruits"] = finalList
-                                                            Log.d("LoadingActivity", "finalList Created: ${finalList}")
+                    Log.d("LoadingActivity","FeatureList Created")
 
 
-                                                            val refFeatured = FirebaseDatabase.getInstance().getReference("/all_items/Foodgrains")
-                                                            refFeatured
-                                                                .orderByChild("OrderCount")
-                                                                .limitToFirst(5)
-                                                                .addListenerForSingleValueEvent(object : ValueEventListener {
-                                                                    override fun onCancelled(p0: DatabaseError) {
-                                                                        Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                                                                        return
-                                                                    }
+                    val totalRef = FirebaseDatabase.getInstance().getReference("/total_items")
+                    totalRef.addValueEventListener(object : ValueEventListener{
+                        override fun onCancelled(p0: DatabaseError) {
+                            Log.d("LoadingActivity","Failed to Retrieve total items")
+                        }
+                        override fun onDataChange(p0: DataSnapshot) {
 
-                                                                    override fun onDataChange(p0: DataSnapshot) {
-                                                                        Log.d("LoadingActivity", "${p0}")
-                                                                        val finalList =
-                                                                            HelperUtils.getAllItemsList(p0)
-                                                                        popularHashMap["Foodgrains"] =
-                                                                            finalList
-                                                                        Log.d("LoadingActivity", "finalList Created: ${finalList}")
+                            Log.d("LoadingActivity","Successfully to Retrieve total items")
+                            val totalHashMap = HashMap<String,String>()
+                            for( name in p0.children){
+                                totalHashMap.put(name.key.toString(), name.value.toString())
+                            }
 
-                                                                        val featureRef = FirebaseDatabase.getInstance().getReference("/featured")
-                                                                        featureRef.addValueEventListener(object : ValueEventListener{
-                                                                            override fun onCancelled(p0: DatabaseError) {
-                                                                                Log.d("LoadingActivity","Failed to retrieve feature list")
-                                                                            }
-
-                                                                            override fun onDataChange(p0: DataSnapshot) {
-                                                                                Log.d("LoadingActivity", "Successfully Fetched featured data")
-
-                                                                                val featureList = mutableListOf<String>()
-                                                                                for (name in p0.children) {
-//                                                                                Log.d("LoadingActivity", "Image Location : ${name.value.toString()}")
-                                                                                    featureList.add(name.value.toString())
-                                                                                }
-                                                                                Log.d("LoadingActivity","FeatureList Created")
+                            Log.d("LoadingActivity","Creating dataObj")
+                            val dataObj =
+                                AllData(
+                                    totalHashMap,
+                                    featureList
+                                )
+                            val indexIntent = Intent(this@LoadingActivity, IndexActivity::class.java)
+                            indexIntent.putExtra("dataObj", dataObj)
+                            Log.d("LoadingActivity", "User Logged In : Starting IndexActivity")
+                            startActivity(indexIntent)
+                            finish()
+                        }
+                    })
+                }
+            })
 
 
-                                                                                val totalRef = FirebaseDatabase.getInstance().getReference("/total_items")
-                                                                                totalRef.addValueEventListener(object : ValueEventListener{
-                                                                                    override fun onCancelled(p0: DatabaseError) {
-                                                                                        Log.d("LoadingActivity","Failed to Retrieve total items")
-                                                                                    }
-                                                                                    override fun onDataChange(p0: DataSnapshot) {
-
-                                                                                        Log.d("LoadingActivity","Successfully to Retrieve total items")
-                                                                                        val totalHashMap = HashMap<String,String>()
-                                                                                        for( name in p0.children){
-                                                                                            totalHashMap.put(name.key.toString(), name.value.toString())
-                                                                                        }
-
-                                                                                        Log.d("LoadingActivity","Creating dataObj")
-                                                                                        val dataObj =
-                                                                                            AllData(
-                                                                                                popularHashMap,
-                                                                                                totalHashMap,
-                                                                                                featureList
-                                                                                            )
-                                                                                        val indexIntent = Intent(this@LoadingActivity, IndexActivity::class.java)
-                                                                                        indexIntent.putExtra("dataObj", dataObj)
-                                                                                        Log.d("LoadingActivity", "User Logged In : Starting IndexActivity")
-                                                                                        startActivity(indexIntent)
-                                                                                        finish()
-                                                                                    }
-                                                                                })
-                                                                            }
-                                                                        })
-
-
-
-
-                                                                    }
-                                                                })
-
-
-                                                        }
-                                                    })
-
-
-                                            }
-                                        })
-
-
-                                }
-                            })
-                    }
-                })
         }
     }
 }
+
 

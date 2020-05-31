@@ -215,26 +215,27 @@
 
 
             </androidx.cardview.widget.CardView>
-
-
         </LinearLayout>
+            <TextView
+                android:layout_marginTop="530sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/alegreya_sans_medium"
+                android:textSize="22sp"
+                android:layout_marginLeft="15sp"
+                android:text="Most Popular Items :"/>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recylerview_index"
-            android:scrollbars="horizontal"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/popularitem_layout"
-            android:layout_marginTop="550sp"/>
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_index_test"
+                android:scrollbars="horizontal"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/popularitem_layout"
+                android:layout_marginTop="555sp"/>
 
     </RelativeLayout>
-
-
-
-
 
     </ScrollView>
 
