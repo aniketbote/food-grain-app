@@ -326,19 +326,19 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
 
 
-        initrecylerview()
+      //  initrecylerview()
 
     }
 
-    private fun initrecylerview() {
-        val recyclerView: RecyclerView = findViewById(R.id.recylerview_index)
-        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false) as RecyclerView.LayoutManager?
-        var adapter= PopularItemsAdapter(
-            subDataObj.itemList,
-            cartList
-        )
-        recyclerView.adapter = adapter
-    }
+   // private fun initrecylerview() {
+   //         val recyclerView: RecyclerView = findViewById(R.id.recylerview_index)
+   //     recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false) as RecyclerView.LayoutManager?
+   //     var adapter= PopularItemsAdapter(
+   //         subDataObj.itemList,
+   //         cartList
+    //    )
+    //    recyclerView.adapter = adapter
+   // }
 
     var imageListener: ImageListener = object : ImageListener
     {
@@ -444,6 +444,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             R.id.previous_orders -> {
                 Log.d("IndexActivity","Pressed Previous Orders")
                 val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHashGlobal/previous")
+                    .orderByChild("OrderTime")
                 currentRef.addValueEventListener(object : ValueEventListener{
                     override fun onCancelled(p0: DatabaseError) {
                         Log.d("IndexActivity","Error occured: ${p0}")
