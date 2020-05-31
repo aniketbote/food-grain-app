@@ -23,4 +23,6 @@ data class OrderList(val orderList: List<Order>): Serializable
 
 data class ProductList(val itemList:List<Product>): Serializable
 
+data class BraintreeResponse(val success:String, val transaction_id: String): Serializable
+
 

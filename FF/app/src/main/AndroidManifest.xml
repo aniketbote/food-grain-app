@@ -33,6 +33,15 @@
         <activity android:name=".Activities.SearchActivity"></activity>
         <activity android:name=".Activities.PlaceOrderActivity" android:launchMode="singleTask"></activity>
         <activity android:name=".Activities.NoConnectionActivity"></activity>
+        <activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="${applicationId}.braintree" />
+            </intent-filter>
+        </activity>
 
 <!--        <meta-data-->
 <!--            android:name="preloaded_fonts"-->

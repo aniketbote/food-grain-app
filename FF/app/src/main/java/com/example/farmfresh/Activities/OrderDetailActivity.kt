@@ -57,6 +57,7 @@ class OrderDetailActivity :AppCompatActivity(){
         order_status.text = orderObj.orderCompletionDate
         order_date.text = orderObj.orderCreatedDate
 
+        Log.d("OrderDetails","${orderObj.orderItems}")
         val recycleView: RecyclerView = findViewById(R.id.orderDetails_recycker)
         recycleView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL,false) as RecyclerView.LayoutManager?
         val adapter = OrderDetailsAdapter(this, orderObj.orderItems)

@@ -1,5 +1,6 @@
 package com.example.farmfresh.Retrofit
 
+import com.example.farmfresh.Model.BraintreeResponse
 import com.example.farmfresh.Model.PlaceOrderResponse
 import com.example.farmfresh.Model.ProductList
 import com.google.gson.JsonObject
@@ -30,6 +31,13 @@ interface ApiInterface {
     fun search(
         @Field("pattern") pattern:String
     ):Call<ProductList>
+
+    @FormUrlEncoded
+    @POST("checkout")
+    fun checkout(
+        @Field("amount") amount:String,
+        @Field("nonce") nonce:String
+    ):Call<BraintreeResponse>
 
     @GET("client_token")
     fun client_token():Call<String>

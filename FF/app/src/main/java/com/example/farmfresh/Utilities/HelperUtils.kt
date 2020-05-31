@@ -24,9 +24,9 @@ fun ImageView.loadImage(uri: String?) {
 
 object HelperUtils {
     fun getOrderList(p0: DataSnapshot): MutableList<Order> {
-        val orderItemList = mutableListOf<OrderItem>()
         val finalList = mutableListOf<Order>()
         for(order in p0.children){
+            val orderItemList = mutableListOf<OrderItem>()
             val orderId = order.key.toString()
             val dateofCompletion = order.child("Date of Completion").value.toString()
             val dateofCreation = order.child("Date of Order").value.toString()

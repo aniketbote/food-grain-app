@@ -2,6 +2,7 @@ package com.example.farmfresh.Adapters
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,11 +38,13 @@ class OrderAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val orderitem = orderList[position]
+        Log.d("OrderDetailsAdapterList","$orderList")
         holder.orderId.text = orderitem.orderId
         holder.dateOfCompletion.text = orderitem.orderCompletionDate
 //        holder.dateOfCreation = orderitem.orderCreatedDate
 //        holder.total = orderitem.total
         holder.orderButton.setOnClickListener {
+            Log.d("OrderDetailsAdapter","${orderitem}")
             val orderDetailsIntent = Intent(context, OrderDetailActivity::class.java)
             orderDetailsIntent.putExtra("orderObj", orderitem)
             context.startActivity(orderDetailsIntent)

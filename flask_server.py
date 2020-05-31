@@ -17,17 +17,14 @@ from firebase_admin import db
 import braintree
 
 gateway = braintree.BraintreeGateway(
-    braintree.Configuration(
-        braintree.Environment.Sandbox,
-        merchant_id="c9zswznhcgy499sv",
-        public_key="h32bbxg6wckmx83w",
-        private_key="ca34384614ba3f669b861e9d5c2d1dc4"
-    )
+  braintree.Configuration(
+    environment=braintree.Environment.Sandbox,
+    merchant_id='c9zswznhcgy499sv',
+    public_key='h32bbxg6wckmx83w',
+    private_key='ca34384614ba3f669b861e9d5c2d1dc4'
+  )
 )
 
-# client_token = gateway.client_token.generate({
-#     "customer_id": a_customer_id
-# })
 
 cartList = []
 errorCode = 0
@@ -47,17 +44,9 @@ def get_combinedItems():
     for category in data:
         combined_data.update(data[category])
     combined_keys = combined_data.keys()
-    print(len(combined_data))
     return combined_data, combined_keys
 
-
-
-
-# allItemsRef = db.reference('all_items')
 combinedItems, combinedItemsKeys = get_combinedItems()
-# pprint(combinedItems)
-
-
 
 app = Flask(__name__)
 def checkForCurrentOrder(emHash):
@@ -114,7 +103,6 @@ def updateData(current_value, cart_list, email_hash, orderAddress):
         errorCode = 2
         raise db.TransactionAbortedError("Transaction Failed")
 
-    # pprint(orderDict)
     return current_value
 
 def transactionOp(current_value):
@@ -127,17 +115,30 @@ def transactionOp(current_value):
 
 @app.route("/client_token", methods=["GET"])
 def client_token():
-  return jsonify(gateway.client_token.generate())
+    return jsonify(gateway.client_token.generate())
 
-@app.route("/checkout", methods=["POST"])
+@app.route("/checkout", methods=["POST","GET"])
 def create_purchase():
-  nonce_from_the_client = request.form["payment_method_nonce"]
-  result = gateway.transaction.sale({
-    "amount": "10.00",
-    "payment_method_nonce": nonce_from_the_client,
-    "options": {
-      "submit_for_settlement": True}
-      })
+    responseDict = {}
+    nonce_from_the_client = request.form["nonce"]
+    amount = request.form["amount"]
+    result = gateway.transaction.sale({
+                        "amount": amount,
+                        "payment_method_nonce": nonce_from_the_client,
+                        "options": {"submit_for_settlement": True}
+                        })
+    if(re.search("SuccessfulResult",str(result))):
+        responseDict['success'] = "true"
+        responseDict['transaction_id'] = result.transaction.id
+    else:
+        responseDict['success'] = "false"
+        responseDict['transaction_id'] = ""
+
+    return jsonify(responseDict)
+
+
+
+
 
 
 

@@ -12,7 +12,11 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.braintreepayments.api.dropin.DropInActivity
+import com.braintreepayments.api.dropin.DropInRequest
+import com.braintreepayments.api.dropin.DropInResult
 import com.example.farmfresh.Database.CartDatabase
+import com.example.farmfresh.Model.BraintreeResponse
 import com.example.farmfresh.Model.OrderList
 import com.example.farmfresh.Model.PlaceOrderResponse
 import com.example.farmfresh.R
@@ -31,7 +35,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.math.roundToLong
+import java.lang.Exception
 
 class PaymentActivity :AppCompatActivity(){
     fun isOnline(context: Context): Boolean {
@@ -69,6 +73,7 @@ class PaymentActivity :AppCompatActivity(){
 
     private lateinit var paymentsClient: PaymentsClient
     private val LOAD_PAYMENT_DATA_REQUEST_CODE = 991
+    private val REQUEST_CODE_BRAINTREE = 7777
     private var address:String = ""
     private var price:String = ""
 
@@ -83,29 +88,34 @@ class PaymentActivity :AppCompatActivity(){
         Log.d("PaymentActivity", "${address}  ${price}")
 
 
-
         paymentsClient = PaymentsUtil.createPaymentsClient(this)
         possiblyShowGooglePayButton()
 
         googlePayButton.setOnClickListener { requestPayment() }
 
-        cardPay_paymet.setOnClickListener {
+        btn_cardpay.setOnClickListener {
             Log.d("PaymentActivity", "Clicked card pay")
             RetrofitClient.instance.client_token()
                 .enqueue(object : Callback<String>{
                     override fun onFailure(call: Call<String>, t: Throwable) {
                         Log.d("PaymentActivity", "${t.message}")
+                        Toast.makeText(this@PaymentActivity, "Payment could not be completed. Use other payment option", Toast.LENGTH_LONG).show()
+
+
                     }
 
                     override fun onResponse(call: Call<String>, response: Response<String>) {
                         Log.d("PaymentActivity", response.body().toString())
+                        val dropInRequest:DropInRequest = DropInRequest().clientToken(response.body().toString())
+                        startActivityForResult(dropInRequest.getIntent(this@PaymentActivity),REQUEST_CODE_BRAINTREE)
+
                     }
-
                 })
-
-
         }
 
+        btn_cash.setOnClickListener {
+            createOrder()
+        }
     }
 
     private fun possiblyShowGooglePayButton() {
@@ -142,9 +152,9 @@ class PaymentActivity :AppCompatActivity(){
 
         // The price provided to the API should include taxes and shipping.
         // This price is not displayed to the user.
-        val price = (1).toString()
+        val cost = price
 
-        val paymentDataRequestJson = PaymentsUtil.getPaymentDataRequest(price)
+        val paymentDataRequestJson = PaymentsUtil.getPaymentDataRequest(cost)
         if (paymentDataRequestJson == null) {
             Log.d("PaymentActivity", "RequestPayment : Can't fetch payment data request")
             return
@@ -185,8 +195,74 @@ class PaymentActivity :AppCompatActivity(){
                 // Re-enables the Google Pay payment button.
                 googlePayButton.isClickable = true
             }
+
+            REQUEST_CODE_BRAINTREE -> {
+                if(resultCode == Activity.RESULT_OK){
+                    val result = data!!.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
+                    val nonce = result.paymentMethodNonce
+                    val stringNonce = nonce!!.nonce
+                    val paramsHash: HashMap<String,String> = HashMap()
+                    paramsHash["amount"] = price
+                    paramsHash["nonce"] = stringNonce
+
+                    sendBraintreePayments(paramsHash)
+                }
+                else if(resultCode == Activity.RESULT_CANCELED){
+                    Toast.makeText(this,"User Cancelled operation",Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    val error = data!!.getSerializableExtra(DropInActivity.EXTRA_ERROR) as Exception
+                    Log.d("PaymentActivity","Braintree Error: ${error.message}")
+                }
+            }
+
+
         }
     }
+
+    private fun sendBraintreePayments(paramsHash: HashMap<String, String>) {
+        //progress bar
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.progress_bar,null)
+        builder.setView(dialogView)
+        builder.setCancelable(false)
+        val message = dialogView.findViewById<TextView>(R.id.text_progressBar)
+        message.text = "Completing your transaction"
+        val dialog = builder.create()
+        dialog.show()
+
+        RetrofitClient.instance.checkout(paramsHash["amount"]!!,paramsHash["nonce"]!!)
+            .enqueue(object : Callback<BraintreeResponse>{
+                override fun onFailure(call: Call<BraintreeResponse>, t: Throwable) {
+                    dialog.dismiss()
+                    Log.d("PaymentActivity", "Failed to get Response : ${t.message}")
+                    Toast.makeText(this@PaymentActivity, "Transaction Failed",Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onResponse(
+                    call: Call<BraintreeResponse>,
+                    response: Response<BraintreeResponse>
+                ) {
+                    Log.d("PaymentActivity","${response.body()?.success}")
+                    if(response.body()?.success == "true"){
+                        Toast.makeText(this@PaymentActivity, "Transaction Successful : ${response.body()?.transaction_id}",Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                        createOrder()
+                    }
+                    else if(response.body()?.success == "false"){
+                        dialog.dismiss()
+                        Toast.makeText(this@PaymentActivity, "Transaction Failed : ${response.body()?.transaction_id}",Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+                        dialog.dismiss()
+                        Toast.makeText(this@PaymentActivity, "Some Error Occurred",Toast.LENGTH_SHORT).show()
+                    }
+
+                }
+
+            })
+    }
+
     private fun handleError(statusCode: Int) {
         Log.d("PaymentActivity", "loadPaymentData failed : ${String.format("Error code: %d", statusCode)}")
     }
