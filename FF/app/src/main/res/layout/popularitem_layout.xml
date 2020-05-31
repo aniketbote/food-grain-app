@@ -55,8 +55,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="130sp"
         android:visibility="invisible"
-        app:backGroundColor="@android:color/transparent"
-        app:textColor="@android:color/black" />
+     />
 
     <Button
         android:fontFamily="@font/alegreya_sans_medium"
