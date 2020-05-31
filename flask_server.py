@@ -85,7 +85,7 @@ def updateData(current_value, cart_list, email_hash, orderAddress):
         tempOC = current_value[item['type']][item['name']]['OrderCount']
         if (int(tempAQ) - int(item['count'])) >= 0:
             current_value[item['type']][item['name']]['Available Quantity'] = str(int(tempAQ) - int(item['count']))
-            current_value[item['type']][item['name']]['OrderCount'] = str(int(tempOC) - int(item['count']))
+            current_value[item['type']][item['name']]['OrderCount'] = int(tempOC) - int(item['count'])
         else:
             errorCode = 1
             itemDeficiency = itemDeficiency + item['name'] + ','
@@ -113,6 +113,21 @@ def transactionOp(current_value):
     new_value = updateData(current_value, cartList, emhash_global, address)
     return new_value
 
+def get_reponse(data):
+    final_list = []
+    for element in data:
+        tempDict = {}
+        tempDict['name'] = element
+        tempDict['description'] = data[element]['Description']
+        tempDict['imageUrl'] = data[element]['Image']
+        tempDict['size'] = data[element]['Size']
+        tempDict['price'] = data[element]['Price']
+        tempDict['availableQuantity'] = data[element]['Available Quantity']
+        tempDict['type'] = data[element]['Type']
+        final_list.append(tempDict)
+    return final_list
+
+
 
 
 
@@ -138,6 +153,18 @@ def create_purchase():
         responseDict['success'] = "false"
         responseDict['transaction_id'] = ""
 
+    return jsonify(responseDict)
+
+
+
+@app.route("/popular", methods = ['POST'])
+def popularItems():
+    responseDict = {}
+    for category in ["Exotic_Vegetables","Exotic_Fruits","Vegetables","Fruits","Foodgrains"]:
+        print(category)
+        ref = db.reference('all_items/{}'.format(category)).order_by_child("OrderCount").limit_to_first(5)
+        refData = ref.get()
+        responseDict[category] = get_reponse(refData)
     return jsonify(responseDict)
 
 

@@ -7,7 +7,7 @@ data class PlaceOrderResponse(val message:String, val deficiency:String, val err
 
 data class SubData(val itemList:List<Product>, val totalCount:Int): Serializable
 
-data class AllData(val itemList:List<Product>, val totalHashMap: HashMap<String, String>, val featureList: List<String>):
+data class AllData(val popularItemObj:PopularItem, val totalHashMap: HashMap<String, String>, val featureList: List<String>):
     Serializable
 
 data class Product(val name:String, val description: String, val imageUrl:String, val size: String, val price:String, val availableQuantity:String, val type:String = ""):
@@ -24,5 +24,7 @@ data class OrderList(val orderList: List<Order>): Serializable
 data class ProductList(val itemList:List<Product>): Serializable
 
 data class BraintreeResponse(val success:String, val transaction_id: String): Serializable
+
+data class PopularItem(val Exotic_Vegetables:MutableList<Product>,val Exotic_Fruits:MutableList<Product>,val Vegetables:MutableList<Product>,val Fruits:MutableList<Product>,val Foodgrains:MutableList<Product>): Serializable
 
 
