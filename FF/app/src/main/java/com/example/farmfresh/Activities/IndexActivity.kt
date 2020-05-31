@@ -126,7 +126,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
         val allDataObj = intent.getSerializableExtra("dataObj") as AllData
         featureImageList = allDataObj.featureList
-        val exoticVegetable = allDataObj.itemList[0].name
+        val exoticVegetable = allDataObj.popularHashMap["Exotic_Vegetables"]
         val count = allDataObj.totalHashMap.getValue("Exotic_Vegetables")
         Log.d("IndexActivity","${featureImageList[0]}")
         Log.d("IndexActivity","${exoticVegetable}")

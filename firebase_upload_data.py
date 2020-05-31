@@ -25,7 +25,7 @@ for name in cat:
             if str(type(data[col][i])) == "<class 'str'>":
                 temp_data_all[col] = data[col][i]
                 temp_data_combined[col] = data[col][i]
-                continue
+                continue        
             temp_data_all[col] = data[col][i].item()
             temp_data_combined[col] = data[col][i].item()
             temp_data_all['Type'] = name.split('.')[0]
