@@ -8,6 +8,7 @@ import string
 from datetime import date
 import time
 from pprint import pprint
+import time
 #Firebase realtime database
 import firebase_admin
 from firebase_admin import credentials
@@ -94,6 +95,7 @@ def updateData(current_value, cart_list, email_hash, orderAddress):
     itemDict['Date of Completion'] = "PENDING"
     itemDict['Total'] = totalAmount
     itemDict['Address'] = orderAddress
+    itemDict['OrderTime'] = int(time.time()) * -1
     orderDict[orderId] = itemDict
 
     try:

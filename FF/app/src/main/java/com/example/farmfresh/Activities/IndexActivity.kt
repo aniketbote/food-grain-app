@@ -431,6 +431,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             R.id.previous_orders -> {
                 Log.d("IndexActivity","Pressed Previous Orders")
                 val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHashGlobal/previous")
+                    .orderByChild("OrderTime")
                 currentRef.addValueEventListener(object : ValueEventListener{
                     override fun onCancelled(p0: DatabaseError) {
                         Log.d("IndexActivity","Error occured: ${p0}")
