@@ -125,17 +125,13 @@ class ProductActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val subDataObj = intent.getSerializableExtra("subDataObj") as SubData
         Log.d("ProductActivity","${subDataObj.itemList}")
 
-        val type = intent.getStringExtra("type")
-        Log.d("ProductActivity", "$type")
-
 
 
         val recyclerView:RecyclerView = findViewById(R.id.recycleview)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false) as RecyclerView.LayoutManager?
         var adapter= ProductAdapter(
             subDataObj.itemList,
-            cartList,
-            type
+            cartList
         )
         recyclerView.adapter = adapter
     }

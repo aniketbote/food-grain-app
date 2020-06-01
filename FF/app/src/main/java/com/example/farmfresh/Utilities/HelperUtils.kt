@@ -60,7 +60,8 @@ object HelperUtils {
                 itemName.child("Image").value.toString(),
                 itemName.child("Size").value.toString(),
                 itemName.child("Price").value.toString(),
-                itemName.child("Available Quantity").value.toString()
+                itemName.child("Available Quantity").value.toString(),
+                itemName.child("Type").value.toString()
             )
             finalList.add(productObj)
         }

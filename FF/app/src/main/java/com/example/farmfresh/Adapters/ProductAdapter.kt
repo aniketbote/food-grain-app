@@ -21,8 +21,7 @@ import com.example.farmfresh.R
 import com.example.farmfresh.Utilities.loadImage
 
 class ProductAdapter(val productList: List<Product>,
-                     val cartList:MutableList<CartItem>,
-                     val type:String) :
+                     val cartList:MutableList<CartItem>) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.activity_item, parent, false)
@@ -78,7 +77,7 @@ class ProductAdapter(val productList: List<Product>,
                 product.size,
                 product.price,
                 holder.count.number,
-                type,
+                product.type,
                 product.availableQuantity
             )
             val result = db.insertData(cartItemObj)

@@ -201,7 +201,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         val fruitIntent =
                                 Intent(this@IndexActivity, ProductActivity::class.java)
                         fruitIntent.putExtra("subDataObj", subDataObj)
-                        fruitIntent.putExtra("type", "Fruits")
                         startActivity(fruitIntent)
                     }
                 })
@@ -230,7 +229,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                             )
                         val exoticFruitIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         exoticFruitIntent.putExtra("subDataObj",subDataObj)
-                        exoticFruitIntent.putExtra("type","Exotic_Fruits")
                         startActivity(exoticFruitIntent)
                     }
                 })
@@ -259,7 +257,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                             )
                         val vegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         vegIntent.putExtra("subDataObj",subDataObj)
-                        vegIntent.putExtra("type","Vegetables")
                         startActivity(vegIntent)
                     }
 
@@ -288,7 +285,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                             )
                         val exoticVegIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         exoticVegIntent.putExtra("subDataObj",subDataObj)
-                        exoticVegIntent.putExtra("type","Exotic_Vegetables")
                         startActivity(exoticVegIntent)
                     }
 
@@ -317,7 +313,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                             )
                         val foodgrainIntent = Intent(this@IndexActivity, ProductActivity::class.java)
                         foodgrainIntent.putExtra("subDataObj",subDataObj)
-                        foodgrainIntent.putExtra("type","Foodgrains")
                         startActivity(foodgrainIntent)
                     }
 
