@@ -203,7 +203,6 @@
 
                 <TextView
                     android:background="@drawable/gridtext"
-                    android:padding="3sp"
                     android:layout_width="95sp"
                     android:layout_height="40sp"
                     android:layout_gravity="center"
@@ -220,6 +219,17 @@
         </LinearLayout>
 
 
+        <TextView
+            android:layout_marginTop="525sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@android:color/secondary_text_light"
+            android:fontFamily="@font/alegreya_sans_medium"
+            android:layout_marginLeft="15sp"
+            android:text="Popular Items :"/>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recylerview_index"
             android:scrollbars="horizontal"
@@ -227,7 +237,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:listitem="@layout/popularitem_layout"
-            android:layout_marginTop="550sp"/>
+            android:layout_marginTop="555sp"/>
 
 
     </RelativeLayout>

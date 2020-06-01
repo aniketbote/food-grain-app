@@ -163,6 +163,15 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
         nav_activity_index.setNavigationItemSelectedListener(this)
 
+
+        val recyclerView: RecyclerView = findViewById(R.id.recylerview_index)
+        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false) as RecyclerView.LayoutManager?
+         var adapter= PopularItemsAdapter(
+                exoticVegetable!!,
+              cartList
+           )
+        recyclerView.adapter = adapter
+
         val carouselview:CarouselView = findViewById(R.id.carousel_index)
         carouselview.setPageCount(featureImageList.size)
         carouselview.setImageListener(imageListener)
@@ -326,19 +335,10 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
 
 
-      //  initrecylerview()
 
     }
 
-   // private fun initrecylerview() {
-   //         val recyclerView: RecyclerView = findViewById(R.id.recylerview_index)
-   //     recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false) as RecyclerView.LayoutManager?
-   //     var adapter= PopularItemsAdapter(
-   //         subDataObj.itemList,
-   //         cartList
-    //    )
-    //    recyclerView.adapter = adapter
-   // }
+
 
     var imageListener: ImageListener = object : ImageListener
     {

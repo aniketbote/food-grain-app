@@ -20,7 +20,7 @@ import com.example.farmfresh.Model.Product
 import com.example.farmfresh.R
 import com.example.farmfresh.Utilities.loadImage
 
-class PopularItemsAdapter(val productList: List<Product>,
+class PopularItemsAdapter(val productList: MutableList<Product>,
                           val cartList:MutableList<CartItem>): RecyclerView.Adapter<PopularItemsAdapter.ViewHolder>() {
 
     class ViewHolder(item: View): RecyclerView.ViewHolder(item){
