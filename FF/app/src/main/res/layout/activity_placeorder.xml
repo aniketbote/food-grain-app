@@ -25,14 +25,12 @@
         android:fontFamily="@font/alegreya_sans_medium"
         android:background="@drawable/address_field"
         android:layout_width="390sp"
-        android:layout_height="35sp"
+        android:layout_height="45sp"
         android:layout_marginTop="95sp"
         android:layout_marginLeft="10sp"
         android:id="@+id/previous_address"
         android:text="Previous Address Here"
-        android:paddingLeft="15sp"
-
-        />
+        android:paddingLeft="15sp" />
     <Button
         android:focusableInTouchMode="true"
         android:layout_width="150sp"
@@ -42,11 +40,12 @@
         android:textColor="@color/quantum_white_100"
         android:background="@drawable/place_order"
         android:layout_height="35sp"
-        android:layout_marginTop="135sp"
+        android:layout_marginTop="150sp"
         android:layout_centerHorizontal="true"
         android:text="Select New Address"/>
 
     <ScrollView
+        android:layout_marginTop="5sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/order_box"

@@ -8,18 +8,19 @@
     <RelativeLayout
         android:id="@+id/cart_layout_internal"
         android:layout_width="wrap_content"
-        android:layout_height="54dp"
+        android:layout_height="52dp"
         android:clickable="true"
         android:gravity="center"
         android:paddingRight="10sp">
 
         <ImageView
+            android:layout_marginTop="3sp"
             android:id="@+id/cart_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2sp"
             android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/shop" />
+            android:src="@drawable/cart_icon_white_index" />
 
         <TextView
             android:id="@+id/item_count"

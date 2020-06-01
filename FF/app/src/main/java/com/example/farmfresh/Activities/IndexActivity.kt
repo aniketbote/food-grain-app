@@ -191,7 +191,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         false
                     ) as RecyclerView.LayoutManager?
                     val padapter = PopularItemsAdapter(
-                        finalList!!, // idhar kuch aur daal ke dekh
+                        finalList!!,
                         cartList
                     )
                     recyclerView.adapter = padapter

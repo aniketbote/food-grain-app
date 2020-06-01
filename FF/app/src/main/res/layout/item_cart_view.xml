@@ -13,6 +13,7 @@
         android:src="@drawable/loading"/>
 
     <TextView
+        android:textColor="@color/places_ui_default_text"
         android:fontFamily="@font/alegreya_sans_medium"
         android:id="@+id/product_name_cart"
         android:layout_width="100sp"
@@ -24,6 +25,7 @@
 
 
     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+        app:backGroundColor="@color/quantum_bluegrey50"
         android:id="@+id/product_count_cart"
         android:layout_width="80sp"
         android:layout_height="30sp"
@@ -31,9 +33,10 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="35sp"
         android:background="@drawable/btn_add_to_cart"
-        app:textColor="@android:color/darker_gray" />
+        app:textColor="@color/places_ui_default_text" />
 
     <TextView
+        android:textColor="@color/places_ui_default_text"
         android:fontFamily="@font/alegreya_sans_medium"
         android:id="@+id/product_amount_cart"
         android:layout_width="55sp"

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="133sp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/address_field"
+    android:layout_marginLeft="7sp">
 
     <ImageView
-        android:layout_marginTop="5sp"
+        android:layout_marginTop="10sp"
         android:layout_centerHorizontal="true"
         android:layout_width="55sp"
         android:layout_height="55sp"
@@ -13,8 +16,10 @@
         />
 
     <TextView
+        android:textColor="@color/quantum_black_100"
+        android:layout_centerHorizontal="true"
         android:id="@+id/product_name_index"
-        android:layout_marginTop="65sp"
+        android:layout_marginTop="66sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -24,6 +29,7 @@
         android:textStyle="normal" />
 
     <TextView
+        android:textColor="@color/quantum_black_100"
         android:layout_centerHorizontal="true"
         android:id="@+id/product_weight_index"
         android:layout_width="wrap_content"
@@ -36,42 +42,59 @@
         android:textStyle="normal" />
 
     <TextView
+        android:textColor="@color/quantum_black_100"
         android:id="@+id/product_price_index"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alegreya_sans_medium"
         android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="105sp"
+        android:layout_marginTop="115sp"
         android:text="Product Price"
         android:textSize="18sp"
         android:textStyle="normal" />
 
 
     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+        app:backGroundColor="@color/quantum_bluegrey50"
+        app:textColor="@color/quantum_black_100"
         android:id="@+id/product_count_index"
         android:layout_width="83dp"
         android:layout_height="34dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="130sp"
+        android:layout_marginTop="145sp"
         android:visibility="invisible"
      />
 
 
     <Button
+        android:textColor="@color/quantum_black_100"
         android:fontFamily="@font/alegreya_sans_medium"
         android:id="@+id/product_addtocart_index"
         android:layout_width="wrap_content"
         android:layout_height="35sp"
         android:layout_centerHorizontal="true"
         android:padding="4sp"
-        android:layout_marginTop="133sp"
+        android:layout_marginTop="145sp"
         android:background="@drawable/btn_add_to_cart"
         android:drawableLeft="@drawable/shopping2"
         android:drawablePadding="4sp"
         android:text="Add to Cart"
         android:textSize="12sp"
         android:layout_marginBottom="10sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150sp"
+        android:text="Unavailable"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/bt_error_red"
+        android:fontFamily="@font/alegreya_sans_medium"
+        android:textStyle="italic"
+        android:visibility="invisible"
+        android:id="@+id/product_unavailable_index"/>
+
 
 
 </RelativeLayout>

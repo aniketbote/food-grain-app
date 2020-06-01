@@ -27,6 +27,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:textColor="@color/places_ui_default_text"
             android:id="@+id/product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,6 +39,7 @@
             android:textStyle="normal" />
 
         <TextView
+            android:textColor="@color/places_ui_default_text"
             android:id="@+id/product_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,6 +63,8 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/places_ui_default_text"
             android:id="@+id/product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,6 +77,7 @@
             android:textStyle="normal" />
 
         <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+            android:layout_centerHorizontal="true"
             android:id="@+id/product_count"
             android:layout_width="83dp"
             android:layout_height="34dp"
@@ -83,19 +88,17 @@
             app:textColor="@android:color/black" />
 
         <Button
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="33sp"
             android:fontFamily="@font/alegreya_sans_medium"
             android:id="@+id/product_addtocart"
             android:layout_width="wrap_content"
             android:layout_height="35sp"
             android:layout_alignParentEnd="true"
-            android:layout_gravity="center"
             android:layout_marginTop="67sp"
-            android:layout_marginEnd="24dp"
             android:background="@drawable/btn_add_to_cart"
             android:drawableLeft="@drawable/shopping2"
             android:drawablePadding="4sp"
-            android:paddingLeft="5sp"
-            android:paddingRight="5sp"
             android:text="Add to Cart"
             android:textSize="12sp" />
         <TextView

@@ -1,5 +1,7 @@
 package com.example.farmfresh.Adapters
 
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,18 +23,20 @@ import com.example.farmfresh.Utilities.loadImage
 class PopularItemsAdapter(val productList: List<Product>,
                           val cartList:MutableList<CartItem>): RecyclerView.Adapter<PopularItemsAdapter.ViewHolder>() {
 
-    class ViewHolder(item: View): RecyclerView.ViewHolder(item){
+    class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         val name: TextView = item.findViewById(R.id.product_name_index)
         val price: TextView = item.findViewById(R.id.product_price_index)
         val img: ImageView = item.findViewById(R.id.product_img_index)
         val size: TextView = item.findViewById(R.id.product_weight_index)
         val addToCart: Button = item.findViewById(R.id.product_addtocart_index)
         val count: ElegantNumberButton = item.findViewById(R.id.product_count_index)
+        val unavailable: TextView = item.findViewById(R.id.product_unavailable_index)
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.popularitem_layout, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.popularitem_layout, parent, false)
         return ViewHolder(view)
     }
 
@@ -48,18 +52,37 @@ class PopularItemsAdapter(val productList: List<Product>,
         holder.price.text = product.price
         holder.size.text = product.size
 
-        for(i in 0 until cartList.size){
-            holder.count.number = cartList[i].count
-            holder.addToCart.visibility = View.INVISIBLE
-            holder.count.visibility = View.VISIBLE
+        for (i in 0 until cartList.size) {
+            if (product.name == cartList[i].name) {
+                if (cartList[i].available.toInt() < cartList[i].count.toInt()) {
+                    holder.count.number = cartList[i].available
+                    db.updateData(cartList[i].name, cartList[i].available)
+                    Toast.makeText(context, "Not Enough Quantity Available", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    holder.count.number = cartList[i].count
+                }
+                holder.addToCart.visibility = View.INVISIBLE
+                holder.count.visibility = View.VISIBLE
             }
+        }
 
-
+        Log.d("ProductAdapter", "AvailableQuantity is ${product.availableQuantity}")
+        if (product.availableQuantity == 0.toString()) {
+            Log.d("ProductAdapter", "AvailableQuantity is zero")
+            val colorMatrix: ColorMatrix = ColorMatrix()
+            colorMatrix.setSaturation(0.toFloat())
+            val filter = ColorMatrixColorFilter(colorMatrix)
+            holder.img.colorFilter = filter
+            holder.addToCart.visibility = View.INVISIBLE
+            holder.count.visibility = View.INVISIBLE
+            holder.unavailable.visibility = View.VISIBLE
+        }
         holder.img.loadImage(product.imageUrl)
         holder.addToCart.setOnClickListener {
             holder.addToCart.visibility = View.GONE
             holder.count.number = 1.toString()
-            Log.d("Product","Clicked ${product.name}, count = ${holder.count.number}")
+            Log.d("Product", "Clicked ${product.name}, count = ${holder.count.number}")
             val cartItemObj = CartItem(
                 product.name,
                 product.imageUrl,
@@ -70,8 +93,8 @@ class PopularItemsAdapter(val productList: List<Product>,
                 product.availableQuantity
             )
             val result = db.insertData(cartItemObj)
-            if(result == (-1).toLong()){
-                Log.d("ProductAdapter","Error in Inserting values")
+            if (result == (-1).toLong()) {
+                Log.d("ProductAdapter", "Error in Inserting values")
                 return@setOnClickListener
             }
             holder.count.visibility = View.VISIBLE
@@ -83,36 +106,33 @@ class PopularItemsAdapter(val productList: List<Product>,
 
 
         holder.count.setOnValueChangeListener { view, oldValue, newValue ->
-            Log.d("Product","Number for ${product.name} is $newValue")
+            Log.d("Product", "Number for ${product.name} is $newValue")
             val context = view.context
             val db = CartDatabase(context)
-            if(newValue == 0){
+            if (newValue == 0) {
                 //delete
                 db.deleteData(product.name)
                 holder.addToCart.visibility = View.VISIBLE
                 holder.count.visibility = View.INVISIBLE
                 cartCount -= 1
-                if(cartCount == 0){
+                if (cartCount == 0) {
                     itemText.visibility = View.INVISIBLE
-                }
-                else {
+                } else {
                     itemText.visibility = View.VISIBLE
                     itemText.text = cartCount.toString()
                 }
 
             }
-            if(newValue >= 1){
+            if (newValue >= 1) {
                 //update
-                if((product.availableQuantity.toInt() - newValue) < 0){
-                    Toast.makeText(context,"Not Enough Quantity Available", Toast.LENGTH_SHORT).show()
+                if ((product.availableQuantity.toInt() - newValue) < 0) {
+                    Toast.makeText(context, "Not Enough Quantity Available", Toast.LENGTH_SHORT)
+                        .show()
                     holder.count.number = oldValue.toString()
-                }
-                else {
+                } else {
                     db.updateData(product.name, newValue.toString())
                 }
             }
         }
-
-
     }
 }
