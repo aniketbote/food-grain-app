@@ -170,139 +170,41 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             Log.d("IndexActivity","Image: ${it} Clicked")
         }
 
-        val refExotic_Fruits = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Fruits")
-        refExotic_Fruits
-            .orderByChild("OrderCount")
-            .limitToFirst(5)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                    return
-                }
-                override fun onDataChange(p0: DataSnapshot) {
-                    Log.d("LoadingActivity", "${p0}")
-                    val finalList =
-                        HelperUtils.getAllItemsList(p0)
-
-                    val recyclerView: RecyclerView = findViewById(R.id.recycler_index_test)
-                    recyclerView.layoutManager = LinearLayoutManager(
-                        this@IndexActivity,
-                        RecyclerView.HORIZONTAL,
-                        false
-                    ) as RecyclerView.LayoutManager?
-                    val padapter = PopularItemsAdapter(
-                        finalList!!,
-                        cartList
-                    )
-                    recyclerView.adapter = padapter
-                }
-            })
-        val refExotic_Vegetables = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Vegetables")
-        refExotic_Vegetables
-            .orderByChild("OrderCount")
-            .limitToFirst(5)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                    return
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    Log.d("LoadingActivity", "${p0}")
-                    val finalList =
-                        HelperUtils.getAllItemsList(p0)
-                }
-            })
-
-        val refVegetables = FirebaseDatabase.getInstance().getReference("/all_items/Vegetables")
-        refVegetables
-            .orderByChild("OrderCount")
-            .limitToFirst(5)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                    return
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    Log.d("LoadingActivity", "${p0}")
-                    val finalList =
-                        HelperUtils.getAllItemsList(p0)
-                }
-            })
-
-        val refFruits = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
-        refFruits
-            .orderByChild("OrderCount")
-            .limitToFirst(5)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                    return
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    Log.d("LoadingActivity", "${p0}")
-                    val finalList =
-                        HelperUtils.getAllItemsList(p0)
-                }
-            })
-
-        val refFoodgrains = FirebaseDatabase.getInstance().getReference("/all_items/Foodgrains")
-        refFoodgrains
-            .orderByChild("OrderCount")
-            .limitToFirst(5)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                    return
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    Log.d("LoadingActivity", "${p0}")
-                    val finalList =
-                        HelperUtils.getAllItemsList(p0)
-                }
-            })
+        initRecyclerExoticFruits()
+        initRecyclerExoticVegetables()
+        initRecyclerFruits()
+        initRecyclerVegetables()
+        initRecyclerFoodgrains()
 
 
 
-// problem kya hai ? I don't know???????????????????????????????????????????hi?????????????????????????????????????????????????????????
 
+        fruit_index.setSafeOnClickListener {
+            checkConnection(this)
+            Log.d("IndexActivity", "Clicked Fruits")
+            val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
+            Ref
+                .orderByKey()
+                .limitToFirst(5)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError) {
+                        Log.d("IndexActivity", "Error Fetching Fruits Values")
+                    }
 
-
-            fruit_index.setSafeOnClickListener {
-                    checkConnection(this)
-                    Log.d("IndexActivity", "Clicked Fruits")
-                    val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
-                    Ref
-                    .orderByKey()
-                    .limitToFirst(5)
-                    .addListenerForSingleValueEvent(
-                    object : ValueEventListener {
-                        override fun onCancelled(p0: DatabaseError) {
-                            Log.d("IndexActivity", "Error Fetching Fruits Values")
-                        }
-
-                        override fun onDataChange(p0: DataSnapshot) {
-                            val itemList =
-                                HelperUtils.getAllItemsList(p0)
-                            Log.d("IndexActivity", "${itemList}")
-                            val subDataObj =
-                                HelperUtils.getCatObj(
+                    override fun onDataChange(p0: DataSnapshot) {
+                        val itemList = HelperUtils.getAllItemsList(p0)
+                        Log.d("IndexActivity", "${itemList}")
+                        val subDataObj = HelperUtils.getCatObj(
                                     itemList,
                                     allDataObj.totalHashMap.getValue("Fruits")
                                 )
-                            val fruitIntent =
+                        val fruitIntent =
                                 Intent(this@IndexActivity, ProductActivity::class.java)
-                            fruitIntent.putExtra("subDataObj", subDataObj)
-                            fruitIntent.putExtra("type", "Fruits")
-                            startActivity(fruitIntent)
-                        }
-
-
-                    })
-
+                        fruitIntent.putExtra("subDataObj", subDataObj)
+                        fruitIntent.putExtra("type", "Fruits")
+                        startActivity(fruitIntent)
+                    }
+                })
         }
 
         exoticfruits_index.setSafeOnClickListener {
@@ -331,11 +233,9 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         exoticFruitIntent.putExtra("type","Exotic_Fruits")
                         startActivity(exoticFruitIntent)
                     }
-
                 })
-
-
         }
+
         vegetables_index.setSafeOnClickListener {
             checkConnection(this)
             Log.d("Index Activity", "Clicked Vegetables")
@@ -425,12 +325,115 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
 
 
-      //  initrecylerview()
+    }
+
+    private fun initRecyclerFoodgrains() {
+        val refFoodgrains = FirebaseDatabase.getInstance().getReference("/all_items/Foodgrains")
+        refFoodgrains
+            .orderByChild("OrderCount")
+            .limitToFirst(5)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
+                    return
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    Log.d("LoadingActivity", "${p0}")
+                    val finalList =
+                        HelperUtils.getAllItemsList(p0)
+                }
+            })
 
     }
 
-   // private fun initrecylerview() {
-   // }
+    private fun initRecyclerFruits() {
+        val refFruits = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
+        refFruits
+            .orderByChild("OrderCount")
+            .limitToFirst(5)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
+                    return
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    Log.d("LoadingActivity", "${p0}")
+                    val finalList =
+                        HelperUtils.getAllItemsList(p0)
+                }
+            })
+    }
+
+    private fun initRecyclerVegetables() {
+        val refVegetables = FirebaseDatabase.getInstance().getReference("/all_items/Vegetables")
+        refVegetables
+            .orderByChild("OrderCount")
+            .limitToFirst(5)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
+                    return
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    Log.d("LoadingActivity", "${p0}")
+                    val finalList =
+                        HelperUtils.getAllItemsList(p0)
+                }
+            })
+    }
+
+    private fun initRecyclerExoticVegetables() {
+        val refExotic_Vegetables = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Vegetables")
+        refExotic_Vegetables
+            .orderByChild("OrderCount")
+            .limitToFirst(5)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
+                    return
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    Log.d("LoadingActivity", "${p0}")
+                    val finalList =
+                        HelperUtils.getAllItemsList(p0)
+                }
+            })
+    }
+
+    private fun initRecyclerExoticFruits() {
+        val refExotic_Fruits = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Fruits")
+        refExotic_Fruits
+            .orderByChild("OrderCount")
+            .limitToFirst(5)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
+                    return
+                }
+                override fun onDataChange(p0: DataSnapshot) {
+                    Log.d("LoadingActivity", "${p0}")
+                    val finalList =
+                        HelperUtils.getAllItemsList(p0)
+
+                    val recyclerView: RecyclerView = findViewById(R.id.recycler_index_test)
+                    recyclerView.layoutManager = LinearLayoutManager(
+                        this@IndexActivity,
+                        RecyclerView.HORIZONTAL,
+                        false
+                    ) as RecyclerView.LayoutManager?
+                    val padapter = PopularItemsAdapter(
+                        finalList!!,
+                        cartList
+                    )
+                    recyclerView.adapter = padapter
+                }
+            })
+    }
+
 
     var imageListener: ImageListener = object : ImageListener
     {
@@ -618,6 +621,13 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             onSafeClick(it)
         }
         setOnClickListener(safeClickListener)
+    }
+
+    override fun onRestart() {
+        val db = CartDatabase(this)
+        cartList = db.readData()
+        initRecyclerExoticFruits()
+        super.onRestart()
     }
 
 
