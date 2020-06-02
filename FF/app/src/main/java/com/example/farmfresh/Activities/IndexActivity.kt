@@ -383,6 +383,34 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         cartList
                     )
                     recyclerView.adapter = padapter
+                    var isLastPage: Boolean = false
+                    var isLoading: Boolean = false
+
+                    recyclerView?.addOnScrollListener(object : PaginationScrollListener(recyclerView.layoutManager as LinearLayoutManager ) {
+                         override fun isLastPage(): Boolean {
+                            return isLastPage
+                        }
+
+                         override fun isLoading(): Boolean {
+                            return isLoading
+                        }
+
+                         override fun loadMoreItems() {
+                            isLoading = true
+                            //you have to call loadmore items to get more data
+                          //  getMoreItems()
+                        }
+                    })
+
+                    fun getMoreItems() {
+                        //after fetching your data assuming you have fetched list in your
+                        // recyclerview adapter assuming your recyclerview adapter is
+                        //rvAdapter
+                        //after getting your data you have to assign false to isLoading
+                        isLoading = false
+
+                       // PopularItemsAdapter.addData(list)
+                    }
                 }
             })
     }
@@ -591,6 +619,29 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
 
 }
+
+abstract class PaginationScrollListener
+    (var layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
+
+   abstract fun isLastPage(): Boolean
+
+    abstract fun isLoading(): Boolean
+
+   override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        super.onScrolled(recyclerView, dx, dy)
+
+       val visibleItemCount = layoutManager.childCount
+       val totalItemCount = layoutManager.itemCount
+         val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+            if (!isLoading() && !isLastPage()) {
+               if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
+                    loadMoreItems()
+            }//                    && totalItemCount >= ClothesFragment.itemsCount
+ }
+    }
+    abstract fun loadMoreItems()
+}
+
 
 
 
