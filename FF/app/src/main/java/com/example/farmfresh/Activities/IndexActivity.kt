@@ -57,7 +57,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
         val db = CartDatabase(this)
         cartList = db.readData()
-        Log.d("ProductActivity","$cartList")
+        Log.d("IndexActivity","$cartList")
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         emailHashGlobal = token.getString("EMAILHASH", "").toString()
