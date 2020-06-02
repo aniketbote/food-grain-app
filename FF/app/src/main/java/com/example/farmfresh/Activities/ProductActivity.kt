@@ -29,6 +29,7 @@ class ProductActivity : AppCompatActivity(){
     lateinit var adapter: ProductAdapterTest
     var notLoading = true
     lateinit var layoutManager: LinearLayoutManager
+    lateinit var TYPE: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +41,7 @@ class ProductActivity : AppCompatActivity(){
 
         val subDataObj = intent.getSerializableExtra("subDataObj") as SubData
         productList = subDataObj.itemList as MutableList<Product>
+        TYPE = productList[0].type
         Log.d("ProductActivity","${productList[productList.size - 1]}")
 
         val recyclerView:RecyclerView = findViewById(R.id.recycleview)
@@ -60,7 +62,7 @@ class ProductActivity : AppCompatActivity(){
                     val lastItem = productList[productList.size - 1]
                     notLoading = false
 
-                    val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
+                    val Ref = FirebaseDatabase.getInstance().getReference("/all_items/${TYPE}")
                     Ref
                         .orderByKey()
                         .startAt(lastItem.name)

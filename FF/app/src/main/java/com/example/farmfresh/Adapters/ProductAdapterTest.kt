@@ -38,11 +38,12 @@ class ProductAdapterTest(val context:Context,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val context = holder.img.context
         val db = CartDatabase(context)
-        val product: Product = productList[position]
+        val product: Product = productList[holder.adapterPosition]
         holder.name.text = product.name
         holder.price.text = product.price
         holder.size.text = product.size
 
+        // This checks if the item is present in the cartlist. If it is present then make "add to cart" button INVISIBLE and "Counter" button VISIBLE
         for(i in 0 until cartList.size){
             if(product.name == cartList[i].name){
                 if(cartList[i].available.toInt() < cartList[i].count.toInt()){
@@ -51,25 +52,32 @@ class ProductAdapterTest(val context:Context,
                     Toast.makeText(context, "Not Enough Quantity Available",Toast.LENGTH_SHORT).show()
                 }
                 else {
-                    holder.count.number = cartList[i].count
+                    holder.count.number = cartList[i].count    // Updating the Counter button text to no of items Previously added
                 }
-                holder.addToCart.visibility = View.INVISIBLE
-                holder.count.visibility = View.VISIBLE
+                holder.addToCart.visibility = View.INVISIBLE   // Making add to cart INVISBLE
+                holder.count.visibility = View.VISIBLE         // Making Counter VISIBLE
             }
         }
 
+
+        // This Checks if the Available quantity is equal to zero. If it is equal to zero make the image grey,
+        // Make the "add to cart button INVISIBLE", Make ""Counter" button INVISIBLE, Make a textview VISIBLE
         Log.d("Test1","AvailableQuantity for ${product.name} is ${product.availableQuantity}")
         if(product.availableQuantity == 0.toString()){
             Log.d("Test1","AvailableQuantity is zero")
             val colorMatrix:ColorMatrix = ColorMatrix()
             colorMatrix.setSaturation(0.toFloat())
             val filter = ColorMatrixColorFilter(colorMatrix)
-            holder.img.colorFilter = filter
-            holder.addToCart.visibility = View.INVISIBLE
-            holder.count.visibility = View.INVISIBLE
-            holder.unavailable.visibility = View.VISIBLE
+            holder.img.colorFilter = filter               // make the image grey
+            holder.addToCart.visibility = View.INVISIBLE  // Make the "add to cart button INVISIBLE"
+            holder.count.visibility = View.INVISIBLE      // Make "Counter" button INVISIBLE
+            holder.unavailable.visibility = View.VISIBLE  // Make a textview VISIBLE
         }
-        holder.img.loadImage(product.imageUrl)
+        holder.img.loadImage(product.imageUrl)            // Used to load the image on Imageview
+
+
+        // This implements the logic which is executed after addtocart is pressed.
+        // It basically inserts the items into local database
         holder.addToCart.setOnClickListener {
             holder.addToCart.visibility = View.GONE
             holder.count.number = 1.toString()
@@ -95,7 +103,7 @@ class ProductAdapterTest(val context:Context,
             itemText.text = cartCount.toString()
         }
 
-
+        // This is the counter button. This elegant number button which updates the local db with count of items.
         holder.count.setOnValueChangeListener { view, oldValue, newValue ->
             Log.d("Product","Number for ${product.name} is $newValue")
             val context = view.context
