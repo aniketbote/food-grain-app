@@ -639,7 +639,24 @@ abstract class PaginationScrollListener
             }//                    && totalItemCount >= ClothesFragment.itemsCount
  }
     }
-    abstract fun loadMoreItems()
+    fun loadMoreItems(){
+        val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Foodgrains")
+        Ref
+            .orderByKey()
+            .limitToFirst(5)
+            .addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d("IndexActivity", "Error Fetching Foodgrain Values")
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    val itemList =
+                        HelperUtils.getAllItemsList(p0)
+                    Log.d("IndexActivity","${itemList}")
+                }
+
+            })
+    }
 }
 
 
