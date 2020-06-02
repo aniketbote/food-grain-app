@@ -1,5 +1,6 @@
 package com.example.farmfresh.Adapters
 
+import android.content.Context
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.util.Log
@@ -20,7 +21,7 @@ import com.example.farmfresh.Model.Product
 import com.example.farmfresh.R
 import com.example.farmfresh.Utilities.loadImage
 
-class PopularItemsAdapter(val productList: List<Product>,
+class PopularItemsAdapter(val context:Context,val productList: List<Product>,
                           val cartList:MutableList<CartItem>): RecyclerView.Adapter<PopularItemsAdapter.ViewHolder>() {
 
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {

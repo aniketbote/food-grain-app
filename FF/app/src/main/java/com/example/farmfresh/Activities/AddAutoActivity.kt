@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.farmfresh.R
+import com.example.farmfresh.Utilities.HelperUtils
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
@@ -25,6 +26,8 @@ class AddAutoActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addauto)
+
+        HelperUtils.checkConnection(this)
 
         initPlaces()
         setupPlacesAutocomplete()

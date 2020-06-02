@@ -47,60 +47,17 @@ lateinit var indexActivityGlobal: Intent
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
     lateinit var featureImageList:List<String>
     lateinit var cartList:MutableList<CartItem>
-    private var flag = false
-    fun isOnline(context: Context): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (connectivityManager != null) {
-            val capabilities =
-                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-            if (capabilities != null) {
-                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
-                    return true
-                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
-                    return true
-                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
-                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
-                    return true
-                }
-            }
-        }
-        return false
-    }
 
-    private fun checkConnection(context: Context) {
-        val isConnected = isOnline(context)
-        Log.d("LoadingActivity", "$isConnected")
-
-        if(!isConnected){
-            Log.d("LoadingActivity", "No connection : Starting No Connection Activity")
-            val noConnectionIntent = Intent(context, NoConnectionActivity::class.java)
-            startActivityForResult(noConnectionIntent,999)
-        }
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         indexActivityGlobal = this.intent
         setContentView(R.layout.activity_index)
-        checkConnection(this)
+        HelperUtils.checkConnection(this)
         Log.d("IndexActivity", cartCount.toString())
 
         val db = CartDatabase(this)
         cartList = db.readData()
         Log.d("ProductActivity","$cartList")
-
-        if(flag){
-            if(cartList.size == 0){
-                itemText.visibility = View.INVISIBLE
-            }
-            if(cartList.size > 0) {
-                itemText.visibility = View.VISIBLE
-                cartCount = cartList.size
-                itemText.text = cartCount.toString()
-            }
-        }
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         emailHashGlobal = token.getString("EMAILHASH", "").toString()
@@ -180,7 +137,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
 
         fruit_index.setSafeOnClickListener {
-            checkConnection(this)
+            HelperUtils.checkConnection(this)
             Log.d("IndexActivity", "Clicked Fruits")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
             Ref
@@ -207,7 +164,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
 
         exoticfruits_index.setSafeOnClickListener {
-            checkConnection(this)
+            HelperUtils.checkConnection(this)
             Log.d("Index Activity", "Clicked Exotic Fruits")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Fruits") // aisa
             Ref
@@ -235,7 +192,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         }
 
         vegetables_index.setSafeOnClickListener {
-            checkConnection(this)
+            HelperUtils.checkConnection(this)
             Log.d("Index Activity", "Clicked Vegetables")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Vegetables")
             Ref
@@ -263,7 +220,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                 })
         }
         exoticveg_index.setSafeOnClickListener {
-            checkConnection(this)
+            HelperUtils.checkConnection(this)
             Log.d("Index Activity", "Clicked Exotic Vegetables")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Vegetables")
             Ref
@@ -291,7 +248,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                 })
         }
         grain_index.setSafeOnClickListener {
-            checkConnection(this)
+            HelperUtils.checkConnection(this)
             Log.d("Index Activity", "Clicked Food Grains")
             val Ref = FirebaseDatabase.getInstance().getReference("/all_items/Foodgrains")
             Ref
@@ -414,13 +371,14 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                     val finalList =
                         HelperUtils.getAllItemsList(p0)
 
-                    val recyclerView: RecyclerView = findViewById(R.id.recycler_index_test)
+                    val recyclerView: RecyclerView = findViewById(R.id.recycler_index_exotic_fruits)
                     recyclerView.layoutManager = LinearLayoutManager(
                         this@IndexActivity,
                         RecyclerView.HORIZONTAL,
                         false
                     ) as RecyclerView.LayoutManager?
                     val padapter = PopularItemsAdapter(
+                        this@IndexActivity,
                         finalList!!,
                         cartList
                     )
@@ -445,6 +403,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         val icon=count.findViewById<ImageView>(R.id.cart_img)
 
         icon.setOnClickListener{
+            HelperUtils.checkConnection(this)
             val db = CartDatabase(this)
             cartList = db.readData()
             if(cartList.size == 0){
@@ -473,13 +432,13 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             cartCount = cartList.size
             itemText.text = cartCount.toString()
         }
-        flag = true
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.search ->
             {
+                HelperUtils.checkConnection(this)
                 Log.d("Index Activity", "Clicked Search button")
                 val searchIntent = Intent(this, SearchActivity::class.java)
                 searchIntent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
@@ -495,11 +454,13 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         when (MenuItem.itemId)
         {
             R.id.home ->{
+                HelperUtils.checkConnection(this)
                 Log.d("IndexActivity","Pressed Home Button")
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             }
             R.id.current_order -> {
+                HelperUtils.checkConnection(this)
                 Log.d("IndexActivity","Pressed Current Orders")
                 val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHashGlobal/current")
                 currentRef.addValueEventListener(object : ValueEventListener{
@@ -532,6 +493,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                 })
             }
             R.id.previous_orders -> {
+                HelperUtils.checkConnection(this)
                 Log.d("IndexActivity","Pressed Previous Orders")
                 val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHashGlobal/previous")
                     .orderByChild("OrderTime")
@@ -556,12 +518,14 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                 })
             }
             R.id.support -> {
+                HelperUtils.checkConnection(this)
                 Log.d("IndexActivity","Pressed Support")
                 val supportIntent = Intent(this, SupportActivity::class.java)
                 startActivity(supportIntent)
             }
 
             R.id.logout -> {
+                HelperUtils.checkConnection(this)
                 Log.d("IndexActivity","Pressed Log Out")
                 val token = getSharedPreferences("UserSharedPreferences",Context.MODE_PRIVATE)
                 val editor = token.edit()

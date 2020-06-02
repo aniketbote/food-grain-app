@@ -32,7 +32,7 @@
         <activity android:name=".Activities.PaymentActivity"></activity>
         <activity android:name=".Activities.SearchActivity"></activity>
         <activity android:name=".Activities.PlaceOrderActivity" android:launchMode="singleTask"></activity>
-        <activity android:name=".Activities.NoConnectionActivity"></activity>
+        <activity android:name=".Activities.NoConnectionActivity" android:launchMode="singleTask"></activity>
         <activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
             android:launchMode="singleTask">
             <intent-filter>

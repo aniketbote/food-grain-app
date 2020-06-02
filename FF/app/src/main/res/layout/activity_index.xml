@@ -227,7 +227,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_index_test"
+                android:id="@+id/recycler_index_exotic_fruits"
                 android:scrollbars="horizontal"
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"

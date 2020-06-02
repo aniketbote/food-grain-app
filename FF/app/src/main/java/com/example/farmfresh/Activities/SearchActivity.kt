@@ -28,6 +28,7 @@ import com.example.farmfresh.Model.ProductList
 import com.example.farmfresh.Model.SubData
 import com.example.farmfresh.R
 import com.example.farmfresh.Retrofit.RetrofitClient
+import com.example.farmfresh.Utilities.HelperUtils
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
@@ -38,42 +39,11 @@ import retrofit2.Response
 
 class SearchActivity: AppCompatActivity() {
     lateinit var cartList: MutableList<CartItem>
-    fun isOnline(context: Context): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (connectivityManager != null) {
-            val capabilities =
-                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-            if (capabilities != null) {
-                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
-                    return true
-                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
-                    return true
-                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
-                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
-                    return true
-                }
-            }
-        }
-        return false
-    }
 
-    private fun checkConnection(context: Context) {
-        val isConnected = isOnline(context)
-        Log.d("LoadingActivity", "$isConnected")
-
-        if(!isConnected){
-            Log.d("LoadingActivity", "No connection : Starting No Connection Activity")
-            val noConnectionIntent = Intent(context, NoConnectionActivity::class.java)
-            startActivityForResult(noConnectionIntent,999)
-        }
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        checkConnection(this)
+        HelperUtils.checkConnection(this)
 
         val db = CartDatabase(this)
         cartList = db.readData()
@@ -138,6 +108,7 @@ class SearchActivity: AppCompatActivity() {
                                 response: Response<ProductList>
                             ) {
                                 var adapter = SearchProductAdapter(
+                                    this@SearchActivity,
                                     response.body()?.itemList!!,
                                     cartList
                                 )

@@ -8,9 +8,11 @@ import android.net.NetworkCapabilities
 import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.farmfresh.R
 import kotlinx.android.synthetic.main.activity_connection_error.*
+import kotlin.system.exitProcess
 
 class NoConnectionActivity:AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,9 +25,7 @@ class NoConnectionActivity:AppCompatActivity(){
         }
     }
 
-    override fun onBackPressed() {
 
-    }
     fun isOnline(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -58,5 +58,10 @@ class NoConnectionActivity:AppCompatActivity(){
         else if(!isConnected){
             return
         }
+    }
+
+    override fun onBackPressed() {
+        finish()
+        super.onBackPressed()
     }
 }

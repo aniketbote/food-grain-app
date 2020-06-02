@@ -1,10 +1,16 @@
 package com.example.farmfresh.Utilities
 
+import android.content.Context
+import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.util.Log
 import android.util.Patterns
 import android.widget.ImageView
+import androidx.core.app.ActivityCompat.startActivityForResult
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.farmfresh.Activities.NoConnectionActivity
 import com.example.farmfresh.Model.*
 import com.example.farmfresh.R
 import com.google.firebase.database.DataSnapshot
@@ -101,8 +107,45 @@ object HelperUtils {
             }
         }
         return pos
+    }
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun checkConnection(context: Context) {
+        val isConnected = isOnline(context)
+        Log.d("LoadingActivity", "$isConnected")
+
+        if(!isConnected){
+            Log.d("LoadingActivity", "No connection : Starting No Connection Activity")
+            val noConnectionIntent = Intent(context, NoConnectionActivity::class.java)
+            context.startActivity(noConnectionIntent)
+        }
+    }
+    fun returnConnectionResult(context: Context): Boolean {
+        val isConnected = isOnline(context)
+        return isConnected
 
     }
+
 }
 
 

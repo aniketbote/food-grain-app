@@ -1,5 +1,6 @@
 package com.example.farmfresh.Adapters
 
+import android.content.Context
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.util.Log
@@ -20,8 +21,8 @@ import com.example.farmfresh.Model.Product
 import com.example.farmfresh.R
 import com.example.farmfresh.Utilities.loadImage
 
-class SearchProductAdapter(val productList: List<Product>,
-                     val cartList:MutableList<CartItem>) :
+class SearchProductAdapter(val context: Context, val productList: List<Product>,
+                           val cartList:MutableList<CartItem>) :
     RecyclerView.Adapter<SearchProductAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.activity_searchitem, parent, false)

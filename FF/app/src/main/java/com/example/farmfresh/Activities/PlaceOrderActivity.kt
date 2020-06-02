@@ -38,38 +38,6 @@ lateinit var orderTotalPlaceorder: TextView
 lateinit var deliverChargePlaceorder: TextView
 class PlaceOrderActivity:AppCompatActivity() {
     var emailHash: String = ""
-    fun isOnline(context: Context): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (connectivityManager != null) {
-            val capabilities =
-                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-            if (capabilities != null) {
-                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
-                    return true
-                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
-                    return true
-                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
-                    Log.d("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
-                    return true
-                }
-            }
-        }
-        return false
-    }
-
-    private fun checkConnection(context: Context) {
-        val isConnected = isOnline(context)
-        Log.d("LoadingActivity", "$isConnected")
-
-        if(!isConnected){
-            Log.d("LoadingActivity", "No connection : Starting No Connection Activity")
-            val noConnectionIntent = Intent(context, NoConnectionActivity::class.java)
-            startActivityForResult(noConnectionIntent,999)
-        }
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -89,7 +57,7 @@ class PlaceOrderActivity:AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_placeorder)
-        checkConnection(this)
+        HelperUtils.checkConnection(this)
 
         orderTotalPlaceorder = findViewById(R.id.ordertotal_placeorder)
         cartTotalPlaceorder = findViewById(R.id.total_placeorder)
@@ -145,6 +113,7 @@ class PlaceOrderActivity:AppCompatActivity() {
         recycleView.adapter = adapter
 
         select_address.setOnClickListener{
+            HelperUtils.checkConnection(this)
             Log.d("PlaceOrderActivity","Clicked address")
             val addressIntent = Intent(this,
                 AddAutoActivity::class.java)
@@ -154,6 +123,7 @@ class PlaceOrderActivity:AppCompatActivity() {
 
 
         place_order.setOnClickListener {
+            HelperUtils.checkConnection(this)
             if(cartList.size == 0){
                 Toast.makeText(this,"Nothing in the basket",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -182,6 +152,7 @@ class PlaceOrderActivity:AppCompatActivity() {
 
     override fun onBackPressed() {
         indexActivityGlobal.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        indexActivityGlobal.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
         startActivity(indexActivityGlobal)
     }
 
