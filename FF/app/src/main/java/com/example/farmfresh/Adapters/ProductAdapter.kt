@@ -141,4 +141,11 @@ class ProductAdapter(val context:Context,
         val unavailable:TextView = item.findViewById(R.id.product_unavailable)
 
     }
+
+    fun addData(listItems: List<Product> ) {
+        var size = listItems.size
+      //  listItems.addAll(listItems)
+        var sizeNew = listItems.size
+        notifyItemRangeChanged(size, sizeNew)
+    }
 }
