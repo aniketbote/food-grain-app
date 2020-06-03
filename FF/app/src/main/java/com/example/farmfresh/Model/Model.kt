@@ -16,7 +16,7 @@ data class CartItem(val name:String, val imageUrl:String, val size: String, val 
 
 data class OrderItem(val name: String, val amount:String, val count:String, val imageUrl: String): Serializable
 
-data class Order(val orderId:String, val orderCreatedDate:String, val orderCompletionDate:String, val orderItems:List<OrderItem>, val total: String): Serializable
+data class Order(val orderId:String, val orderCreatedDate:String, val orderCompletionDate:String, val orderItems:List<OrderItem>, val total: String, val orderTime: Int): Serializable
 
 data class OrderList(val orderList: List<Order>): Serializable
 

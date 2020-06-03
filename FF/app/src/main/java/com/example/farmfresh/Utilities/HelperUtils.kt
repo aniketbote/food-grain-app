@@ -37,6 +37,7 @@ object HelperUtils {
             val dateofCompletion = order.child("Date of Completion").value.toString()
             val dateofCreation = order.child("Date of Order").value.toString()
             val total = order.child("Total").value.toString()
+            val ordertime = order.child("OrderTime").value.toString().toInt()
             for (item in order.child("Items").children){
                 val orderitemObj = OrderItem(
                     item.key.toString(),
@@ -51,7 +52,8 @@ object HelperUtils {
                 dateofCreation,
                 dateofCompletion,
                 orderItemList,
-                total
+                total,
+                ordertime
             )
             finalList.add(orderObj)
         }
