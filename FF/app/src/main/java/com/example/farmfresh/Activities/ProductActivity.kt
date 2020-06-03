@@ -24,9 +24,8 @@ import kotlinx.android.synthetic.main.activity_itemlist.*
 
 //var cartCount_:Int = 0
 class ProductActivity : AppCompatActivity(){
-    lateinit var cartList:MutableList<CartItem>
     lateinit var productList: MutableList<Product>
-    lateinit var adapter: ProductAdapterTest
+    lateinit var adapter: ProductAdapter
     var notLoading = true
     lateinit var layoutManager: LinearLayoutManager
     lateinit var TYPE: String
@@ -36,8 +35,6 @@ class ProductActivity : AppCompatActivity(){
         setContentView(R.layout.activity_itemlist)
         HelperUtils.checkConnection(this)
 
-        val db = CartDatabase(this)
-        cartList= db.readData()
 
         val subDataObj = intent.getSerializableExtra("subDataObj") as SubData
         productList = subDataObj.itemList as MutableList<Product>
@@ -47,7 +44,7 @@ class ProductActivity : AppCompatActivity(){
         val recyclerView:RecyclerView = findViewById(R.id.recycleview)
         layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerView.layoutManager = layoutManager
-        adapter= ProductAdapterTest(this, productList, cartList)
+        adapter= ProductAdapter(this, productList)
         recyclerView.adapter = adapter
 
         addscrolllistener()

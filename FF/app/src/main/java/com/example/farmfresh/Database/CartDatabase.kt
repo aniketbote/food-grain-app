@@ -120,10 +120,11 @@ class CartDatabase(context: Context) : SQLiteOpenHelper(context,
         return cartObjJson
     }
 
-    fun deleteData(name:String){
+    fun deleteData(name:String): Int {
         val db = this.writableDatabase
-        db.delete(TABLE_NAME, "$COL_NAME=?", arrayOf(name))
+        val result = db.delete(TABLE_NAME, "$COL_NAME=?", arrayOf(name))
         db.close()
+        return result
     }
 
     fun updateData(name:String, count:String){
