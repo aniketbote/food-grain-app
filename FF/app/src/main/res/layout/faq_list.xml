@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Question "
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="15sp"
+        android:fontFamily="@font/alegreya_sans_medium"/>
+
+    <TextView
+        android:layout_centerVertical="true"
+        android:id="@+id/answer"
+        android:layout_width="match_parent"
+        android:layout_height="45sp"
+        android:text="Answer "
+        android:layout_below="@id/question"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="5sp"
+        android:fontFamily="@font/alegreya_sans_medium"/>
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_below="@id/answer"
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="#c0c0c0"/>
+
+</RelativeLayout>

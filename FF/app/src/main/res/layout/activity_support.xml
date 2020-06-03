@@ -1,16 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/support">
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="135sp"
-        android:layout_marginTop="206sp"
-        android:textSize="48sp"
-        android:text="FAQ's"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"/>
+    android:layout_height="match_parent">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="55sp"
+        layout="@layout/activity_toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="@color/quantum_lightgreen500"
+            android:id="@+id/titleplaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Frequently Asked Questions :"
+            android:layout_marginTop="15sp"
+            android:layout_marginLeft="10sp"
+            android:fontFamily="@font/alegreya_sans_medium"
+            android:textSize="16sp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/faq_reclerview"
+            android:layout_marginTop="5sp"
+            android:layout_below="@id/titleplaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="400sp"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/faq_list"/>
+
+
+        <TextView
+            android:id="@+id/contactplaceholder"
+            android:layout_width="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/quantum_lightgreen500"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/faq_reclerview"
+            android:layout_marginTop="15sp"
+            android:text="24 x 7  Contact Support Available at :"
+            android:fontFamily="@font/alegreya_sans_medium"
+            android:layout_marginLeft="10sp"/>
+
+        <TextView
+            android:id="@+id/contact_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/contactplaceholder"
+            android:fontFamily="@font/alegreya_sans_medium"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="5sp"
+            android:textSize="16sp"
+            android:text="12345656/12345676/12345678"/>
+
+
+
+
+    </RelativeLayout>
+
+
 </LinearLayout>

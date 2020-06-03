@@ -37,16 +37,19 @@ class ProfileActivity : AppCompatActivity(){
         Glide.with(this).load("${imageUri}").into(imageView)
         Log.d("IndexActivity","Image Loaded On Nav Bar")
 
-        val useraddress: TextView = constraintLayout.findViewById(R.id.useraddress_profile)
+        val useraddress: TextView = findViewById(R.id.address_profile)
         useraddress.text = address
 
-        val username: TextView = constraintLayout.findViewById(R.id.username_profile)
-        username.text = name
+        val username2: TextView = findViewById(R.id.username1_profile)
+        username2.text = name
 
-        val useremail: TextView = constraintLayout.findViewById(R.id.useremail_profile)
+        val username1: TextView = findViewById(R.id.username1_profile)
+        username1.text = name
+
+        val useremail: TextView = findViewById(R.id.email_profile)
         useremail.text = email
 
-        val userphone: TextView = constraintLayout.findViewById(R.id.userphone_profile)
+        val userphone: TextView = findViewById(R.id.phnumber_profile)
         userphone.text = phone
 
 

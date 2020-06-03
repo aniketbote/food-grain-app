@@ -203,7 +203,6 @@
 
                 <TextView
                     android:background="@drawable/gridtext"
-                    android:padding="3sp"
                     android:layout_width="95sp"
                     android:layout_height="40sp"
                     android:layout_gravity="center"
