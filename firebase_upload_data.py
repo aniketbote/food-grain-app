@@ -56,7 +56,4 @@ ref.set(final_dict)
 ref = db.reference('featured')
 ref.set(featured_list)
 
-ref = db.reference('total_items')
-ref.set(final_len_dict)
-
 pprint('Done')

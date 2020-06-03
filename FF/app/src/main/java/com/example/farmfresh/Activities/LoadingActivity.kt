@@ -77,39 +77,16 @@ class LoadingActivity : AppCompatActivity() {
                         featureList.add(name.value.toString())
                     }
                     Log.d("LoadingActivity","FeatureList Created")
-
-
-                    val totalRef = FirebaseDatabase.getInstance().getReference("/total_items")
-                    totalRef.addValueEventListener(object : ValueEventListener{
-                        override fun onCancelled(p0: DatabaseError) {
-                            Log.d("LoadingActivity","Failed to Retrieve total items")
-                        }
-                        override fun onDataChange(p0: DataSnapshot) {
-
-                            Log.d("LoadingActivity","Successfully to Retrieve total items")
-                            val totalHashMap = HashMap<String,String>()
-                            for( name in p0.children){
-                                totalHashMap.put(name.key.toString(), name.value.toString())
-                            }
-
-                            Log.d("LoadingActivity","Creating dataObj")
-                            val dataObj =
-                                AllData(
-                                    totalHashMap,
-                                    featureList
-                                )
-                            val indexIntent = Intent(this@LoadingActivity, IndexActivity::class.java)
-                            indexIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            indexIntent.putExtra("dataObj", dataObj)
-                            Log.d("LoadingActivity", "User Logged In : Starting IndexActivity")
-                            startActivity(indexIntent)
-                            finish()
-                        }
-                    })
+                    Log.d("LoadingActivity","Creating dataObj")
+                    val dataObj = AllData(featureList)
+                    val indexIntent = Intent(this@LoadingActivity, IndexActivity::class.java)
+                    indexIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    indexIntent.putExtra("dataObj", dataObj)
+                    Log.d("LoadingActivity", "User Logged In : Starting IndexActivity")
+                    startActivity(indexIntent)
+                    finish()
                 }
             })
-
-
         }
     }
 

@@ -96,6 +96,15 @@ class ProductAdapter(val context:Context,
             holder.addToCart.visibility = View.INVISIBLE   // Making add to cart INVISBLE
             holder.count.visibility = View.INVISIBLE         // Making Counter VISIBLE
             holder.unavailable.visibility = View.VISIBLE  // Make a textview VISIBLE
+            cartCount -= 1
+            if(cartCount == 0){
+                itemText.visibility = View.INVISIBLE
+            }
+            else {
+                itemText.visibility = View.VISIBLE
+                itemText.text = cartCount.toString()
+            }
+
         }
         else{
             Log.d("Test2","Missed Something")

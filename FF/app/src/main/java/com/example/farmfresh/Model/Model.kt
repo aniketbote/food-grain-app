@@ -4,9 +4,7 @@ import java.io.Serializable
 
 data class PlaceOrderResponse(val message:String, val deficiency:String, val errorCode:Int)
 
-data class SubData(val itemList:List<Product>, val totalCount:Int): Serializable
-
-data class AllData(val totalHashMap: HashMap<String, String>, val featureList: List<String>):
+data class AllData(val featureList: List<String>):
     Serializable
 
 data class Product(val name:String, val description: String, val imageUrl:String, val size: String, val price:String, val availableQuantity:String, val type:String = ""):

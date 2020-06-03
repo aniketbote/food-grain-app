@@ -353,6 +353,23 @@ class PaymentActivity :AppCompatActivity(){
 
                     }
 
+                    if(response.body()?.errorCode == 1){
+                        Toast.makeText(
+                            this@PaymentActivity,
+                            "Some Items Unavailable",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Log.d("PlaceOrderActivity", "Successfull : ${response.body()!!.deficiency}")
+                        val defString = response.body()!!.deficiency
+                        val defItems = defString.split(",") as MutableList
+                        defItems.removeAt(defItems.size-1)
+                        for(item in defItems){
+                            db.deleteData(item)
+                        }
+                        Log.d("PlaceOrderActivity", "Successfull : ${defItems}")
+                        dialog.dismiss()
+                    }
+
                 }
             })
     }

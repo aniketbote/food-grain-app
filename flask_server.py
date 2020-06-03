@@ -84,7 +84,7 @@ def updateData(current_value, cart_list, email_hash, orderAddress):
         tempAQ = current_value[item['type']][item['name']]['Available Quantity']
         tempOC = current_value[item['type']][item['name']]['OrderCount']
         if (int(tempAQ) - int(item['count'])) >= 0:
-            current_value[item['type']][item['name']]['Available Quantity'] = str(int(tempAQ) - int(item['count']))
+            current_value[item['type']][item['name']]['Available Quantity'] = int(tempAQ) - int(item['count'])
             current_value[item['type']][item['name']]['OrderCount'] = int(tempOC) - int(item['count'])
         else:
             errorCode = 1
@@ -166,6 +166,8 @@ def create_purchase():
 @app.route("/popular", methods = ['POST','GET'])
 def popularItems():
     global combinedItems
+    global combinedItemsKeys
+    combinedItems, combinedItemsKeys = get_combinedItems()
     res = sorted(combinedItems.items(), key = lambda x: x[1]['OrderCount'])
     popularList = get_reponse(res)
     return jsonify(popularList)

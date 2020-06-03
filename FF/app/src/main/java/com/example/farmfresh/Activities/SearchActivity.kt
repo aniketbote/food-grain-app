@@ -25,7 +25,6 @@ import com.example.farmfresh.Adapters.SearchProductAdapter
 import com.example.farmfresh.Database.CartDatabase
 import com.example.farmfresh.Model.CartItem
 import com.example.farmfresh.Model.ProductList
-import com.example.farmfresh.Model.SubData
 import com.example.farmfresh.R
 import com.example.farmfresh.Retrofit.RetrofitClient
 import com.example.farmfresh.Utilities.HelperUtils

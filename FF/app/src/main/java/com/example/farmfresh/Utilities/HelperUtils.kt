@@ -87,9 +87,8 @@ object HelperUtils {
         Log.d("RegisterActivity","Funtion : email validate")
         return Patterns.EMAIL_ADDRESS.toRegex().matches(email)
     }
-    fun getCatObj(itemList:List<Product>, totalCount:String): SubData {
-        val catDataObj =
-            SubData(itemList, totalCount.toInt())
+    fun getCatObj(itemList:List<Product>): ProductList {
+        val catDataObj = ProductList(itemList)
         return catDataObj
     }
 

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmfresh.Adapters.ProductAdapter
 import com.example.farmfresh.Model.Product
-import com.example.farmfresh.Model.SubData
+import com.example.farmfresh.Model.ProductList
 import com.example.farmfresh.R
 import com.example.farmfresh.Utilities.HelperUtils
 import com.google.firebase.database.DataSnapshot
@@ -32,8 +32,8 @@ class ProductActivity : AppCompatActivity(){
         HelperUtils.checkConnection(this)
 
 
-        val subDataObj = intent.getSerializableExtra("subDataObj") as SubData
-        productList = subDataObj.itemList as MutableList<Product>
+        val productListObj = intent.getSerializableExtra("productListObj") as ProductList
+        productList = productListObj.itemList as MutableList<Product>
         TYPE = productList[0].type
         Log.d("ProductActivity","${productList[productList.size - 1]}")
 
