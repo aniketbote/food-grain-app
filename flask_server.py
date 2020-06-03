@@ -115,16 +115,22 @@ def transactionOp(current_value):
 
 def get_reponse(data):
     final_list = []
+    count = 0
     for element in data:
+        if count >= 10:
+            break
+        # if element[1]['Available Quantity'] == '0':
+        #     continue
         tempDict = {}
-        tempDict['name'] = element
-        tempDict['description'] = data[element]['Description']
-        tempDict['imageUrl'] = data[element]['Image']
-        tempDict['size'] = data[element]['Size']
-        tempDict['price'] = data[element]['Price']
-        tempDict['availableQuantity'] = data[element]['Available Quantity']
-        tempDict['type'] = data[element]['Type']
+        tempDict['name'] = element[0]
+        tempDict['description'] = element[1]['Description']
+        tempDict['imageUrl'] = element[1]['Image']
+        tempDict['size'] = element[1]['Size']
+        tempDict['price'] = element[1]['Price']
+        tempDict['availableQuantity'] = element[1]['Available Quantity']
+        tempDict['type'] = element[1]['Type']
         final_list.append(tempDict)
+        count += 1
     return final_list
 
 
@@ -157,15 +163,12 @@ def create_purchase():
 
 
 
-@app.route("/popular", methods = ['POST'])
+@app.route("/popular", methods = ['POST','GET'])
 def popularItems():
-    responseDict = {}
-    for category in ["Exotic_Vegetables","Exotic_Fruits","Vegetables","Fruits","Foodgrains"]:
-        print(category)
-        ref = db.reference('all_items/{}'.format(category)).order_by_child("OrderCount").limit_to_first(5)
-        refData = ref.get()
-        responseDict[category] = get_reponse(refData)
-    return jsonify(responseDict)
+    global combinedItems
+    res = sorted(combinedItems.items(), key = lambda x: x[1]['OrderCount'])
+    popularList = get_reponse(res)
+    return jsonify(popularList)
 
 
 

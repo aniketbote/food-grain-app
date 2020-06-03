@@ -38,22 +38,16 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class SearchActivity: AppCompatActivity() {
-    lateinit var cartList: MutableList<CartItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         HelperUtils.checkConnection(this)
 
-        val db = CartDatabase(this)
-        cartList = db.readData()
 
         setSupportActionBar(toolbar_searchbar)
         getSupportActionBar()?.setDisplayShowTitleEnabled(false)
 
-        //getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
-        //getSupportActionBar()?.setDisplayShowHomeEnabled(true)
-        //getSupportActionBar()?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp)
 
 
     }
@@ -77,7 +71,6 @@ class SearchActivity: AppCompatActivity() {
 
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 Log.d("SearchActivity", "Clicked Back button")
-                //val backIntent = Intent(this@SearchActivity,IndexActivity::class.java)
                 startActivity(indexActivityGlobal)
                 finish()
                 return true
@@ -109,9 +102,7 @@ class SearchActivity: AppCompatActivity() {
                             ) {
                                 var adapter = SearchProductAdapter(
                                     this@SearchActivity,
-                                    response.body()?.itemList!!,
-                                    cartList
-                                )
+                                    response.body()?.itemList!!)
                                 val recyclerView: RecyclerView = findViewById(R.id.recycleview_search)
                                 recyclerView.layoutManager = LinearLayoutManager(this@SearchActivity, RecyclerView.VERTICAL, false) as RecyclerView.LayoutManager?
                                 recyclerView.adapter = adapter

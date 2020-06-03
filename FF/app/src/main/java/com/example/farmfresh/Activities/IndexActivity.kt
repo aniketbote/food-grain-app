@@ -22,10 +22,9 @@ import com.bumptech.glide.Glide
 import com.example.farmfresh.Adapters.PopularItemsAdapter
 import com.example.farmfresh.Adapters.ProductAdapter
 import com.example.farmfresh.Database.CartDatabase
-import com.example.farmfresh.Model.AllData
-import com.example.farmfresh.Model.CartItem
-import com.example.farmfresh.Model.OrderList
+import com.example.farmfresh.Model.*
 import com.example.farmfresh.R
+import com.example.farmfresh.Retrofit.RetrofitClient
 import com.example.farmfresh.Utilities.HelperUtils
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.DataSnapshot
@@ -37,6 +36,9 @@ import com.synnapps.carouselview.ImageListener
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_index.*
 import kotlinx.android.synthetic.main.activity_toolbar.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 lateinit var itemText:TextView
@@ -46,7 +48,7 @@ lateinit var indexActivityGlobal: Intent
 
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
     lateinit var featureImageList:List<String>
-    lateinit var cartList:MutableList<CartItem>
+    lateinit var padapter: PopularItemsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +57,9 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         HelperUtils.checkConnection(this)
         Log.d("IndexActivity", cartCount.toString())
 
-        val db = CartDatabase(this)
-        cartList = db.readData()
-        Log.d("IndexActivity","$cartList")
+//        val db = CartDatabase(this)
+//        cartList = db.readData()
+//        Log.d("IndexActivity","$cartList")
 
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
         emailHashGlobal = token.getString("EMAILHASH", "").toString()
@@ -127,12 +129,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             Log.d("IndexActivity","Image: ${it} Clicked")
         }
 
-        initRecyclerExoticFruits()
-        initRecyclerExoticVegetables()
-        initRecyclerFruits()
-        initRecyclerVegetables()
-        initRecyclerFoodgrains()
-
+        initRecyclerPopular()
 
 
 
@@ -279,109 +276,30 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
     }
 
-    private fun initRecyclerFoodgrains() {
-        val refFoodgrains = FirebaseDatabase.getInstance().getReference("/all_items/Foodgrains")
-        refFoodgrains
-            .orderByChild("OrderCount")
-            .limitToFirst(5)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                    return
+
+
+    private fun initRecyclerPopular() {
+        RetrofitClient.instance.popular()
+            .enqueue(object : Callback<MutableList<Product>> {
+                override fun onFailure(call: Call<MutableList<Product>>, t: Throwable) {
+
+                    Toast.makeText(
+                        this@IndexActivity,
+                        "Failed : ${t.localizedMessage}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.d("IndexActivity", "Failed : ${t.message}")
                 }
 
-                override fun onDataChange(p0: DataSnapshot) {
-                    Log.d("LoadingActivity", "${p0}")
-                    val finalList =
-                        HelperUtils.getAllItemsList(p0)
-                }
-            })
-
-    }
-
-    private fun initRecyclerFruits() {
-        val refFruits = FirebaseDatabase.getInstance().getReference("/all_items/Fruits")
-        refFruits
-            .orderByChild("OrderCount")
-            .limitToFirst(5)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                    return
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    Log.d("LoadingActivity", "${p0}")
-                    val finalList =
-                        HelperUtils.getAllItemsList(p0)
-                }
-            })
-    }
-
-    private fun initRecyclerVegetables() {
-        val refVegetables = FirebaseDatabase.getInstance().getReference("/all_items/Vegetables")
-        refVegetables
-            .orderByChild("OrderCount")
-            .limitToFirst(5)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                    return
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    Log.d("LoadingActivity", "${p0}")
-                    val finalList =
-                        HelperUtils.getAllItemsList(p0)
-                }
-            })
-    }
-
-    private fun initRecyclerExoticVegetables() {
-        val refExotic_Vegetables = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Vegetables")
-        refExotic_Vegetables
-            .orderByChild("OrderCount")
-            .limitToFirst(5)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                    return
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    Log.d("LoadingActivity", "${p0}")
-                    val finalList =
-                        HelperUtils.getAllItemsList(p0)
-                }
-            })
-    }
-
-    private fun initRecyclerExoticFruits() {
-        val refExotic_Fruits = FirebaseDatabase.getInstance().getReference("/all_items/Exotic_Fruits")
-        refExotic_Fruits
-            .orderByChild("OrderCount")
-            .limitToFirst(5)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d("LoadingActivity", "Error in Fetching all items data : ${p0}")
-                    return
-                }
-                override fun onDataChange(p0: DataSnapshot) {
-                    Log.d("LoadingActivity", "${p0}")
-                    val finalList =
-                        HelperUtils.getAllItemsList(p0)
-
+                override fun onResponse(
+                    call: Call<MutableList<Product>>,
+                    response: Response<MutableList<Product>>
+                ) {
+                    Log.d("LoadingActivity", "${response.body()}")
+                    val finalList = response.body()
                     val recyclerView: RecyclerView = findViewById(R.id.recycler_index_exotic_fruits)
-                    recyclerView.layoutManager = LinearLayoutManager(
-                        this@IndexActivity,
-                        RecyclerView.HORIZONTAL,
-                        false
-                    ) as RecyclerView.LayoutManager?
-                    val padapter = PopularItemsAdapter(
-                        this@IndexActivity,
-                        finalList!!,
-                        cartList
-                    )
+                    recyclerView.layoutManager = LinearLayoutManager(this@IndexActivity, RecyclerView.HORIZONTAL, false)
+                    padapter = PopularItemsAdapter(this@IndexActivity, finalList!!)
                     recyclerView.adapter = padapter
                 }
             })
@@ -401,11 +319,11 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         menuInflater.inflate(R.menu.cart_menu, menu)
         val count:View = menu!!.findItem(R.id.select_cart).actionView
         val icon=count.findViewById<ImageView>(R.id.cart_img)
+        val db = CartDatabase(this)
+        val cartList = db.readData()
 
         icon.setOnClickListener{
             HelperUtils.checkConnection(this)
-            val db = CartDatabase(this)
-            cartList = db.readData()
             if(cartList.size == 0){
                 Toast.makeText(this,"Nothing in the basket", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -584,9 +502,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     }
 
     override fun onRestart() {
-        val db = CartDatabase(this)
-        cartList = db.readData()
-        initRecyclerExoticFruits()
+        padapter.notifyDataSetChanged()
         super.onRestart()
     }
 

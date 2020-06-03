@@ -44,15 +44,13 @@ class ProductAdapter(val context:Context,
         holder.size.text = product.size
         val cartList = db.readData()
 
-        val pos = HelperUtils.getPosition(cartList,product.name)
-        val colorMatrix:ColorMatrix = ColorMatrix()
+        val pos = HelperUtils.getPosition(cartList, product.name)
+        val colorMatrix: ColorMatrix = ColorMatrix()
         colorMatrix.setSaturation(0.toFloat())
         val filter = ColorMatrixColorFilter(colorMatrix)
 
-        // For item not in cart and available quantity is zero
-        Log.d("Test1","AvailableQuantity for ${product.name} is ${product.availableQuantity}")
-        if(pos == -1 && product.availableQuantity == 0.toString()){
-            Log.d("Test2","Block1 : ${product.name}")
+        if (pos == -1 && product.availableQuantity == 0.toString()) {
+            Log.d("Test2", "Block1 : ${product.name}")
             holder.img.colorFilter = filter               // make the image grey
             holder.addToCart.visibility = View.INVISIBLE  // Make the "add to cart button INVISIBLE"
             holder.count.visibility = View.INVISIBLE      // Make "Counter" button INVISIBLE
@@ -60,27 +58,28 @@ class ProductAdapter(val context:Context,
         }
 
         //For item not in cart and available quantity is non-zero
-        if(pos == -1 && product.availableQuantity != 0.toString()){
-            Log.d("Test2","Block2 : ${product.name}")
+        else if (pos == -1 && product.availableQuantity != 0.toString()) {
+            Log.d("Test2", "Block2 : ${product.name}")
             holder.img.colorFilter = null               // make the image grey
             holder.addToCart.visibility = View.VISIBLE  // Make the "add to cart button INVISIBLE"
             holder.count.visibility = View.INVISIBLE      // Make "Counter" button INVISIBLE
             holder.unavailable.visibility = View.INVISIBLE  // Make a textview VISIBLE
         }
         // For item present in cart with non-zero available quantity
-        if(pos != -1 && product.availableQuantity != 0.toString()) {
-            Log.d("Test2","Block3 : ${product.name}")
+        else if (pos != -1 && product.availableQuantity != 0.toString()) {
+            Log.d("Test2", "Block3 : ${product.name}")
             // For available quantity < quantity selected in cart
             if (cartList[pos].available.toInt() < cartList[pos].count.toInt()) {
-                Log.d("Test2","Block3-1 : ${product.name}")
+                Log.d("Test2", "Block3-1 : ${product.name}")
                 holder.count.number = cartList[pos].available
                 db.updateData(cartList[pos].name, cartList[pos].available)
                 Toast.makeText(context, "Not Enough Quantity Available", Toast.LENGTH_SHORT).show()
             }
             // For available quantity > quantity selected in cart
             else {
-                Log.d("Test2","Block3-2 : ${product.name}")
-                holder.count.number = cartList[pos].count    // Updating the Counter button text to no of items Previously added
+                Log.d("Test2", "Block3-2 : ${product.name}")
+                holder.count.number =
+                    cartList[pos].count    // Updating the Counter button text to no of items Previously added
             }
             holder.img.colorFilter = null               // make the image grey
             holder.addToCart.visibility = View.INVISIBLE   // Making add to cart INVISBLE
@@ -89,14 +88,17 @@ class ProductAdapter(val context:Context,
         }
 
         // For item present in cart but 0 available quantity
-        if(pos != -1 && product.availableQuantity == 0.toString()){
-            Log.d("Test2","Block4 : ${product.name}")
+        else if (pos != -1 && product.availableQuantity == 0.toString()) {
+            Log.d("Test2", "Block4 : ${product.name}")
             val resultDel = db.deleteData(product.name)
-            Log.d("ProductAdapter","$resultDel")
+            Log.d("ProductAdapter", "$resultDel")
             holder.img.colorFilter = filter
             holder.addToCart.visibility = View.INVISIBLE   // Making add to cart INVISBLE
             holder.count.visibility = View.INVISIBLE         // Making Counter VISIBLE
             holder.unavailable.visibility = View.VISIBLE  // Make a textview VISIBLE
+        }
+        else{
+            Log.d("Test2","Missed Something")
         }
 
 

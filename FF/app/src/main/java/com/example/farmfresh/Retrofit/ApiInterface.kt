@@ -2,6 +2,7 @@ package com.example.farmfresh.Retrofit
 
 import com.example.farmfresh.Model.BraintreeResponse
 import com.example.farmfresh.Model.PlaceOrderResponse
+import com.example.farmfresh.Model.Product
 import com.example.farmfresh.Model.ProductList
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -41,5 +42,8 @@ interface ApiInterface {
 
     @GET("client_token")
     fun client_token():Call<String>
+
+    @POST("popular")
+    fun popular():Call<MutableList<Product>>
 
 }

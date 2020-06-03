@@ -1,6 +1,5 @@
 package com.example.farmfresh.Activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,9 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farmfresh.Adapters.ProductAdapter
-import com.example.farmfresh.Adapters.ProductAdapterTest
-import com.example.farmfresh.Database.CartDatabase
-import com.example.farmfresh.Model.CartItem
 import com.example.farmfresh.Model.Product
 import com.example.farmfresh.Model.SubData
 import com.example.farmfresh.R

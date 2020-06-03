@@ -19,10 +19,10 @@ import com.example.farmfresh.Database.CartDatabase
 import com.example.farmfresh.Model.CartItem
 import com.example.farmfresh.Model.Product
 import com.example.farmfresh.R
+import com.example.farmfresh.Utilities.HelperUtils
 import com.example.farmfresh.Utilities.loadImage
 
-class SearchProductAdapter(val context: Context, val productList: List<Product>,
-                           val cartList:MutableList<CartItem>) :
+class SearchProductAdapter(val context: Context, val productList: List<Product>) :
     RecyclerView.Adapter<SearchProductAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.activity_searchitem, parent, false)
@@ -41,32 +41,65 @@ class SearchProductAdapter(val context: Context, val productList: List<Product>,
         holder.price.text = product.price
         holder.size.text = product.size
 
-        for(i in 0 until cartList.size){
-            if(product.name == cartList[i].name){
-                if(cartList[i].available.toInt() < cartList[i].count.toInt()){
-                    holder.count.number = cartList[i].available
-                    db.updateData(cartList[i].name, cartList[i].available)
-                    Toast.makeText(context, "Not Enough Quantity Available",Toast.LENGTH_SHORT).show()
-                }
-                else {
-                    holder.count.number = cartList[i].count
-                }
-                holder.addToCart.visibility = View.INVISIBLE
-                holder.count.visibility = View.VISIBLE
-            }
+        val cartList = db.readData()
+
+        val pos = HelperUtils.getPosition(cartList, product.name)
+        val colorMatrix: ColorMatrix = ColorMatrix()
+        colorMatrix.setSaturation(0.toFloat())
+        val filter = ColorMatrixColorFilter(colorMatrix)
+
+        if (pos == -1 && product.availableQuantity == 0.toString()) {
+            Log.d("Test2", "Block1 : ${product.name}")
+            holder.img.colorFilter = filter               // make the image grey
+            holder.addToCart.visibility = View.INVISIBLE  // Make the "add to cart button INVISIBLE"
+            holder.count.visibility = View.INVISIBLE      // Make "Counter" button INVISIBLE
+            holder.unavailable.visibility = View.VISIBLE  // Make a textview VISIBLE
         }
 
-        Log.d("SearchProductAdapter","AvailableQuantity is ${product.availableQuantity}")
-        if(product.availableQuantity == 0.toString()){
-            Log.d("ProductAdapter","AvailableQuantity is zero")
-            val colorMatrix:ColorMatrix = ColorMatrix()
-            colorMatrix.setSaturation(0.toFloat())
-            val filter = ColorMatrixColorFilter(colorMatrix)
-            holder.img.colorFilter = filter
-            holder.addToCart.visibility = View.INVISIBLE
-            holder.count.visibility = View.INVISIBLE
-            holder.unavailable.visibility = View.VISIBLE
+        //For item not in cart and available quantity is non-zero
+        else if (pos == -1 && product.availableQuantity != 0.toString()) {
+            Log.d("Test2", "Block2 : ${product.name}")
+            holder.img.colorFilter = null               // make the image grey
+            holder.addToCart.visibility = View.VISIBLE  // Make the "add to cart button INVISIBLE"
+            holder.count.visibility = View.INVISIBLE      // Make "Counter" button INVISIBLE
+            holder.unavailable.visibility = View.INVISIBLE  // Make a textview VISIBLE
         }
+        // For item present in cart with non-zero available quantity
+        else if (pos != -1 && product.availableQuantity != 0.toString()) {
+            Log.d("Test2", "Block3 : ${product.name}")
+            // For available quantity < quantity selected in cart
+            if (cartList[pos].available.toInt() < cartList[pos].count.toInt()) {
+                Log.d("Test2", "Block3-1 : ${product.name}")
+                holder.count.number = cartList[pos].available
+                db.updateData(cartList[pos].name, cartList[pos].available)
+                Toast.makeText(context, "Not Enough Quantity Available", Toast.LENGTH_SHORT).show()
+            }
+            // For available quantity > quantity selected in cart
+            else {
+                Log.d("Test2", "Block3-2 : ${product.name}")
+                holder.count.number =
+                    cartList[pos].count    // Updating the Counter button text to no of items Previously added
+            }
+            holder.img.colorFilter = null               // make the image grey
+            holder.addToCart.visibility = View.INVISIBLE   // Making add to cart INVISBLE
+            holder.count.visibility = View.VISIBLE         // Making Counter VISIBLE
+            holder.unavailable.visibility = View.INVISIBLE  // Make a textview VISIBLE
+        }
+
+        // For item present in cart but 0 available quantity
+        else if (pos != -1 && product.availableQuantity == 0.toString()) {
+            Log.d("Test2", "Block4 : ${product.name}")
+            val resultDel = db.deleteData(product.name)
+            Log.d("ProductAdapter", "$resultDel")
+            holder.img.colorFilter = filter
+            holder.addToCart.visibility = View.INVISIBLE   // Making add to cart INVISBLE
+            holder.count.visibility = View.INVISIBLE         // Making Counter VISIBLE
+            holder.unavailable.visibility = View.VISIBLE  // Make a textview VISIBLE
+        }
+        else{
+            Log.d("Test2","Missed Something")
+        }
+
         holder.img.loadImage(product.imageUrl)
         holder.addToCart.setOnClickListener {
             var test:String = "test"
