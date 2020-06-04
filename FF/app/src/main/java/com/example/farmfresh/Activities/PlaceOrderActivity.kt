@@ -144,16 +144,25 @@ class PlaceOrderActivity:AppCompatActivity() {
     override fun onOptionsItemSelected(item:MenuItem) : Boolean{
         // handle arrow click here
         if (item.getItemId() == android.R.id.home) {
-           startActivity(indexActivityGlobal)
+            val indexIntent = Intent(this, IndexActivity::class.java)
+            indexIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            Log.d("LoadingActivity", "User Logged In : Starting IndexActivity")
+            startActivity(indexIntent)
+            finish()
+
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     override fun onBackPressed() {
-        indexActivityGlobal.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        indexActivityGlobal.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
-        startActivity(indexActivityGlobal)
+        val indexIntent = Intent(this, IndexActivity::class.java)
+        indexIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        indexIntent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
+        Log.d("LoadingActivity", "User Logged In : Starting IndexActivity")
+        startActivity(indexIntent)
+        finish()
+
     }
 
 }

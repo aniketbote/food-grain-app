@@ -23,7 +23,7 @@ fun ImageView.loadImage(uri: String?) {
         .circleCrop()
         .error(R.mipmap.ic_launcher)
     Glide.with(this.context)
-        .setDefaultRequestOptions(options)
+        .applyDefaultRequestOptions(options)
         .load(uri)
         .into(this)
 }

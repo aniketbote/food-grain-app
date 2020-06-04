@@ -70,7 +70,10 @@ class SearchActivity: AppCompatActivity() {
 
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 Log.d("SearchActivity", "Clicked Back button")
-                startActivity(indexActivityGlobal)
+                val indexIntent = Intent(this@SearchActivity, IndexActivity::class.java)
+                indexIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                Log.d("LoadingActivity", "User Logged In : Starting IndexActivity")
+                startActivity(indexIntent)
                 finish()
                 return true
             }

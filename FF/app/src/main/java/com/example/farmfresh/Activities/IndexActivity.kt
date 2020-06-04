@@ -19,6 +19,7 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.farmfresh.Adapters.PopularItemsAdapter
 import com.example.farmfresh.Adapters.ProductAdapter
 import com.example.farmfresh.Database.CartDatabase
@@ -42,20 +43,48 @@ import retrofit2.Response
 
 
 lateinit var itemText:TextView
-var emailHashGlobal: String = ""
-lateinit var indexActivityGlobal: Intent
 
 
 class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener{
-    lateinit var featureImageList:List<String>
+    var featureImageList:List<String> = mutableListOf()
     lateinit var padapter: PopularItemsAdapter
     lateinit var cartList:MutableList<CartItem>
+    lateinit var carouselview:CarouselView
+    lateinit var emailHash:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        indexActivityGlobal = this.intent
         setContentView(R.layout.activity_index)
         HelperUtils.checkConnection(this)
+
+
+        carouselview= findViewById(R.id.carousel_index)
+        carouselview.setPageCount(featureImageList.size)
+        carouselview.setImageListener(imageListener)
+
+        // Fetching Data for carousel view
+        val featureRef = FirebaseDatabase.getInstance().getReference("/featured")
+        featureRef.addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d("LoadingActivity","Failed to retrieve feature list")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                Log.d("LoadingActivity", "Successfully Fetched featured data")
+
+                val featureList = mutableListOf<String>()
+                for (name in p0.children) {
+                    Log.d("LoadingActivity", "Image Location : ${name.value.toString()}")
+                    featureList.add(name.value.toString())
+                }
+
+                featureImageList = featureList
+                carouselview.setPageCount(featureImageList.size)
+                carouselview.setImageListener(imageListener)
+            }
+        })
+
+
         padapter = PopularItemsAdapter(this@IndexActivity, mutableListOf())
         Log.d("IndexActivity", cartCount.toString())
 
@@ -63,8 +92,10 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         cartList = db.readData()
         Log.d("IndexActivity","$cartList")
 
+
+
         val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
-        emailHashGlobal = token.getString("EMAILHASH", "").toString()
+        emailHash = token.getString("EMAILHASH", "").toString()
         val name = token.getString("name","")
         val photoUrl = token.getString("imageUri","").toString()
         Log.d("IndexActivity","Name = ${name}")
@@ -86,9 +117,6 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         Log.d("IndexActivity","Image Loaded On Nav Bar")
 
 
-        val allDataObj = intent.getSerializableExtra("dataObj") as AllData
-        featureImageList = allDataObj.featureList
-        Log.d("IndexActivity","${featureImageList[0]}")
 
 
         tv.setOnClickListener {
@@ -121,12 +149,10 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
         nav_activity_index.setNavigationItemSelectedListener(this)
 
-        val carouselview:CarouselView = findViewById(R.id.carousel_index)
-        carouselview.setPageCount(featureImageList.size)
-        carouselview.setImageListener(imageListener)
+
 
         carouselview.setImageClickListener {
-            Log.d("IndexActivity","Image: ${it} Clicked")
+            Log.d("IndexActivity", "Image: ${it} Clicked")
         }
 
         initRecyclerPopular()
@@ -298,8 +324,15 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     var imageListener: ImageListener = object : ImageListener
     {
         override fun setImageForPosition(position: Int, imageView: ImageView?) {
-            if (imageView != null) {
-                Glide.with(this@IndexActivity).load("${featureImageList[position]}").into(imageView)
+            if (imageView != null && !featureImageList.isEmpty()) {
+                val options = RequestOptions()
+                    .placeholder(R.drawable.home)
+                    .error(R.mipmap.ic_launcher)
+                Glide
+                    .with(this@IndexActivity)
+                    .setDefaultRequestOptions(options)
+                    .load("${featureImageList[position]}")
+                    .into(imageView)
             }
         }
     }
@@ -371,7 +404,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             R.id.current_order -> {
                 HelperUtils.checkConnection(this)
                 Log.d("IndexActivity","Pressed Current Orders")
-                val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHashGlobal/current")
+                val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHash/current")
                 currentRef.addValueEventListener(object : ValueEventListener{
                     override fun onCancelled(p0: DatabaseError) {
                         Log.d("IndexActivity","Error occured: ${p0}")
@@ -382,7 +415,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                         Log.d("IndexActivity", "${p0}")
                         if(p0.value == null){
                             val pref = this@IndexActivity.getSharedPreferences(
-                                "${emailHashGlobal}",
+                                "${emailHash}",
                                 Context.MODE_PRIVATE
                             )
                             val editor = pref.edit()
@@ -404,7 +437,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             R.id.previous_orders -> {
                 HelperUtils.checkConnection(this)
                 Log.d("IndexActivity","Pressed Previous Orders")
-                val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHashGlobal/previous")
+                val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHash/previous")
                     .orderByChild("OrderTime")
                     .limitToFirst(5)
                 currentRef.addValueEventListener(object : ValueEventListener{

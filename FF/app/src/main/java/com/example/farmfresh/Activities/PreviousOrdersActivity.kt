@@ -1,5 +1,6 @@
 package com.example.farmfresh.Activities
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -23,6 +24,7 @@ class PreviousOrdersActivity : AppCompatActivity(){
     var notLoading = true
     lateinit var layoutManager: LinearLayoutManager
     lateinit var orderList: MutableList<Order>
+    lateinit var emailHash:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,9 @@ class PreviousOrdersActivity : AppCompatActivity(){
         val orderListObj = intent.getSerializableExtra("orderListObj") as OrderList
         Log.d("PreviousActivity","${orderListObj.orderList}")
         orderList = orderListObj.orderList as MutableList<Order>
+
+        val token = getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE)
+        emailHash = token.getString("EMAILHASH", "").toString()
 
         val recycleView: RecyclerView = findViewById(R.id.previous_recycleview)
         layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL,false)
@@ -49,7 +54,7 @@ class PreviousOrdersActivity : AppCompatActivity(){
                     val lastItem = orderList[orderList.size - 1]
                     notLoading = false
 
-                    val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHashGlobal/previous")
+                    val currentRef = FirebaseDatabase.getInstance().getReference("all_orders/$emailHash/previous")
                         .orderByChild("OrderTime")
                         .limitToFirst(5)
                         .startAt(lastItem.orderTime.toDouble())

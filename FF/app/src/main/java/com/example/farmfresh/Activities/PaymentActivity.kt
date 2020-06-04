@@ -323,7 +323,7 @@ class PaymentActivity :AppCompatActivity(){
                         itemText.visibility = View.INVISIBLE
 
                         val currentRef = FirebaseDatabase.getInstance()
-                            .getReference("all_orders/$emailHashGlobal/current")
+                            .getReference("all_orders/$emailHash/current")
                         currentRef.addValueEventListener(object : ValueEventListener {
                             override fun onCancelled(p0: DatabaseError) {
                                 Log.d("PlaceOrderActivity", "Error occured: ${p0}")
@@ -345,8 +345,8 @@ class PaymentActivity :AppCompatActivity(){
                                     this@PaymentActivity, "${response.body()?.message}",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                startActivity(currentOrdersIntent)
                                 dialog.dismiss()
+                                startActivity(currentOrdersIntent)
                                 finish()
                             }
                         })

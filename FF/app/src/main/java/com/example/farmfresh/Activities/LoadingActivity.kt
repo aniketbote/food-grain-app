@@ -62,31 +62,11 @@ class LoadingActivity : AppCompatActivity() {
 
         if (emailHash != "") {
             Log.d("LoadingActivity", "Fetching data from database")
-            val featureRef = FirebaseDatabase.getInstance().getReference("/featured")
-            featureRef.addValueEventListener(object : ValueEventListener{
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d("LoadingActivity","Failed to retrieve feature list")
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    Log.d("LoadingActivity", "Successfully Fetched featured data")
-
-                    val featureList = mutableListOf<String>()
-                    for (name in p0.children) {
-                        Log.d("LoadingActivity", "Image Location : ${name.value.toString()}")
-                        featureList.add(name.value.toString())
-                    }
-                    Log.d("LoadingActivity","FeatureList Created")
-                    Log.d("LoadingActivity","Creating dataObj")
-                    val dataObj = AllData(featureList)
-                    val indexIntent = Intent(this@LoadingActivity, IndexActivity::class.java)
-                    indexIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    indexIntent.putExtra("dataObj", dataObj)
-                    Log.d("LoadingActivity", "User Logged In : Starting IndexActivity")
-                    startActivity(indexIntent)
-                    finish()
-                }
-            })
+            val indexIntent = Intent(this@LoadingActivity, IndexActivity::class.java)
+            indexIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            Log.d("LoadingActivity", "User Logged In : Starting IndexActivity")
+            startActivity(indexIntent)
+            finish()
         }
     }
 
