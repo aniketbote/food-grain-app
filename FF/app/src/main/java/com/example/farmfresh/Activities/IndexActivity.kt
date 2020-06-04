@@ -493,6 +493,7 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     }
 
     override fun onRestart() {
+//        initRecyclerPopular()
         padapter.notifyDataSetChanged()
         super.onRestart()
     }
