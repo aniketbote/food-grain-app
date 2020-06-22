@@ -31,8 +31,8 @@ cartList = []
 errorCode = 0
 itemDeficiency = ''
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:/Users/Aniket/Desktop/Aniket/food-grain-app/farmfresh-9c7fd-firebase-adminsdk-dx65j-9533ee02a1.json"
-cred = credentials.Certificate('farmfresh-9c7fd-firebase-adminsdk-dx65j-9533ee02a1.json')
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:/Users/Aniket/Documents/Aniket/food-grain-app/Credentials/farmfresh-9c7fd-firebase-adminsdk-dx65j-9533ee02a1.json"
+cred = credentials.Certificate('Credentials/farmfresh-9c7fd-firebase-adminsdk-dx65j-9533ee02a1.json')
 
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://farmfresh-9c7fd.firebaseio.com/'
