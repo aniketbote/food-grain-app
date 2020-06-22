@@ -4,8 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.29.242:5000/"
-//    private const val BASE_URL = "http://192.168.0.3:5000/"
+    private const val BASE_URL = "https://food-grain-app-backend.herokuapp.com/"
     val instance: ApiInterface by lazy {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
