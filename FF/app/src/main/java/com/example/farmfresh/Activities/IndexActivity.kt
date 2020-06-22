@@ -311,11 +311,15 @@ class IndexActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
                     response: Response<MutableList<Product>>
                 ) {
                     Log.d("LoadingActivity", "${response.body()}")
-                    val finalList = response.body()
-                    val recyclerView: RecyclerView = findViewById(R.id.recycler_index_exotic_fruits)
-                    recyclerView.layoutManager = LinearLayoutManager(this@IndexActivity, RecyclerView.HORIZONTAL, false)
-                    padapter = PopularItemsAdapter(this@IndexActivity, finalList!!)
-                    recyclerView.adapter = padapter
+                    if(response.body() != null) {
+                        val finalList = response.body()
+                        val recyclerView: RecyclerView =
+                            findViewById(R.id.recycler_index_exotic_fruits)
+                        recyclerView.layoutManager =
+                            LinearLayoutManager(this@IndexActivity, RecyclerView.HORIZONTAL, false)
+                        padapter = PopularItemsAdapter(this@IndexActivity, finalList!!)
+                        recyclerView.adapter = padapter
+                    }
                 }
             })
     }
